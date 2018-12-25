@@ -7,4 +7,16 @@ spring:
     url: jdbc:mysql://192.168.153.128/test
     username: root
     password: 123456
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
+  redis:
+    cluster:
+      nodes: 192.168.153.128:9000,192.168.153.129:9000,192.168.153.130:9000,192.168.153.128:9001,192.168.153.129:9001,192.168.153.130:9001
 
+
+
+#redis cluster
+#  resources:
+#    static-locations: classpath:/static/
