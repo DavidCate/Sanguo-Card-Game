@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
     RedisTemplate<String,String> redisTemplate;
 
     public String login(String username, String password,HttpServletRequest request ) {
+
         if (username.equals("")||password.equals("")){
             return "false";
         }else {

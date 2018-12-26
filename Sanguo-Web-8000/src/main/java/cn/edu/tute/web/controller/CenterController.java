@@ -1,10 +1,10 @@
 package cn.edu.tute.web.controller;
 
-import cn.edu.tute.web.mapper.UserInfoMapper;
 import cn.edu.tute.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.stereotype.Controller;
+import org.springframework.data.redis.connection.RedisClusterConnection;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,22 +17,33 @@ public class CenterController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    RedisTemplate<String,String> redisTemplate;
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
+
     @GetMapping(value = "hello")
-    public String hello(){
+    public String hello() {
         return "this is a test";
     }
 
     @GetMapping("login")
-    public ModelAndView loginPage(){
-        ModelAndView modelAndView=new ModelAndView();
+    public ModelAndView loginPage() {
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
         return modelAndView;
     }
 
     @PostMapping("login")
-    public String login(String username,String password,HttpServletRequest httpServletRequest){
-        return userService.login(username,password,httpServletRequest);
-
+    public String login(String username, String password, HttpServletRequest httpServletRequest) {
+        return userService.login(username, password, httpServletRequest);
     }
 
+
+    @GetMapping("test")
+    public String test() {
+        stringRedisTemplate.opsForValue().set("abc","xxx");
+        return "success";
+    }
 }

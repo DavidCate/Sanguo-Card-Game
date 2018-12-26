@@ -2,18 +2,24 @@ server:
   port: 8000
 spring:
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.153.128/test
     username: root
     password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
   mvc:
     view:
       prefix: /
       suffix: .html
   redis:
     cluster:
-      nodes: 192.168.153.128:9000,192.168.153.129:9000,192.168.153.130:9000,192.168.153.128:9001,192.168.153.129:9001,192.168.153.130:9001
+      nodes:
+        - 192.168.153.128:9000
+        - 192.168.153.129:9000
+        - 192.168.153.130:9000
+        - 192.168.153.128:9001
+        - 192.168.153.129:9001
+        - 192.168.153.130:9001
 
 
 
