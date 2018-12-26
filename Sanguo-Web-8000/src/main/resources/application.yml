@@ -20,9 +20,13 @@ spring:
         - 192.168.153.128:9001
         - 192.168.153.129:9001
         - 192.168.153.130:9001
+  session:
+    store-type: redis
+
 
 
 
 #redis cluster
 #  resources:
 #    static-locations: classpath:/static/
+#debug: true
