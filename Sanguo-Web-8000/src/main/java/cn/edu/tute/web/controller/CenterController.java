@@ -2,14 +2,14 @@ package cn.edu.tute.web.controller;
 
 import cn.edu.tute.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisClusterConnection;
-import org.springframework.data.redis.connection.RedisClusterNode;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,7 +67,7 @@ public class CenterController {
     public Object sessions(HttpServletRequest request) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("sessionId", request.getSession().getId());
-        map.put("message", request.getSession().getAttribute("request Url"));
+        map.put("message", request.getSession().getAttribute("loginStatus"));
         return map;
     }
 }
