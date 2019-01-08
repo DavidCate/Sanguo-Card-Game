@@ -24,6 +24,10 @@ spring:
     store-type: redis
 
 
+fastdfs:
+  fileserveraddr: 192.168.153.128:8888
+  maxstorageconnection: 8
+  httpsecretKey: HandFastDFSToken
 
 
 #redis cluster
