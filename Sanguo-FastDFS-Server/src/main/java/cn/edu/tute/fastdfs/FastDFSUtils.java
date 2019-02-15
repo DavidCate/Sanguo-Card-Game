@@ -23,7 +23,10 @@ public class FastDFSUtils {
         String ext=FileStringUtils.getFileExt(uploadFileVo.getFileName());
         if (ext!=null){
             NameValuePair[] mata_list=new NameValuePair[3];
-
+            mata_list[0]=new NameValuePair("fileName",uploadFileVo.getFileName());
+            mata_list[1]=new NameValuePair("fileExt",FileStringUtils.getFileExt(uploadFileVo.getFileName()));
+            mata_list[2]=new NameValuePair("uploadTime",uploadFileVo.getUploadTime());
+            path=storageClient1.upload_file1(uploadFileVo.getBytes(),ext,mata_list);
         }
         return path;
     }
