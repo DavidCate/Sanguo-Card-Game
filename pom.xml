@@ -12,6 +12,7 @@
         <module>Sanguo-Web-8000</module>
         <module>Sanguo-api</module>
         <module>Sanguo-FastDFS-Server</module>
+        <module>Sanguo-ES-Server</module>
     </modules>
 
 <dependencyManagement>
