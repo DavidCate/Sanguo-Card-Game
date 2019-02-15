@@ -32,7 +32,8 @@ public class FileUpDownControll {
     @RequestMapping("upload/uploadPic")
     public void uploadFile(MultipartFile pic, HttpServletResponse response, HttpServletRequest request){
         HttpSession httpSession=request.getSession();
-        int userId=(Integer) httpSession.getAttribute("");
+        //尚未开发用户session登录  暂时模拟
+        int userId=Integer.parseInt(httpSession.getId()) ;
         UploadFileVo uploadFileVo=new UploadFileVo();
         try {
             uploadFileVo.setFileBytes(pic.getBytes());
