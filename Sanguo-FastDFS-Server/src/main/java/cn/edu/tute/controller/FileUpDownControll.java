@@ -4,6 +4,7 @@ import cn.edu.tute.entities.Constans;
 import cn.edu.tute.fastdfs.FastDFSUtils;
 import cn.edu.tute.fastdfs.UploadFileVo;
 import cn.edu.tute.service.FileStorageService;
+import cn.edu.tute.sesson.UserSessionManager;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,12 +32,14 @@ public class FileUpDownControll {
     FileStorageService fileStorageService;
 
     @RequestMapping("upload/uploadPic")
-    public void uploadFile(MultipartFile pic, HttpServletResponse response, HttpServletRequest request){
+    public void uploadFile(@RequestParam(required = true) MultipartFile pic, HttpServletResponse response, HttpServletRequest request){
         HttpSession httpSession=request.getSession();
+        int userId= UserSessionManager.getUserIdBySession(httpSession.getId());
         //尚未开发用户session登录  暂时模拟
-        int userId=Integer.parseInt(httpSession.getId()) ;
+
         UploadFileVo uploadFileVo=new UploadFileVo();
         try {
+
             uploadFileVo.setFileBytes(pic.getBytes());
             uploadFileVo.setFileName(pic.getOriginalFilename());
             uploadFileVo.setSize(String.valueOf(pic.getSize()));
