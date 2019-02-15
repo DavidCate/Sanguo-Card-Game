@@ -13,6 +13,7 @@
         <module>Sanguo-api</module>
         <module>Sanguo-FastDFS-Server</module>
         <module>Sanguo-ES-Server</module>
+        <module>Sanguo-NettyChat-Server</module>
     </modules>
 
 <dependencyManagement>

@@ -9,6 +9,7 @@
         <module name="Sanguo-api" />
         <module name="Sanguo-ES-Server" />
         <module name="Sanguo-FastDFS-Server" />
+        <module name="Sanguo-NettyChat-Server" />
         <module name="Sanguo-Web-8000" />
       </profile>
     </annotationProcessing>
