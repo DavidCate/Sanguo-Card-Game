@@ -5,40 +5,49 @@ import java.io.*;
 public class UploadFileVo {
     private String fileName;
     private String uploadTime;
-    private File file;
+    private byte[] fileBytes;
+    private String size;
 
-    public File getFile() {
-        return file;
+    public String getSize() {
+        return size;
     }
 
-    public byte[] getBytes() {
-        if (this.file != null) {
-            byte[] res = null;
-            try {
-                FileInputStream inputStream = new FileInputStream(this.file);
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                byte[] bytes = new byte[1024 * 3];
-                int n = 0;
-                while ((n = inputStream.read(bytes)) != -1) {
-                    outputStream.write(bytes, 0, n);
-                }
-                res = outputStream.toByteArray();
-                inputStream.close();
-                outputStream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return res;
-        }else {
-            return null;
-        }
+    public void setSize(String size) {
+        this.size = size;
     }
 
-    public void setFile(File file) {
-        this.file = file;
+    public byte[] getFileBytes() {
+        return fileBytes;
     }
+
+    public void setFileBytes(byte[] fileBytes) {
+        this.fileBytes = fileBytes;
+    }
+
+//    public byte[] getBytes() {
+//        if (this.file != null) {
+//            byte[] res = null;
+//            try {
+//                FileInputStream inputStream = new FileInputStream();
+//                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                byte[] bytes = new byte[1024 * 3];
+//                int n = 0;
+//                while ((n = inputStream.read(bytes)) != -1) {
+//                    outputStream.write(bytes, 0, n);
+//                }
+//                res = outputStream.toByteArray();
+//                inputStream.close();
+//                outputStream.close();
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return res;
+//        }else {
+//            return null;
+//        }
+//    }
 
     public String getFileName() {
         return fileName;
