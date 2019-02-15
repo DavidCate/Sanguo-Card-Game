@@ -3,7 +3,7 @@ package cn.edu.tute.fastdfs;
 public class FileStringUtils {
     public static String getFileExt(String fileName){
         String ext=null;
-        String[] name=fileName.split(".");
+        String[] name=fileName.split("\\.");
         if (".".equals(fileName)){
             return null;
         }
@@ -11,7 +11,7 @@ public class FileStringUtils {
             return null;
         }
         if (name.length>1){
-            ext=name[name.length];
+            ext=name[name.length-1];
         }
         return ext;
     }
@@ -21,7 +21,7 @@ public class FileStringUtils {
         String ext=getFileExt(fileName);
         if (ext!=null){
             int index=fileName.indexOf(ext);
-            res=fileName.substring(0,index-2);
+            res=fileName.substring(0,index-1);
         }
         return res;
     }
