@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface UserInfoMapper {
-    @Select("select * from userInfo where username=#{username}")
-    UserInfo getUserInfo(String username);
+    @Select("select username,password from userInfo where username=#{userName}")
+    UserInfo getUserInfo(String userName);
 }

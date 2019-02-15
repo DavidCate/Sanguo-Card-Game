@@ -1,6 +1,8 @@
 package cn.edu.tute.web.controller;
 
+import cn.edu.tute.web.redis.RedisService;
 import cn.edu.tute.web.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -20,12 +22,6 @@ public class CenterController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    RedisTemplate<String, String> redisTemplate;
-
-    @Autowired
-    StringRedisTemplate stringRedisTemplate;
-
     @GetMapping(value = "hello")
     public String hello() {
         return "this is a test";
@@ -39,8 +35,8 @@ public class CenterController {
     }
 
     @PostMapping("login")
-    public String login(String username, String password, HttpServletRequest httpServletRequest) {
-        return userService.login(username, password, httpServletRequest);
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest httpServletRequest) {
+            return userService.login(username, password, httpServletRequest);
     }
 
     @RequestMapping("xxx")
@@ -51,7 +47,6 @@ public class CenterController {
 
     @GetMapping("test")
     public String test() {
-        stringRedisTemplate.opsForValue().set("abc", "xxx");
         return "success";
     }
 
