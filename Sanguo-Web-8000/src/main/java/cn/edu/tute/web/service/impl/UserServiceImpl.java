@@ -1,6 +1,7 @@
 package cn.edu.tute.web.service.impl;
 
-import cn.edu.tute.MyImplements.Response;
+
+import cn.edu.tute.entities.RegisterUserInfo;
 import cn.edu.tute.entities.UserInfo;
 import cn.edu.tute.entities.response.FailureResponse;
 import cn.edu.tute.entities.response.SuccessResponse;
@@ -8,8 +9,9 @@ import cn.edu.tute.web.mapper.UserInfoMapper;
 import cn.edu.tute.web.redis.RedisService;
 import cn.edu.tute.web.service.UserService;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +23,7 @@ import java.util.UUID;
 
 @Component
 public class UserServiceImpl implements UserService {
+    private static final Logger logger= LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     UserInfoMapper userInfoMapper;
 
@@ -74,6 +77,27 @@ public class UserServiceImpl implements UserService {
                 response.setErrorMsg("用户名不能为空！");
                 return response.send();
             }
+        }
+    }
+
+    public String register(RegisterUserInfo registerUserInfo) {
+        RegisterUserInfo selected=userInfoMapper.getRegisterUserInfo(registerUserInfo.getUserCount());
+        if (selected!=null){
+            FailureResponse failureResponse=new FailureResponse();
+            failureResponse.setErrorMsg("用户名已存在");
+            return failureResponse.send();
+        }else {
+            try {
+                userInfoMapper.registUserInfo(registerUserInfo);
+            }catch (Exception e){
+                e.printStackTrace();
+                FailureResponse failureResponse=new FailureResponse();
+                failureResponse.setErrorMsg("插入注册信息失败");
+                return failureResponse.send();
+            }
+                SuccessResponse successResponse=new SuccessResponse();
+                successResponse.setErrorMsg("注册成功");
+                return successResponse.send();
         }
     }
 

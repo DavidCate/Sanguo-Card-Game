@@ -1,23 +1,17 @@
 package cn.edu.tute.web.controller;
 
-import cn.edu.tute.web.mapper.UserInfoMapper;
-import cn.edu.tute.web.redis.RedisService;
+
+import cn.edu.tute.entities.RegisterUserInfo;
 import cn.edu.tute.web.service.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,16 +37,20 @@ public class CenterController {
     }
 
     @GetMapping("login")
-    public ModelAndView loginPage() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView loginPage(ModelAndView modelAndView) {
         modelAndView.setViewName("login");
         return modelAndView;
     }
 
     @PostMapping("login")
     public String login(@RequestParam("loginPasswd") String username, @RequestParam("loginPasswd") String password, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        logger.warn("this is a test");
+        logger.info("this is a test");
         return userService.login(username, password, httpServletRequest,httpServletResponse);
+    }
+
+    @PostMapping("register")
+    public String register(RegisterUserInfo registerUserInfo){
+        return userService.register(registerUserInfo);
     }
 
     @RequestMapping("xxx")

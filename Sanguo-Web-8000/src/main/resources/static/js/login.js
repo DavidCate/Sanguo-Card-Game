@@ -48,14 +48,14 @@ $(document).ready(function(){
          */
         $.ajax({
             type: "POST",
-            url:  "",
+            url:  "/register",
             data: $('#reg-form').serialize(),
             dataType: "json",
             success:function(){
                 /**
                  * 注册成功/失败未渲染
                  */
-                console.log("register success");
+                // console.log("register success");
                 $('#register').css('display','none');
             },
             error:function () {
