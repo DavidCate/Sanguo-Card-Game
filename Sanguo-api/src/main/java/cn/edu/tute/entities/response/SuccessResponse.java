@@ -4,13 +4,17 @@ import cn.edu.tute.MyImplements.Response;
 import com.alibaba.fastjson.JSON;
 
 public class SuccessResponse implements Response {
-    private static final String IS_SUCCESS = "false";
+    private String IS_SUCCESS = "true";
 
-    private String errorMsg;
-
-    public static String getIsSuccess() {
+    public String getIS_SUCCESS() {
         return IS_SUCCESS;
     }
+
+    public void setIS_SUCCESS(String IS_SUCCESS) {
+        this.IS_SUCCESS = IS_SUCCESS;
+    }
+
+    private String errorMsg;
 
     public String getErrorMsg() {
         return errorMsg;
