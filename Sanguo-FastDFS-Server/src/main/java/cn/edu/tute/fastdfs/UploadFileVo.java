@@ -1,7 +1,5 @@
 package cn.edu.tute.fastdfs;
 
-import java.io.*;
-
 public class UploadFileVo {
     private String fileName;
     private String uploadTime;

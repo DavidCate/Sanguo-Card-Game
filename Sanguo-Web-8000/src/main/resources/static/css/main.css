@@ -1,0 +1,286 @@
+body {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+    /*
+        background: url(../png/bodyBack.png) no-repeat;*/
+}
+.bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+/*顶部栏*/
+.main-top {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80%;
+    height: 15%;
+    min-height: 80px;
+    background-size: cover;
+    background: url(../image/png/main/mainTopBg.png);
+    filter: alpha(Opacity=90);
+    -moz-opacity: 0.9;
+    opacity: 0.9;
+    border-bottom:5px outset #000000
+}
+
+.top-begin {
+    width: 80px;
+    height: 30px;
+    position: absolute;
+    top: 30%;
+    left: 50px;
+
+}
+
+.top-column {
+    list-style-type: none;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.top-column li {
+    padding: 15px 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.top-column li:hover {
+    background-color: #000000;
+}
+
+.top-column-more {
+    padding: 0;
+    display: none;
+    position: absolute;
+    z-index: 70;
+    background: #4e4e53;
+}
+.top-column-more li:hover > a {
+    background-color: #000000;
+}
+.main-choose:hover {
+    display: block;
+}
+
+
+.top-column a {
+    text-decoration: none;
+    height: 50px;
+    font-family: "微软雅黑", "Microsoft Yahei", "Hiragino Sans GB", tahoma, arial, "宋体";
+    font-size: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+}
+/*.main-mark{
+    background: url("../png/main/mainmark.png");
+    width: 802px;
+    height: 422px;
+    position: fixed;
+    bottom: 100px;
+    left: 200px;
+    z-index: 10;
+}*/
+/*#main-mark{
+    display: none;
+}*/
+/*切换层*/
+.main-middle {
+    position: fixed;
+    left: 0;
+    top: 85px;
+    width: 80%;
+    min-width: 800px;
+    height: 85%;
+    background-size: cover;
+}
+.main-mid {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-size: auto;
+    z-index: 2;
+}
+
+.main-rig {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background-size: auto;
+    z-index: 2;
+}
+
+.img-main-mid {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.img-main-two {
+    position: absolute;
+    top: 0;
+    filter: alpha(Opacity=80);
+    -moz-opacity: 0.8;
+    opacity: 0.8;
+
+}
+
+.img-main-one {
+    position: absolute;
+    filter: alpha(Opacity=80);
+    -moz-opacity: 0.8;
+    opacity: 0.8;
+
+}
+
+.img-bottom-back {
+    position: fixed;
+    width: 100%;
+    min-width: 1360px;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* 模式层*/
+.main-middle-two {
+    position: fixed;
+    left: 0;
+    top: 85px;
+    width: 80%;
+    min-width: 900px;
+    height: 87%;
+    background-size: cover;
+    background: #7a7a7f;
+    display: none;
+    z-index: 50;
+}
+.main-model{
+    display: none;
+}
+
+#main-model-left + label {
+    width: 307px;
+    height: 445px;
+    position: relative;
+    top: 20px;
+    left: 180px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: bottom;
+    background: url("../image/png/main/mainModelClose.png") no-repeat;
+}
+#main-model-right + label {
+    width: 307px;
+    height: 445px;
+    position: relative;
+    top: 20px;
+    right: -300px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: bottom;
+    background: url("../image/png/main/mainModelClose.png") no-repeat;
+}
+#main-model-left:checked + label {
+    background: url("../image/png/main/mainModelOne.png") no-repeat;
+}
+#main-model-right:checked + label {
+    background: url("../image/png/main/mainModelOne.png") no-repeat;
+}
+/*.mainModel:checked + label:after {
+    content: "\2022";
+    font-size: 150px;
+    color: #111311;
+}*/
+.close-two{
+    width: 32px;
+    height:32px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 5px;
+    background: url("../image/png/main/mainCloseModel.png") no-repeat;
+}
+.main-begin-game{
+    position: absolute;
+    bottom: 100px;
+    left: 500px;
+}
+/*侧边用户栏*/
+.main-right {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 20%;
+    min-width: 200px;
+    height: 100%;
+    background-size: cover;
+    background: #4e4e53;
+    filter: alpha(Opacity=90);
+    -moz-opacity: 0.9;
+    opacity: 0.9;
+    border-left:5px outset #000000;
+    z-index: 50;
+}
+.main-right-top{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:80px;
+    border-bottom:5px outset #000000;
+}
+.main-right-head{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 92px;
+    height:80px;
+    background: url("../image/png/main/mainHead.png") no-repeat;
+}
+.main-right-middle{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:20px;
+    background: #211f81;
+    border-bottom:5px outset #000000;
+}
+.main-right-bottom{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:800px;
+    background: #ff6b06;
+    display: block;
+}
+/**
+个人资料
+ */
+#main-middle-detail{
+    background: url("../image/png/main/mainDetail.png");
+    display: none;
+}
+/**
+任务
+ */
+#main-middle-mark{
+    background: url("../image/png/main/mainMark1.png");
+    display: none;
+}

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>战三国游戏平台</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="../css/login.css" type="text/css"/>
+    <script type="text/javascript" src="../js/login.js"></script>
+    <link rel="shortcut icon" href="../image/ico/webIco.ico"/>
+</head>
+<body>
+<!--背景框-->
+<img class="bg" src="../image/png/login/background.png">
+<!--左上角logo-->
+<!--<img class="logo-top" src="../image/png/logo.png">-->
+<!--顶部-->
+<div class="column-top-div">
+    <ul class="columnTop">
+        <li>
+            <a href="#" class="part-top-one"></a>
+        </li>
+        <li>
+            <a href="#" class="part-top-second"></a>
+        </li>
+    </ul>
+</div>
+<!--声音-->
+<audio loop="loop" autoplay="autoplay" class="bg-voice" id="voice-one" name="true">
+    <source src="../voice/backmusic.mp3" type="audio/mpeg" />
+</audio>
+<img class="voice" id="voice" src="../image/png/login/open.png">
+<!--背景视频-->
+<div>
+<video muted autoplay="autoplay" loop="loop">
+    <source src="../video/back.Ogg">
+    ;
+</video>
+</div>
+<!--游戏版本-->
+<!--登录-->
+<!--<img class="logo" src="../image/png/logo.png">-->
+<div class="login">
+    <form id="login-form">
+        <span class="user">用户名</span>
+        <input type="text" class="one-In" name="username"/><br>
+        <span class="pass-wd">密码</span>
+        <input type="password" class="second-In" name="loginPasswd"/><br>
+        <input type="checkbox" class="remember" name="remember" value="password"/><br>
+        <span class="rem-pass">记住密码</span>
+        <input type="button" class="login-button" id="login-button"/>
+    </form>
+</div>
+<img class="reg-button" id="left-reg-button" src="../image/png/login/reg.png">
+<!--注册-->
+<div class="register" id="register">
+    <img class="close-reg" id="close-reg" src="../image/png/login/closeReg.png">
+    <form id="reg-form">
+        <span >账  号</span>
+        <input type="text" class="third-In" name="user" id="user"/><br>
+        <span >用户名</span>
+        <input type="text" class="four-In" name="name" id="name"/><br>
+        <span >密  码</span>
+        <input type="password" class="five-In" name="passwd" id="passwd"/><br>
+        <span>手机号</span>
+        <input type="text" class="six-In" name="phone" id="phone"/><br>
+        <span >性  别</span>
+        <input id="man" class="seven-In" type="radio" checked="checked" name="sex" value="男"/>男
+        <input id="woman" class="eight-In" type="radio" name="sex" value="女"/>女<br>
+        <input type="button" class="" id="reg-button" value="注册"/>
+    </form>
+</div>
+</body>
+</html>

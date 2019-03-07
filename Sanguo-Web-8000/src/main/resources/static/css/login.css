@@ -1,0 +1,199 @@
+﻿html,body{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+}
+body{
+    background: transparent;
+    /*background: url(../png/back.png) no-repeat;
+    z-index: 200;*/
+    cursor:url('../image/ico/mouseMain.ico'),auto;
+}
+div button,.part-top-one,.part-top-second{
+    cursor:url('../image/ico/mouseAction.ico'),auto;
+}
+span{
+    cursor:url('../image/ico/mouseAction.ico'),auto;
+    font-size: 25px;
+    color: #000000;
+    font-family: 楷体  ;
+}
+/*背景框*/
+.bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+/*背景视频*/
+video{
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -200;
+    background-size: contain;
+}
+@media screen and (max-device-width: 800px) {
+    video {
+        display: none;
+    }
+}
+source{
+    min-width: 100%;
+    min-height: 100%;
+    height: auto;
+    width: auto;
+}
+/*顶部栏*/
+.logo-top{
+    width: 150px;
+    height: 69px;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: 3;
+}
+.column-top-div{
+    z-index: 99;
+}
+.part-top-one{
+    background: url(../image/png/login/official.png) no-repeat;
+    width:153px;
+    height:51px;
+    position: absolute;
+    top:8px;
+    right:250px;
+    z-index: 100;
+}
+.part-top-second{
+    background: url(../image/png/login/aboutUs.png) no-repeat;
+    width:200px;
+    height:30px;
+    position: absolute;
+    top:25px;
+    right:40px;
+    z-index: 100;
+}
+/*声音*/
+.voice{
+    position: absolute;
+    width: 40px;
+    height: 39px;
+    top: 64px;
+    right:24px;
+    z-index: 100;
+}
+/*登录框*/
+.logo{
+    position: absolute;
+    width: 360px;
+    height: 176px;
+    top:50px;
+    right:45px;
+    z-index: 5;
+}
+.login{
+    background: url(../image/png/login/boaderLogin.png) no-repeat;
+    background-size: 100%100%;
+    width:400px;
+    height:480px;
+    position:absolute;
+    top:120px;
+    right:20px;
+    z-index: 10;
+}
+input{
+    cursor:url('../image/ico/mouseInput.ico'),auto;
+    background: url(../image/png/login/input.png);
+    width: 270px;
+    height: 38px;
+
+}
+.user{
+    position:absolute;
+    top: 18%;
+    left: 15%;
+}
+.pass-wd{
+    position:absolute;
+    top: 38%;
+    left: 15%;
+}
+.one-In{
+    position:absolute;
+    top: 25%;
+    left: 15%;
+}
+.second-In{
+    position:absolute;
+    top: 45%;
+    left:15%;
+}
+.remember{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 60%;
+    left:15%;
+}
+.rem-pass{
+    font-size: 20px;
+    color: #000000;
+    font-family: 楷体;
+    position: absolute;
+    top: 60%;
+    left:25%;
+}
+.login-button{
+    background-image: url(../image/png/login/beginGame.png);
+    width: 250px;
+    height: 85px;
+    position:absolute;
+    top: 71%;
+    left: 18%;
+}
+/**
+注册按钮
+ */
+.reg-button{
+    position: absolute;
+    width: 115px;
+    height: 112px;
+    bottom: 27px;
+    left: 20px;
+    z-index: 50;
+}
+/**
+注册框
+ */
+.close-reg{
+    position: absolute;
+    width: 33px;
+    height: 33px;
+    top: 0;
+    right: 0;
+}
+.register{
+    background: url(../image/png/login/register.png) no-repeat;
+    position: absolute;
+    width: 500px;
+    height: 584px;
+    top: 60px;
+    left: 30%;
+    z-index: 50;
+    display: none;
+}
+.seven-In{
+    width: 38px;
+    height: 38px;
+}
+.eight-In{
+    width: 38px;
+    height: 38px;
+}

@@ -1,15 +1,21 @@
 package cn.edu.tute.web.controller;
 
+import cn.edu.tute.web.mapper.UserInfoMapper;
 import cn.edu.tute.web.redis.RedisService;
 import cn.edu.tute.web.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -18,9 +24,18 @@ import java.util.Map;
 //restcontrller 只返回json数据 而ModelAndView不受影响
 //如果没有配置controller 直接访问类似localhost：8000/xxx 会默认到static或public文件夹自动匹配页面
 @RestController
+@RequestMapping("/")
 public class CenterController {
+    private static final Logger logger= LoggerFactory.getLogger(CenterController.class);
+
     @Autowired
     UserService userService;
+
+    @RequestMapping("/")
+    public ModelAndView index(ModelAndView modelAndView) throws IOException {
+        modelAndView.setViewName("/html/login");
+        return modelAndView;
+    }
 
     @GetMapping(value = "hello")
     public String hello() {
@@ -35,8 +50,9 @@ public class CenterController {
     }
 
     @PostMapping("login")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest httpServletRequest) {
-            return userService.login(username, password, httpServletRequest);
+    public String login(@RequestParam("loginPasswd") String username, @RequestParam("loginPasswd") String password, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        logger.warn("this is a test");
+        return userService.login(username, password, httpServletRequest,httpServletResponse);
     }
 
     @RequestMapping("xxx")

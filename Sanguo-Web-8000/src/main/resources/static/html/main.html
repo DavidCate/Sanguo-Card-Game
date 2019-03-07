@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>战三国游戏平台</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="../css/main.css" type="text/css"/>
+    <script type="text/javascript" src="../js/main.js"></script>
+    <link rel="shortcut icon" href="../image/ico/webIco.ico"/>
+</head>
+<body>
+<!--<img class="bg" src="../image/png/main/main-bg.png">-->
+<!--顶部栏-->
+<div class="main-top" clearFloat>
+    <button class="top-begin" id="top-begin">开始</button>
+    <ul class="top-column">
+        <li><a href="#" class="main-choose" name="main-middle-page" onclick="choose(this.name)">首页</a></li>
+        <li><a href="#" class="main-choose" name="main-middle-detail" onclick="choose(this.name)">个人资料</a></li>
+        <li><a href="#" class="main-choose" name="main-middle-mark" onclick="choose(this.name)">任务</a></li>
+        <li><a href="#" class="main-choose">更多</a>
+            <ul class="top-column-more">
+                <li><a href="#">官网</a></li>
+                <li><a href="#">游戏规则</a></li>
+                <li><a href="#">关于我们</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!--首页栏-->
+<div class="main-middle" id="main-middle-page">
+    <div class="middle-top">
+        <button>匹配模式</button>
+        <button>故事模式</button>
+    </div>
+    <!--<div class="main-mid">
+        <img class="img-main-mid" src="../image/png/main/mainMiddle.png">
+    </div>
+    <div class="mainRig">
+        <img class="img-main-one" src="../image/png/main/mainOne.png">
+        <img class="img-main-two" src="../image/png/main/mainTwo.png">
+    </div>-->
+    <!--<img class="bottomBack" src="../png/mainBottom.png">-->
+</div>
+<!--模式选择栏-->
+<div class="main-middle-two">
+    <input type="radio" class="main-model" name="model" id="main-model-left" value="匹配" checked="checked">
+    <label for="main-model-left"></label>
+    <input type="radio" class="main-model" name="model" id="main-model-right" value="故事">
+    <label for="main-model-right"></label>
+    <!--<button href="#" class="mainMiddleBegin" id="mainMiddleBegin" onclick="startGame()"></button>-->
+    <!--<a href="#" class="main-middle-begin" id="main-middle-begin" onclick="startGame()"></a>-->
+    <button class="main-begin-game">开始游戏</button>
+    <button class="close-two" id="close-two"></button>
+</div>
+<!--右侧用户栏-->
+<div class="main-right">
+    <div class="main-right-top">
+        <div class="main-right-head">
+            <!--<img class="img-head" src="../image/png/main/">-->
+        </div>
+        <span></span>
+    </div>
+    <div class="main-right-middle">
+        <button class="main-friend">点击</button>
+    </div>
+    <div class="main-right-bottom" name="true"></div>
+</div>
+<div class="main-game-detail">
+
+</div>
+<!--个人资料栏-->
+<div class="main-middle" id="main-middle-detail">
+    <div class="main-middle-person-left">
+        <div class="main-head">
+            <img class="img-head" src="../image/png/main/">
+        </div>
+    </div>
+    <div class="main-middle-person-right">
+    </div>
+</div>
+<!--任务栏-->
+<div class="main-middle" id="main-middle-mark">
+</div>
+<!--游戏规则栏-->
+<div class="main-game-rule">
+</div>
+<!--关于我们栏-->
+<div class="main-us">
+</div>
+<img class="img-bottom-back" src="../image/png/main/mainBottom.png">
+</body>
+</html>
