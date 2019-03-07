@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,12 +24,20 @@ public class CenterController {
     private static final Logger logger= LoggerFactory.getLogger(CenterController.class);
 
     @Autowired
+    DataSource  dataSource;
+
+    @Autowired
     UserService userService;
 
     @RequestMapping("/")
     public ModelAndView index(ModelAndView modelAndView) throws IOException {
         modelAndView.setViewName("/html/login");
         return modelAndView;
+    }
+
+    @RequestMapping("/datasource")
+    public String getDataSourceInfo(){
+        return dataSource.getClass().toString();
     }
 
     @GetMapping(value = "hello")
