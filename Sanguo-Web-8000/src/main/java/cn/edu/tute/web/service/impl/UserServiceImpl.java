@@ -47,6 +47,11 @@ public class UserServiceImpl implements UserService {
             //第一次登录
             if (StringUtils.isNotBlank(username)){
                 userInfo=userInfoMapper.getUserInfo(username);
+                if (userInfo==null){
+                    FailureResponse response=new FailureResponse();
+                    response.setErrorMsg("用户不存在，请重新登录");
+                    return response.send();
+                }
                 if (validateUserInfo(username,password,userInfo)){
                     UUID tokenId=UUID.randomUUID();
                     //校验通过，生成Cookie 加入token信息
