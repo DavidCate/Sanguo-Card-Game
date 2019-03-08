@@ -2,6 +2,8 @@ package cn.edu.tute.web.controller;
 
 
 import cn.edu.tute.entities.RegisterUserInfo;
+import cn.edu.tute.entities.UserInfo;
+import cn.edu.tute.web.mapper.UserInfoMapper;
 import cn.edu.tute.web.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,9 @@ public class CenterController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserInfoMapper userInfoMapper;
 
     @RequestMapping("/")
     public ModelAndView index(ModelAndView modelAndView) throws IOException {
@@ -57,15 +62,17 @@ public class CenterController {
         return userService.login(username, password, httpServletRequest,httpServletResponse);
     }
 
+
     @PostMapping("register")
     public String register(RegisterUserInfo registerUserInfo){
         return userService.register(registerUserInfo);
     }
 
     @RequestMapping("xxx")
-    public String xxx(@RequestParam("xxx") String xxx) {
-        System.out.println(xxx);
-        return "xxx";
+    public String xxx() {
+        UserInfo userInfo=userInfoMapper.getUserInfo("test");
+        logger.warn("=====>"+userInfo.getUsername()+":"+userInfo.getPassword());
+        return userInfo.toString();
     }
 
     @GetMapping("test")

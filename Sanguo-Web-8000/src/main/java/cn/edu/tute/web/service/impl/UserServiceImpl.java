@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
         String sessionId=session.getId();
         UserInfo userInfo=redisService.get(sessionId,UserInfo.class);
         if (userInfo!=null){
+            logger.warn(userInfo.toString());
             //判断userinfo是否存在,如果存在说明已经登录过,校验token
             if (validateUserInfo((String) session.getAttribute("token"),userInfo.getToken())){
                 FailureResponse response=new FailureResponse();
@@ -49,6 +50,8 @@ public class UserServiceImpl implements UserService {
         }else {
             //第一次登录
             if (StringUtils.isNotBlank(username)){
+                UserInfo test=userInfoMapper.getUserInfo(username);
+                logger.warn(test.toString());
                 userInfo=userInfoMapper.getUserInfo(username);
                 if (userInfo==null){
                     FailureResponse response=new FailureResponse();

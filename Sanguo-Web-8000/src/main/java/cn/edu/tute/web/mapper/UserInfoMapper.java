@@ -2,18 +2,18 @@ package cn.edu.tute.web.mapper;
 
 import cn.edu.tute.entities.RegisterUserInfo;
 import cn.edu.tute.entities.UserInfo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @Mapper
 public interface UserInfoMapper {
-    @Select("select u_name,u_password from user where u_name=#{userName}")
+
+    @Results({@Result(property = "username" ,column = "u_nid"),@Result(property = "password",column = "u_password")})
+    @Select("select u_nid,u_password from user where u_nid=#{userName}")
     UserInfo getUserInfo(String userName);
 
+    @Results({@Result(property = "userCount",column = "u_nid")})
     @Select("select u_nid from user where u_nid=#{userCount}")
     RegisterUserInfo getRegisterUserInfo(String userCount);
 

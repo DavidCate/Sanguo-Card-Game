@@ -1,6 +1,9 @@
 package cn.edu.tute.entities;
 
 public class UserInfo {
+    public UserInfo(){
+
+    }
     String username;
     String password;
     String sessionID;

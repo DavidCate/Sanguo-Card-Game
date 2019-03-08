@@ -1,6 +1,8 @@
 package spingboot;
 
 
+import cn.edu.tute.entities.UserInfo;
+import cn.edu.tute.web.mapper.UserInfoMapper;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +12,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.junit.Test;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,6 +27,9 @@ public class MyTest {
 
     ValueOperations<String,String> stringRedis;
 
+    @Resource
+    UserInfoMapper userInfoMapper;
+
     @Autowired
     DataSource dataSource;
 
@@ -31,8 +37,9 @@ public class MyTest {
     public void test() throws SQLException {
 //        stringRedis=redisTemplate.opsForValue();
 //        stringRedis.set("xxx","aaa");
-        Connection connection=dataSource.getConnection();
-        System.out.println(dataSource.getClass());
+//        Connection connection=dataSource.getConnection();
+        UserInfo userInfo=userInfoMapper.getUserInfo("test");
+        System.out.println(userInfo.toString());
     }
 
 
