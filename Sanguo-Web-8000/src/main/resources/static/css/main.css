@@ -196,9 +196,9 @@ button:active{
     opacity: 0.5;
     border: 1px solid #fff;
 }
-#arr span:hover{
-    cursor:url('../image/ico/mouseAction.ico'),auto;
-}
+/*#arr span:hover{*/
+    /*cursor:url('../image/ico/mouseAction.ico'),auto;*/
+/*}*/
 #arr span:active{
     cursor:url('../image/ico/mouseInput.ico'),auto;
 }

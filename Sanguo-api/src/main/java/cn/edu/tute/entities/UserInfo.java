@@ -45,4 +45,14 @@ public class UserInfo {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", sessionID='" + sessionID + '\'' +
+                ", token='" + token + '\'' +
+                '}';
+    }
 }

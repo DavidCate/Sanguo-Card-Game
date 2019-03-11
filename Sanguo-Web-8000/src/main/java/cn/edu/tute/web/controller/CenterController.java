@@ -57,7 +57,7 @@ public class CenterController {
     }
 
     @PostMapping("login")
-    public String login(@RequestParam("loginUser") String username, @RequestParam("loginPasswd") String password, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public String login(@RequestParam("loginUser") String username, @RequestParam("loginPasswd") String password, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,ModelAndView modelAndView) {
 //        logger.info("this is a test");
         return userService.login(username, password, httpServletRequest,httpServletResponse);
     }
@@ -94,5 +94,10 @@ public class CenterController {
         map.put("sessionId", request.getSession().getId());
         map.put("message", request.getSession().getAttribute("loginStatus"));
         return map;
+    }
+    @PostMapping("initMainPage")
+    public String initMainPage(){
+
+        return null;
     }
 }

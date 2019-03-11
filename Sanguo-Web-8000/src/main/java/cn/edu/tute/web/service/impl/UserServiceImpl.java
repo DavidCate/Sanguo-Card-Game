@@ -36,18 +36,26 @@ public class UserServiceImpl implements UserService {
 //        logger.warn("sessionId=====>"+sessionId);
         UserInfo userInfo=redisService.get(sessionId,UserInfo.class);
         if (userInfo!=null){
-            logger.warn(userInfo.toString());
+//            logger.warn(userInfo.toString());
             //判断userinfo是否存在,如果存在说明已经登录过,校验token
-            if (validateUserInfo((String) session.getAttribute("token"),userInfo.getToken())){
-                FailureResponse response=new FailureResponse();
-                response.setErrorMsg("用户已经登录过,token校验成功");
-                return response.send();
+            if (session.getAttribute("token")!=null){
+                if (validateUserInfo((String) session.getAttribute("token"),userInfo.getToken())){
+                    FailureResponse response=new FailureResponse();
+                    response.setErrorMsg("用户已经登录过,token校验成功");
+                    return response.send();
+                }else {
+                    redisService.delete(sessionId);
+                    FailureResponse response=new FailureResponse();
+                    response.setErrorMsg("token校验失败，重新登录");
+                    return response.send();
+                }
             }else {
                 redisService.delete(sessionId);
                 FailureResponse response=new FailureResponse();
-                response.setErrorMsg("token校验失败，重新登录");
+                response.setErrorMsg("请重新登录");
                 return response.send();
             }
+
         }else {
             //第一次登录
             if (StringUtils.isNotBlank(username)){
