@@ -45,5 +45,5 @@ spring:
 #    static-locations: classpath:/static/
 #debug: true
 mybatis:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml

@@ -4,7 +4,7 @@
 $(function(){
     $.ajax({
         type: "POST",
-        url:  "",
+        url:  "/initMainPage",
         data: {},
         dataType: "json",
         success:function(data){

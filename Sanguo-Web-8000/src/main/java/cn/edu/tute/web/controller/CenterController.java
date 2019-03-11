@@ -1,9 +1,12 @@
 package cn.edu.tute.web.controller;
 
 
+import cn.edu.tute.entities.InitInfo;
 import cn.edu.tute.entities.RegisterUserInfo;
 import cn.edu.tute.entities.UserInfo;
+import cn.edu.tute.web.mapper.InitInfoMapper;
 import cn.edu.tute.web.mapper.UserInfoMapper;
+import cn.edu.tute.web.service.InitMainPageService;
 import cn.edu.tute.web.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +29,9 @@ public class CenterController {
     private static final Logger logger= LoggerFactory.getLogger(CenterController.class);
 
     @Autowired
+    InitInfoMapper initInfoMapper;
+
+    @Autowired
     DataSource  dataSource;
 
     @Autowired
@@ -33,6 +39,9 @@ public class CenterController {
 
     @Autowired
     UserInfoMapper userInfoMapper;
+
+    @Autowired
+    InitMainPageService initMainPageService;
 
     @RequestMapping("/")
     public ModelAndView index(ModelAndView modelAndView) throws IOException {
@@ -70,9 +79,10 @@ public class CenterController {
 
     @RequestMapping("xxx")
     public String xxx() {
-        UserInfo userInfo=userInfoMapper.getUserInfo("test");
-        logger.warn("=====>"+userInfo.getUsername()+":"+userInfo.getPassword());
-        return userInfo.toString();
+//        UserInfo userInfo=userInfoMapper.getUserInfo("test");
+//        logger.warn("=====>"+userInfo.getUsername()+":"+userInfo.getPassword());
+        InitInfo initInfo=initInfoMapper.selectAllInfo();
+        return initInfo.toString();
     }
 
     @GetMapping("test")
@@ -97,7 +107,6 @@ public class CenterController {
     }
     @PostMapping("initMainPage")
     public String initMainPage(){
-
-        return null;
+        return initMainPageService.getInitInfo();
     }
 }
