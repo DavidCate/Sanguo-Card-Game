@@ -4,16 +4,16 @@
 $(document).ready(function(){
     $("#voice").bind("click",function(){
         if($("#voice-one").attr('name') === 'true'){
-            $('#voice').attr('src','../image/png/login/closed.png');
+            $('#voice').css('background','url('+ '../image/png/login/closed.png' +') no-repeat');
             $("#voice-one").attr('name','false');
             $('#voice-one').pause();
             $('#voice-one').load();
         }else if($('#voice-one').attr('name') === 'false'){
-            $('#voice').attr('src','../image/png/login/open.png');
+            $('#voice').css('background','url('+ '../image/png/login/open.png' +') no-repeat');
             $("#voice-one").attr('name','true');
             $('#voice-one').play();
         }
-    })
+    })/*
     $("#voice").mouseenter(function(){
         $('#voice').attr('src','../image/png/login/closing.png');
     });
@@ -23,7 +23,7 @@ $(document).ready(function(){
         }else if($('#voice-one').attr('name') === 'false'){
             $('#voice').attr('src','../image/png/login/closed.png');
         }
-    });
+    });*/
 });
 /**
  *注册
@@ -55,7 +55,7 @@ $(document).ready(function(){
                 /**
                  * 注册成功/失败未渲染
                  */
-                // console.log("register success");
+                console.log("register success");
                 $('#register').css('display','none');
             },
             error:function () {

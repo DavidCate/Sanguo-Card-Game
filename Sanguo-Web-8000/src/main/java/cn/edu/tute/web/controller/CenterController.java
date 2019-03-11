@@ -57,8 +57,8 @@ public class CenterController {
     }
 
     @PostMapping("login")
-    public String login(@RequestParam("loginPasswd") String username, @RequestParam("loginPasswd") String password, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        logger.info("this is a test");
+    public String login(@RequestParam("loginUser") String username, @RequestParam("loginPasswd") String password, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+//        logger.info("this is a test");
         return userService.login(username, password, httpServletRequest,httpServletResponse);
     }
 

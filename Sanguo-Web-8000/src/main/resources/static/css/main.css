@@ -1,35 +1,49 @@
-body {
+html,body {
     position: relative;
-    height: 100%;
     width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
     overflow:hidden;
+    cursor:url('../image/ico/mouseMain.ico'),auto;
     /*
         background: url(../png/bodyBack.png) no-repeat;*/
 }
-.bg{
-    position: absolute;
-    top: 0;
+button,ul,li,a,input,label{
+    cursor:url('../image/ico/mouseAction.ico'),auto;
+}
+a:active{
+    cursor:url('../image/ico/mouseInput.ico'),auto;
+}
+button:hover{
+    cursor:url('../image/ico/mouseAction.ico'),auto;
+}
+button:active{
+    cursor:url('../image/ico/mouseInput.ico'),auto;
+}
+/*底部背景*/
+.img-bottom-back {
+    position: fixed;
+    width: 100%;
+    min-width: 1366px;
+    min-height: 227px;
+    bottom: 0;
     left: 0;
-    z-index: 2;
+    z-index: -1;
 }
 /*顶部栏*/
 .main-top {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
-    width: 80%;
-    height: 15%;
-    min-height: 80px;
-    background-size: cover;
-    background: url(../image/png/main/mainTopBg.png);
-    filter: alpha(Opacity=90);
-    -moz-opacity: 0.9;
-    opacity: 0.9;
-    border-bottom:5px outset #000000
+    width: 79.5%;
+    height: 13.1%;
+    min-width: 1086px;
+    min-height: 86px;
+    background: url(../image/png/main/mainTop.png) no-repeat;
+    background-size: 100% 100%;
+    z-index: 6;
 }
-
 .top-begin {
     width: 80px;
     height: 30px;
@@ -38,8 +52,9 @@ body {
     left: 50px;
 
 }
-
 .top-column {
+    /*padding: 0;
+    margin: 0;*/
     list-style-type: none;
     width: 50%;
     height: 100%;
@@ -49,7 +64,7 @@ body {
 }
 
 .top-column li {
-    padding: 15px 10px;
+    padding: 10px 10px;
     display: inline-block;
     cursor: pointer;
 }
@@ -59,19 +74,23 @@ body {
 }
 
 .top-column-more {
-    padding: 0;
-    display: none;
+    padding: 10px 10px;
     position: absolute;
-    z-index: 70;
-    background: #4e4e53;
+    display: none;
+    z-index: 15;
+    background: #37373c;
 }
-.top-column-more li:hover > a {
+.top-column-more li:hover a {
     background-color: #000000;
 }
-.main-choose:hover {
+.top-column-more li{
+    padding: 5px 5px;
+    display: block;
+    cursor: pointer;
+}
+.main-top ul li:hover ul{
     display: block;
 }
-
 
 .top-column a {
     text-decoration: none;
@@ -79,41 +98,129 @@ body {
     font-family: "微软雅黑", "Microsoft Yahei", "Hiragino Sans GB", tahoma, arial, "宋体";
     font-size: 20px;
     text-align: center;
-    text-decoration: none;
     color: #fff;
 }
-/*.main-mark{
-    background: url("../png/main/mainmark.png");
-    width: 802px;
-    height: 422px;
-    position: fixed;
-    bottom: 100px;
-    left: 200px;
-    z-index: 10;
-}*/
-/*#main-mark{
-    display: none;
-}*/
+
 /*切换层*/
+.img-col{
+    position: fixed;
+    left: 0;
+    top: 13.1%;
+    width: 79.5%;
+    height: 6.1%;
+    min-width: 1086px;
+    min-height: 40px;
+    z-index: 5;
+}
 .main-middle {
     position: fixed;
     left: 0;
-    top: 85px;
-    width: 80%;
-    min-width: 800px;
-    height: 85%;
-    background-size: cover;
-}
-.main-mid {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-size: auto;
+    top: 13.1%;
+    width: 79.5%;
+    /*min-width: 800px;*/
+    height: 87%;
+    min-width: 1086px;
+    min-height: 572px;
     z-index: 2;
 }
+#btn-match{
+    position: absolute;
+    top:7%;
+    left: 10%;
+}
+#btn-story{
+    position: absolute;
+    top:7%;
+    left: 20%;
+}
+/*div轮播图*/
+.box ul {
+    margin: 0;
+    padding: 0
+}
+.box {
+    position: absolute;
+    width: 488px;
+    height: 374px;
+    top: 30%;
+    left: 3%;
+    background: url(../image/png/main/mainDivBg.png) no-repeat;
+    background-size: 100% 100%;
+    z-index: 2;/*
+    border: 1px solid #ccc;
+    margin: 100px auto;
+    padding: 5px;*/
+}
+.inner{
+    width: 454px;
+    height: 335px;
+    position: relative;
+    left: 18px;
+    top: 20px;
+    overflow: hidden;
+}
+.inner img{
+    width: 454px;
+    height: 335px;
+    vertical-align: top
+}
+.inner ul {
+    width: 1000%;
+    position: absolute;
+    list-style: none;
+    left:0;
+    top: 0;
+}
+.inner li{
+    float: left;
 
+}
+#arr{
+    display: none;
+}
+#arr span{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 5px;
+    top: 45%;
+    /*margin-top: -20px;*/
+    background: #fff;
+    cursor: pointer;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-family: '黑体';
+    font-size: 30px;
+    color: #000;
+    opacity: 0.5;
+    border: 1px solid #fff;
+}
+#arr span:hover{
+    cursor:url('../image/ico/mouseAction.ico'),auto;
+}
+#arr span:active{
+    cursor:url('../image/ico/mouseInput.ico'),auto;
+}
+#arr #right {
+    right: 5px;
+    left: auto;
+}
+/*div轮播图结束*/
+/*公告*/
+.main-middle-notice{
+    position: absolute;
+    width: 350px;
+    height: 250px;
+    top: 40%;
+    left: 45%;
+    background: #1d1d1d;
+}
+.main-notice{
+    font-size: 15px;
+    color: #fff;
+}
+/*
 .main-rig {
     position: absolute;
     width: 50%;
@@ -146,60 +253,62 @@ body {
     opacity: 0.8;
 
 }
-
-.img-bottom-back {
-    position: fixed;
-    width: 100%;
-    min-width: 1360px;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-}
+*/
 
 /* 模式层*/
 .main-middle-two {
     position: fixed;
     left: 0;
-    top: 85px;
-    width: 80%;
-    min-width: 900px;
+    top: 13.1%;
+    width: 79.5%;
+    /*min-width: 900px;*/
     height: 87%;
+    min-width: 1086px;
+    min-height: 572px;
     background-size: cover;
     background: #7a7a7f;
     display: none;
-    z-index: 50;
+    z-index: 4;
 }
 .main-model{
     display: none;
 }
 
 #main-model-left + label {
-    width: 307px;
-    height: 445px;
-    position: relative;
-    top: 20px;
-    left: 180px;
+    width: 25.4%;
+    height: 70%;
+    position: absolute;
+    top: 10%;
+    left: 15%;
     display: inline-block;
     text-align: center;
     vertical-align: bottom;
     background: url("../image/png/main/mainModelClose.png") no-repeat;
+    background-size: 100% 100%;
 }
 #main-model-right + label {
-    width: 307px;
-    height: 445px;
-    position: relative;
-    top: 20px;
-    right: -300px;
+    width: 25.4%;
+    height: 70%;
+    position: absolute;
+    top: 10%;
+    right: 15%;
     display: inline-block;
     text-align: center;
     vertical-align: bottom;
     background: url("../image/png/main/mainModelClose.png") no-repeat;
+    background-size: 100% 100%;
 }
 #main-model-left:checked + label {
+    width: 29%;
+    height: 80%;
     background: url("../image/png/main/mainModelOne.png") no-repeat;
+    background-size: 100% 100%;
 }
 #main-model-right:checked + label {
+    width: 29%;
+    height: 80%;
     background: url("../image/png/main/mainModelOne.png") no-repeat;
+    background-size: 100% 100%;
 }
 /*.mainModel:checked + label:after {
     content: "\2022";
@@ -209,72 +318,163 @@ body {
 .close-two{
     width: 32px;
     height:32px;
+    border: none;
     border-radius: 50%;
     position: absolute;
-    top: 0;
-    right: 5px;
+    bottom: 9%;
+    left: 55%;
     background: url("../image/png/main/mainCloseModel.png") no-repeat;
+    background-size: 100% 100%;
 }
 .main-begin-game{
     position: absolute;
-    bottom: 100px;
-    left: 500px;
+    bottom: 10%;
+    left: 47%;
 }
 /*侧边用户栏*/
 .main-right {
     position: fixed;
-    right: 0;
-    bottom: 0;
-    width: 20%;
-    min-width: 200px;
+    left: 79.5%;
+    top: 0;
+    width: 20.5%;
+    /*min-width: 280px;*/
     height: 100%;
-    background-size: cover;
-    background: #4e4e53;
-    filter: alpha(Opacity=90);
-    -moz-opacity: 0.9;
-    opacity: 0.9;
-    border-left:5px outset #000000;
-    z-index: 50;
+    min-width: 280px;
+    min-height: 657px;
+    background-size: cover;/*
+    background: #000000;
+    filter: alpha(Opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;*/
+    z-index: 2;
+}
+.main-btn{
+    position: fixed;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    z-index: 3;
+    border: none;
+    outline: none;
+}
+#main-close{
+    background: url("../image/png/main/mainClose.png") no-repeat;
+    background-size: 100% 100%;
+    right: 0;
+}
+#main-close:hover{
+    background: url("../image/png/main/mainClose0.png") no-repeat;
+    background-size: 100% 100%;
+}
+#main-set{
+    background: url("../image/png/main/mainSet.png") no-repeat;
+    background-size: 100% 100%;
+    right: 22px;
+}
+#main-set:hover{
+    background: url("../image/png/main/mainSet0.png") no-repeat;
+    background-size: 100% 100%;
+}
+#main-msg{
+    background: url("../image/png/main/mainMsg.png") no-repeat;
+    background-size: 100% 100%;
+    right: 44px;
+}
+#main-msg:hover{
+    background: url("../image/png/main/mainMsg0.png") no-repeat;
+    background-size: 100% 100%;
 }
 .main-right-top{
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height:80px;
-    border-bottom:5px outset #000000;
+    height:13.1%;/*
+    border-bottom:5px outset #000000;*/
+}
+.main-friend{
+    position: absolute;
+    top: 13.1%;
+    left: 0;
+    width: 100%;
+    height:86.9%;
+    background: url("../image/png/main/mainFriend.png") no-repeat;
+    background-size: 100% 100%;
 }
 .main-right-head{
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 92px;
-    height:80px;
-    background: url("../image/png/main/mainHead.png") no-repeat;
+    width: 33.4%;
+    height:100%;
+    background: url("../image/png/main/mainRightHead.png") no-repeat;
+    background-size: 100% 100%;
 }
-.main-right-middle{
-    position: relative;
+.img-head{
+    position: absolute;
+    bottom: 0;
+    width: 31%;
+    height: 90%;
+}
+.main-right-name{
+    position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height:20px;
-    background: #211f81;
-    border-bottom:5px outset #000000;
+    left: 32%;
+    width: 68%;
+    height:100%;
+    background: url("../image/png/main/mainTopName.png") no-repeat;
+    background-size: 100% 100%;
+}
+.user-name{
+    font-size: 20px;
+    position: absolute;
+    bottom: 25%;
+    left: 5%;
+}
+.main-line{
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    width: 10px;
+    height: 10px;
+}
+.main-line-msg{
+    position: absolute;
+    bottom: 0;
+    left: 12%;
+    color: #ffffff;
+    font-size: 14px;
+}
+.main-friend-open{
+    position: absolute;
+    top: 7px;
+    left: 20%;
+}
+.main-friend-add{
+    position: absolute;
+    top: 7px;
+    left: 55%;
 }
 .main-right-bottom{
-    position: relative;
-    top: 0;
+    position: absolute;
+    top: 5%;
     left: 0;
     width: 100%;
-    height:800px;
-    background: #ff6b06;
+    height:95%;
+    background: #1d1d1d;
     display: block;
+    z-index: -1;
 }
+
+
+
+
 /**
 个人资料
  */
 #main-middle-detail{
     background: url("../image/png/main/mainDetail.png");
+    background-size: 100% 100%;
     display: none;
 }
 /**
@@ -282,5 +482,76 @@ body {
  */
 #main-middle-mark{
     background: url("../image/png/main/mainMark1.png");
+    background-size: 100% 100%;
     display: none;
+}
+/**
+游戏规则
+ */
+#main-middle-rule{
+    background: url("../image/png/main/mainRule.png");
+    background-size: 100% 100%;
+    display: none;
+}
+/**
+关于我们
+ */
+#main-middle-us{
+    position: fixed;
+    left: 10%;
+    top: 13.1%;
+    width: 58.5%;
+    height: 77%;
+    min-width: 799px;
+    min-height: 506px;
+    z-index: 5;
+    background: url("../image/png/main/mainUs.png");
+    background-size: 100% 100%;
+    display: none;
+}
+.btn-us{
+    position: absolute;
+    top: 11%;
+    right: 8%;
+    width: 32px;
+    height: 32px;
+    border: none;
+    outline: none;
+    background: url("../image/png/main/mainClose.png") no-repeat;
+    background-size: 100% 100%;
+}
+.btn-us:hover{
+    background: url("../image/png/main/mainClose0.png") no-repeat;
+    background-size: 100% 100%;
+}
+/*
+弹出框
+*/
+.main-set-page{
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    width: 35%;
+    height: 44.3%;
+    min-width: 478px;
+    min-height: 291px;
+    background: url("../image/png/main/mainSetPage.png") no-repeat;
+    background-size: 100% 100%;
+    display: none;
+    z-index: 5;
+}
+.btn-close-set{
+    position: absolute;
+    top: 3%;
+    right: 1%;
+    width: 32px;
+    height: 32px;
+    border: none;
+    outline: none;
+    background: url("../image/png/main/mainClose.png") no-repeat;
+    background-size: 100% 100%;
+}
+.btn-close-set:hover{
+    background: url("../image/png/main/mainClose0.png") no-repeat;
+    background-size: 100% 100%;
 }

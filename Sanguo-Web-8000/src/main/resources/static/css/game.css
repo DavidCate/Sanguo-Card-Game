@@ -1,0 +1,211 @@
+html,body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    overflow:hidden;
+    cursor:url('../image/ico/mouseMain.ico'),auto;
+}
+button,input{
+    cursor:url('../image/ico/mouseAction.ico'),auto;
+}
+button:active{
+    cursor:url('../image/ico/mouseInput.ico'),auto;
+}
+input:focus{
+    cursor:url('../image/ico/mouseInput.ico'),auto;
+}
+body{
+    background: url(../image/png/game/gameBg.png) no-repeat;
+    background-size: 100% 100%;
+}
+body div{
+    float: left;
+}
+/*卡牌区*/
+.game-main{
+    width: 80%;
+    height: 100%;
+}
+
+/*对手区*/
+.game-up{
+    position: relative;
+    width: 100%;
+    height: 30%;
+}
+.up-equip-card{
+    position: absolute;
+    top: 0;
+    width: 10.5%;
+    height: 85%;
+    background: url(../image/png/game/gameNoCard.png) no-repeat;
+    background-size: 100% 100%;
+    transform:rotate(180deg);
+}
+#game-up-first{
+    right: 0;
+}
+#game-up-second{
+    right: 11%;
+}
+.game-up-hand{
+    position: absolute;
+    left: 0;
+    width: 57.5%;
+    height: 100%;/*
+    background: url(../image/png/game/gameHand.png) no-repeat;
+    background-size: 100% 100%;
+    transform:rotate(180deg);*/
+}
+/*出牌区*/
+.game-middle{
+    width: 100%;
+    height: 40%;
+}
+.game-middle-btn{
+    width: 96px;
+    height: 30px;
+    border: none;
+    outline: none;
+}
+#game-ready{
+    background: url(../image/png/game/gameReadyBtn0.png) no-repeat;
+    background-size: 100% 100%;
+}
+#game-play{
+    background: url(../image/png/game/gamePlayBtn0.png) no-repeat;
+    background-size: 100% 100%;
+}
+#game-cancel{
+    background: url(../image/png/game/gameNoBtn0.png) no-repeat;
+    background-size: 100% 100%;
+}
+/*自己区*/
+.game-down{
+    position: relative;
+    width: 100%;
+    height: 30%;
+}
+.down-equip-card{
+    position: absolute;
+    bottom: 0;
+    width: 10.5%;
+    height: 85%;
+    background: url(../image/png/game/gameNoCard.png) no-repeat;
+    background-size: 100% 100%;
+}
+#game-down-first{
+    left: 0;
+}
+#game-down-second{
+    left: 11%;
+}
+.game-down-user{
+    position: absolute;
+    left: 22%;
+    width: 20%;
+    height: 100%;
+    background: url(../image/png/game/gameUser.png) no-repeat;
+    background-size: 100% 100%;
+}
+.game-down-hand{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 57.5%;
+    height: 89%;
+    background: url(../image/png/game/gameHand.png) no-repeat;
+    background-size: 100% 100%;
+    /*transform:rotate(180deg);*/
+}
+
+/*聊天室*/
+.game-talk{
+    position: relative;
+    width: 20%;
+    height: 100%;
+    background: url(../image/png/game/gameTalk.png) no-repeat;
+    background-size: 100% 100%;
+}
+.talk-word{
+    position: absolute;
+    top: 6px;
+    left: 41%;
+    color: white;
+}
+.game-talk-middle{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 70%;
+}
+#talk-middle-person{
+    display: block;
+}
+#talk-middle-world{
+    display: none;
+}
+.game-talk-btn{
+    position: absolute;
+    top: 75%;
+    left: 5%;
+    width: 90%;
+    height: 5%;
+}
+.talk-btn{
+    position: absolute;
+    bottom: 0;
+    width: 55px;
+    height: 25px;
+    border: none;
+    outline: none;
+}
+#person-talk-btn{
+    left: 0;
+    background: url(../image/png/game/gamePersonTalk.png) no-repeat;
+    background-size: 100% 100%;
+}
+#person-talk-btn:hover{
+    width: 57px;
+    height: 26px;
+}
+#world-talk-btn{
+    left: 55px;
+    background: url(../image/png/game/gameWorldTalkOff.png) no-repeat;
+    background-size: 100% 100%;
+}
+#world-talk-btn:hover{
+    width: 57px;
+    height: 26px;
+}
+.game-talk-input{
+    position: absolute;
+    top: 80%;
+    left: 5%;
+    width: 90%;
+    height: 5%;
+}
+.input-talk-btn{
+    width: 80%;
+    height: 80%;
+    border: none;
+    outline: none;
+    background: url(../image/png/game/gameInput.png) no-repeat;
+    background-size: 100% 100%;
+}
+#send-talk-btn{
+    position: absolute;
+    top: 2px;
+    right: 0;
+    width: 45px;
+    height: 22px;
+    border: none;
+    outline: none;
+    background: url(../image/png/game/gameSendBtn.png) no-repeat;
+    background-size: 100% 100%;
+}
+#send-talk-btn:hover{
+    width: 46px;
+    height: 23px;
+}

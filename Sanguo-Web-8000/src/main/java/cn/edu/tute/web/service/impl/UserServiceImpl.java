@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
     public String login(String username, String password, HttpServletRequest request, HttpServletResponse httpServletResponse) {
         HttpSession session=request.getSession();
         String sessionId=session.getId();
+//        logger.warn("sessionId=====>"+sessionId);
         UserInfo userInfo=redisService.get(sessionId,UserInfo.class);
         if (userInfo!=null){
             logger.warn(userInfo.toString());
@@ -84,7 +85,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public String register(RegisterUserInfo registerUserInfo) {
-        RegisterUserInfo selected=userInfoMapper.getRegisterUserInfo(registerUserInfo.getUserCount());
+        RegisterUserInfo selected=userInfoMapper.getRegisterUserInfo(registerUserInfo.getUser());
         if (selected!=null){
             FailureResponse failureResponse=new FailureResponse();
             failureResponse.setErrorMsg("用户名已存在");

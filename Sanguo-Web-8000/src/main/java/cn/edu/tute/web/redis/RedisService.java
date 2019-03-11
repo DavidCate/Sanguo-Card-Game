@@ -66,7 +66,9 @@ public class RedisService {
         if (s ==null){
             return null;
         }
-        return JSON.parseObject(s,clazz);
+        //从redis 中获取到的json串 有转义\需要先转换一下 在转成pojo
+        String res=(String) JSON.parse(s);
+        return JSON.parseObject(res,clazz);
     }
 
     public void delete(String key){

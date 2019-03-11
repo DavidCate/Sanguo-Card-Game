@@ -6,64 +6,89 @@
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="../css/main.css" type="text/css"/>
     <script type="text/javascript" src="../js/main.js"></script>
-    <link rel="shortcut icon" href="../image/ico/webIco.ico"/>
+    <link rel="shortcut icon" href="../image/ico/web.ico"/>
 </head>
 <body>
-<!--<img class="bg" src="../image/png/main/main-bg.png">-->
 <!--顶部栏-->
-<div class="main-top" clearFloat>
+<div class="main-top">
     <button class="top-begin" id="top-begin">开始</button>
     <ul class="top-column">
         <li><a href="#" class="main-choose" name="main-middle-page" onclick="choose(this.name)">首页</a></li>
         <li><a href="#" class="main-choose" name="main-middle-detail" onclick="choose(this.name)">个人资料</a></li>
         <li><a href="#" class="main-choose" name="main-middle-mark" onclick="choose(this.name)">任务</a></li>
-        <li><a href="#" class="main-choose">更多</a>
+        <li><a href="#" class="main-choose" id="main-middle-more">更多</a>
             <ul class="top-column-more">
                 <li><a href="#">官网</a></li>
-                <li><a href="#">游戏规则</a></li>
-                <li><a href="#">关于我们</a></li>
+                <li><a href="#" name="main-middle-rule" onclick="choose(this.name)">游戏规则</a></li>
+                <li><a href="#" id="main-us" name="main-middle-us">关于我们</a></li>
             </ul>
         </li>
     </ul>
 </div>
+<img class="img-col" src="../image/png/main/mainColu.png">
 <!--首页栏-->
 <div class="main-middle" id="main-middle-page">
-    <div class="middle-top">
-        <button>匹配模式</button>
-        <button>故事模式</button>
+    <button class="main-model-btn" id="btn-match">匹配模式</button>
+    <button class="main-model-btn" id="btn-story">故事模式</button>
+</div>
+<div class="box" id="box">
+    <div class="inner">
+        <!--轮播图-->
+        <ul>
+            <li><a href="#"><img id="div1" src="../image/png/main/An01.png" alt=""></a></li>
+            <li><a href="#"><img id="div2" src="../image/png/main/An02.png" alt=""></a></li>
+            <li><a href="#"><img id="div3" src="../image/png/main/An03.png" alt=""></a></li>
+            <li><a href="#"><img id="div4" src="../image/png/main/An04.png" alt=""></a></li>
+            <li><a href="#"><img id="div5" src="../image/png/main/An05.png" alt=""></a></li>
+        </ul>
+        <!--左右焦点-->
+        <div id="arr">
+            <span id="left">
+                <
+            </span>
+            <span id="right">
+                >
+            </span>
+        </div>
     </div>
-    <!--<div class="main-mid">
-        <img class="img-main-mid" src="../image/png/main/mainMiddle.png">
-    </div>
-    <div class="mainRig">
-        <img class="img-main-one" src="../image/png/main/mainOne.png">
-        <img class="img-main-two" src="../image/png/main/mainTwo.png">
-    </div>-->
-    <!--<img class="bottomBack" src="../png/mainBottom.png">-->
+</div>
+<div class="main-middle-notice">
+    <span class="main-notice" id="s1"></span><br>
+    <span class="main-notice" id="s2"></span><br>
+    <span class="main-notice" id="s3"></span><br>
+    <span class="main-notice" id="s4"></span>
 </div>
 <!--模式选择栏-->
 <div class="main-middle-two">
-    <input type="radio" class="main-model" name="model" id="main-model-left" value="匹配" checked="checked">
+    <input type="radio" class="main-model" name="model" id="main-model-left" value="match">
     <label for="main-model-left"></label>
-    <input type="radio" class="main-model" name="model" id="main-model-right" value="故事">
+    <input type="radio" class="main-model" name="model" id="main-model-right" value="story">
     <label for="main-model-right"></label>
-    <!--<button href="#" class="mainMiddleBegin" id="mainMiddleBegin" onclick="startGame()"></button>-->
-    <!--<a href="#" class="main-middle-begin" id="main-middle-begin" onclick="startGame()"></a>-->
     <button class="main-begin-game">开始游戏</button>
     <button class="close-two" id="close-two"></button>
 </div>
 <!--右侧用户栏-->
 <div class="main-right">
+    <button class="main-btn" id="main-close"></button>
+    <button class="main-btn" id="main-set"></button>
+    <button class="main-btn" id="main-msg"></button>
     <div class="main-right-top">
+        <img class="img-head" src="">
         <div class="main-right-head">
-            <!--<img class="img-head" src="../image/png/main/">-->
+        </div>
+        <div class="main-right-name">
+            <span class="user-name">夜雨声烦</span>
+            <img class="main-line" src="../image/png/main/mainOnline%20.png">
+            <span class="main-line-msg">在线</span>
         </div>
         <span></span>
     </div>
-    <div class="main-right-middle">
-        <button class="main-friend">点击</button>
+    <div class="main-friend">
+        <button class="main-friend-open">收起好友列表</button>
+        <button class="main-friend-add">添加好友</button>
+        <div class="main-right-bottom" name="true"></div>
     </div>
-    <div class="main-right-bottom" name="true"></div>
+
 </div>
 <div class="main-game-detail">
 
@@ -72,7 +97,7 @@
 <div class="main-middle" id="main-middle-detail">
     <div class="main-middle-person-left">
         <div class="main-head">
-            <img class="img-head" src="../image/png/main/">
+            <!--<img class="img-head" src="../image/png/main/">-->
         </div>
     </div>
     <div class="main-middle-person-right">
@@ -82,11 +107,16 @@
 <div class="main-middle" id="main-middle-mark">
 </div>
 <!--游戏规则栏-->
-<div class="main-game-rule">
+<div class="main-middle" id="main-middle-rule">
 </div>
 <!--关于我们栏-->
-<div class="main-us">
+<div id="main-middle-us">
+    <button class="btn-us"></button>
 </div>
-<img class="img-bottom-back" src="../image/png/main/mainBottom.png">
+<img class="img-bottom-back" src="../image/png/main/main.png">
+<!--弹出框-->
+<div class="main-set-page">
+    <button class="btn-close-set"></button>
+</div>
 </body>
 </html>

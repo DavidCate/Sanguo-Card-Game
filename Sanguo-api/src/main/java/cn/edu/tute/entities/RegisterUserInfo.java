@@ -1,54 +1,45 @@
 package cn.edu.tute.entities;
 
 public class RegisterUserInfo {
-    @Override
-    public String toString() {
-        return "RegisterUserInfo{" +
-                "userCount='" + userCount + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", telNum=" + telNum +
-                ", sex=" + sex +
-                '}';
-    }
 
-    private String userCount;
-    private String userName;
-    private String password;
-    private String telNum;
+
+    private String user;
+    private String name;
+    private String passwd;
+    private String phone;
     //男：0，女：1
     private int sex;
 
-    public String getUserCount() {
-        return userCount;
+    public String getUser() {
+        return user;
     }
 
-    public void setUserCount(String userCount) {
-        this.userCount = userCount;
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswd() {
+        return passwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
     }
 
-    public String getTelNum() {
-        return telNum;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelNum(String telNum) {
-        this.telNum = telNum;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public int getSex() {

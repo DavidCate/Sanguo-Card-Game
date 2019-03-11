@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>战三国游戏平台</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="../css/game.css" type="text/css"/>
+    <script type="text/javascript" src="../js/game.js"></script>
+    <link rel="shortcut icon" href="../image/ico/web.ico"/>
+</head>
+<body>
+<div class="game-main">
+    <div class="game-up">
+        <div class="up-equip-card" id="game-up-first"></div>
+        <div class="up-equip-card" id="game-up-second"></div>
+        <div class="game-up-user"></div>
+        <div class="game-up-hand"></div>
+    </div>
+    <div class="game-middle">
+        <div class="game-card-bg"></div>
+        <button class="game-middle-btn" id="game-ready" name="false"></button>
+        <button class="game-middle-btn" id="game-play"></button>
+        <button class="game-middle-btn" id="game-cancel"></button>
+    </div>
+    <div class="game-down">
+        <div class="down-equip-card" id="game-down-first"></div>
+        <div class="down-equip-card" id="game-down-second"></div>
+        <div class="game-down-user"></div>
+        <div class="game-down-hand"></div>
+    </div>
+</div>
+<div class="game-talk">
+    <!--<div class="game-talk-top"></div>-->
+    <span class="talk-word">聊天室</span>
+    <div class="game-talk-middle" id="talk-middle-person">欢迎来到个人聊天室！</div>
+    <div class="game-talk-middle" id="talk-middle-world">欢迎来到世界聊天室！</div>
+    <div class="game-talk-btn">
+        <button class="talk-btn" id="person-talk-btn"></button>
+        <button class="talk-btn" id="world-talk-btn"></button>
+    </div>
+    <div class="game-talk-input">
+        <input type="text" class="input-talk-btn" name="talk-input"/>
+        <button id="send-talk-btn"></button>
+    </div>
+</div>
+</body>
+</html>
