@@ -3,7 +3,7 @@ package cn.edu.tute.web.controller;
 
 import cn.edu.tute.entities.InitInfo;
 import cn.edu.tute.entities.RegisterUserInfo;
-import cn.edu.tute.entities.UserInfo;
+
 import cn.edu.tute.web.mapper.InitInfoMapper;
 import cn.edu.tute.web.mapper.UserInfoMapper;
 import cn.edu.tute.web.service.InitMainPageService;
@@ -81,12 +81,15 @@ public class CenterController {
     public String xxx() {
 //        UserInfo userInfo=userInfoMapper.getUserInfo("test");
 //        logger.warn("=====>"+userInfo.getUsername()+":"+userInfo.getPassword());
-        InitInfo initInfo=initInfoMapper.selectAllInfo();
-        return initInfo.toString();
+//        InitInfo initInfo=initInfoMapper.selectInitInfo();
+        return null;
     }
 
     @GetMapping("test")
     public String test() {
+        initInfoMapper.selectInitInfo("test");
+        logger.warn("mapperMsgInfo============>>"+initInfoMapper.selectAllMsg().toString());
+        logger.warn("mapperImgInfo============>>"+initInfoMapper.selectAllPlayImg().toString());
         return "success";
     }
 
@@ -106,7 +109,7 @@ public class CenterController {
         return map;
     }
     @PostMapping("initMainPage")
-    public String initMainPage(){
-        return initMainPageService.getInitInfo();
+    public String initMainPage(@RequestParam("user")String userId){
+        return initMainPageService.getInitInfo(userId);
     }
 }

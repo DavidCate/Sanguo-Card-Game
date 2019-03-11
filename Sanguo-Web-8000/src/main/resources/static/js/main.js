@@ -5,7 +5,7 @@ $(function(){
     $.ajax({
         type: "POST",
         url:  "/initMainPage",
-        data: {},
+        data: {"user":"test"},
         dataType: "json",
         success:function(data){
             /**
@@ -17,7 +17,7 @@ $(function(){
              */
             var img0 = data.headImg;
             $('.img-head').attr('src',img0);
-            var name0 = data.userInfo[0].userName;
+            var name0 = data.userInfo.userName;
             $('.user-name').html(name0);
             /**
              * 好友信息（头像，名称）

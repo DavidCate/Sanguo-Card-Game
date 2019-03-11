@@ -2,6 +2,7 @@ package spingboot;
 
 
 import cn.edu.tute.entities.UserInfo;
+import cn.edu.tute.entities.UserLoginInfo;
 import cn.edu.tute.web.mapper.UserInfoMapper;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,8 @@ public class MyTest {
 //        stringRedis=redisTemplate.opsForValue();
 //        stringRedis.set("xxx","aaa");
 //        Connection connection=dataSource.getConnection();
-        UserInfo userInfo=userInfoMapper.getUserInfo("test");
-        System.out.println(userInfo.toString());
+        UserLoginInfo userLoginInfo=userInfoMapper.getUserLoginInfo("test");
+        System.out.println(userLoginInfo.toString());
     }
 
 

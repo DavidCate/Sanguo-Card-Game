@@ -2,7 +2,7 @@ package cn.edu.tute.web.service.impl;
 
 
 import cn.edu.tute.entities.RegisterUserInfo;
-import cn.edu.tute.entities.UserInfo;
+import cn.edu.tute.entities.UserLoginInfo;
 import cn.edu.tute.entities.response.FailureResponse;
 import cn.edu.tute.entities.response.SuccessResponse;
 import cn.edu.tute.web.mapper.UserInfoMapper;
@@ -34,12 +34,12 @@ public class UserServiceImpl implements UserService {
         HttpSession session=request.getSession();
         String sessionId=session.getId();
 //        logger.warn("sessionId=====>"+sessionId);
-        UserInfo userInfo=redisService.get(sessionId,UserInfo.class);
-        if (userInfo!=null){
+        UserLoginInfo userLoginInfo=redisService.get(sessionId,UserLoginInfo.class);
+        if (userLoginInfo!=null){
 //            logger.warn(userInfo.toString());
             //判断userinfo是否存在,如果存在说明已经登录过,校验token
             if (session.getAttribute("token")!=null){
-                if (validateUserInfo((String) session.getAttribute("token"),userInfo.getToken())){
+                if (validateUserInfo((String) session.getAttribute("token"),userLoginInfo.getToken())){
                     FailureResponse response=new FailureResponse();
                     response.setErrorMsg("用户已经登录过,token校验成功");
                     return response.send();
@@ -59,23 +59,23 @@ public class UserServiceImpl implements UserService {
         }else {
             //第一次登录
             if (StringUtils.isNotBlank(username)){
-                UserInfo test=userInfoMapper.getUserInfo(username);
-                logger.warn(test.toString());
-                userInfo=userInfoMapper.getUserInfo(username);
-                if (userInfo==null){
+//                UserLoginInfo test=userInfoMapper.getUserLoginInfo(username);
+//                logger.warn(test.toString());
+                userLoginInfo=userInfoMapper.getUserLoginInfo(username);
+                if (userLoginInfo==null){
                     FailureResponse response=new FailureResponse();
                     response.setErrorMsg("用户不存在，请重新登录");
                     return response.send();
                 }
-                if (validateUserInfo(username,password,userInfo)){
+                if (validateUserInfo(username,password,userLoginInfo)){
                     UUID tokenId=UUID.randomUUID();
                     //校验通过，生成Cookie 加入token信息
                     Cookie cookie=new Cookie("JSESSIONID",session.getId());
                     cookie.setMaxAge(60*30);
                     httpServletResponse.addCookie(cookie);
-                    userInfo.setToken(tokenId.toString());
-                    userInfo.setSessionID(sessionId);
-                    redisService.set(sessionId,JSON.toJSONString(userInfo));
+                    userLoginInfo.setToken(tokenId.toString());
+                    userLoginInfo.setSessionID(sessionId);
+                    redisService.set(sessionId,JSON.toJSONString(userLoginInfo));
                     SuccessResponse response=new SuccessResponse();
                     response.setErrorMsg("登录成功");
                     return response.send();
@@ -121,8 +121,8 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private boolean validateUserInfo(String username, String password, UserInfo userInfo) {
-        if (username.equals(userInfo.getUsername()) && password.equals(userInfo.getPassword())) {
+    private boolean validateUserInfo(String username, String password, UserLoginInfo userLoginInfo) {
+        if (username.equals(userLoginInfo.getUsername()) && password.equals(userLoginInfo.getPassword())) {
             return true;
         } else {
             return false;

@@ -3,8 +3,41 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.tute.web.mapper.InitInfoMapper">
-    <select id="selectAllInfo" resultType="cn.edu.tute.entities.InitInfo">
-        select * from xxx where id=#{xxx}
+    <!--
+         private String headImg;
+         private UserInfo userInfo;
+         private List<UserFriend> userFriends;
+         private List<PlayImg> playImgs;
+         private List<Msg> msgs;
+    -->
+    <select id="selectInitInfo" resultMap="initInfo">
+        select u.u_name u_name,u.u_head u_head,f.f_id f_id,f.f_name f_name from `user` u left join friend f on u.u_nid = f.u_id where u_nid = #{userId}
     </select>
 
+    <resultMap id="initInfo" type="cn.edu.tute.entities.InitInfo">
+        <result property="headImg" column="u_head"/>
+        <association property="userInfo" javaType="cn.edu.tute.entities.UserInfo">
+            <result column="u_name" property="userName"/>
+        </association>
+        <collection property="userFriends" ofType="cn.edu.tute.entities.UserFriend">
+            <result column="f_id" property="friendId"/>
+            <result column="f_name" property="firendName"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectAllMsg" resultType="cn.edu.tute.entities.Msg">
+        select msg
+        from msg
+    </select>
+
+    <select id="selectAllPlayImg" resultMap="playImg">
+        select *
+        from image
+    </select>
+    
+    <resultMap id="playImg" type="cn.edu.tute.entities.PlayImg">
+        <result column="u_id" property="uId"/>
+        <result column="img_url" property="imgUrl"/>
+        <result column="img_info" property="imgInfo"/>
+    </resultMap>
 </mapper>
