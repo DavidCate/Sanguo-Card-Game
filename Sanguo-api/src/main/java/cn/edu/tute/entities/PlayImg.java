@@ -1,6 +1,8 @@
 package cn.edu.tute.entities;
 
-public class PlayImg {
+import java.io.Serializable;
+
+public class PlayImg implements Serializable {
 
     private String imgUrl;
 

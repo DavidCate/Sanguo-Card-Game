@@ -59,9 +59,9 @@ public class CenterController {
         return "this is a test";
     }
 
-    @GetMapping("login")
+    @GetMapping("main")
     public ModelAndView loginPage(ModelAndView modelAndView) {
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("/html/main");
         return modelAndView;
     }
 
@@ -87,7 +87,9 @@ public class CenterController {
 
     @GetMapping("test")
     public String test() {
-        initInfoMapper.selectInitInfo("test");
+        initInfoMapper.selectInitInfo("xxx");
+        initInfoMapper.selectInitInfo("xxx");
+        initInfoMapper.selectInitInfo("xxx");
         logger.warn("mapperMsgInfo============>>"+initInfoMapper.selectAllMsg().toString());
         logger.warn("mapperImgInfo============>>"+initInfoMapper.selectAllPlayImg().toString());
         return "success";

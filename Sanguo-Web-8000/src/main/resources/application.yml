@@ -39,7 +39,8 @@ spring:
         - 192.168.153.130:9001
   session:
     store-type: redis
-
+  application:
+    name: Sanguo-Web
 #redis cluster
 #  resources:
 #    static-locations: classpath:/static/
@@ -47,3 +48,16 @@ spring:
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   config-location: classpath:mybatis/mybatis-config.xml
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:16666/eureka
+  instance:
+    instance-id: web8000
+    prefer-ip-address: true
+
+info:
+  app.name: SanguoWeb
+  company.name: sakura
+  build.artifactId: ${project.artifactId}
+  build.version: ${project.version}

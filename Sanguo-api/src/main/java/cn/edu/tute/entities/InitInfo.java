@@ -1,8 +1,9 @@
 package cn.edu.tute.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class InitInfo {
+public class InitInfo implements Serializable {
     private String headImg;
     private UserInfo userInfo;
     private List<UserFriend> userFriends;

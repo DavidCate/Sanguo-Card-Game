@@ -1,8 +1,8 @@
 package cn.edu.tute.entities;
 
-public class RegisterUserInfo {
+import java.io.Serializable;
 
-
+public class RegisterUserInfo implements Serializable {
     private String user;
     private String name;
     private String passwd;

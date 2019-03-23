@@ -6,5 +6,6 @@
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true "/>
         <setting name="logImpl" value="org.apache.ibatis.logging.stdout.StdOutImpl"/>
+        <setting name="cacheEnabled" value="true"/>
     </settings>
 </configuration>

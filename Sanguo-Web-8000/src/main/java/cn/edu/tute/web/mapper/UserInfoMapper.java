@@ -13,7 +13,7 @@ public interface UserInfoMapper {
     @Select("select u_nid,u_password from user where u_nid=#{userName}")
     UserLoginInfo getUserLoginInfo(String userName);
 
-    @Results({@Result(property = "userCount",column = "u_nid")})
+    @Results({@Result(property = "user",column = "u_nid")})
     @Select("select u_nid from user where u_nid=#{userCount}")
     RegisterUserInfo getRegisterUserInfo(String userCount);
 

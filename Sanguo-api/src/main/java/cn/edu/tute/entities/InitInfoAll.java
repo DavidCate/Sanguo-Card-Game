@@ -1,4 +1,6 @@
 package cn.edu.tute.entities;
 
-public class InitInfoAll {
+import java.io.Serializable;
+
+public class InitInfoAll implements Serializable {
 }

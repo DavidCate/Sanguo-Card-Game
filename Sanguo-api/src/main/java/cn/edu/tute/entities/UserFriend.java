@@ -1,6 +1,8 @@
 package cn.edu.tute.entities;
 
-public class UserFriend {
+import java.io.Serializable;
+
+public class UserFriend implements Serializable {
     private String friendId;
     private String firendName;
 

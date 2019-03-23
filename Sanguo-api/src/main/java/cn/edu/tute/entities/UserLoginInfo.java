@@ -1,6 +1,8 @@
 package cn.edu.tute.entities;
 
-public class UserLoginInfo {
+import java.io.Serializable;
+
+public class UserLoginInfo implements Serializable {
     public UserLoginInfo() {
     }
 

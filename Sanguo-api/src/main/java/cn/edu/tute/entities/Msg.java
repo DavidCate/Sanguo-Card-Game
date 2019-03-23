@@ -1,6 +1,8 @@
 package cn.edu.tute.entities;
 
-public class Msg {
+import java.io.Serializable;
+
+public class Msg implements Serializable {
     private String msg;
 
     public String getMsg() {
