@@ -9,9 +9,12 @@
         <module name="Sanguo-api" />
         <module name="Sanguo-ES-Server" />
         <module name="Sanguo-Eureka-16666" />
+        <module name="Sanguo-Eureka-16667" />
+        <module name="Sanguo-Eureka-16668" />
         <module name="Sanguo-FastDFS-Server" />
         <module name="Sanguo-NettyChat-Server" />
         <module name="Sanguo-Web-8000" />
+        <module name="Sanguo-Web-Consumer-8888" />
       </profile>
     </annotationProcessing>
   </component>

@@ -51,7 +51,7 @@ mybatis:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:16666/eureka
+      defaultZone: http://eureka16666.com:16666/eureka/,http://eureka16667.com:16667/eureka,http://eureka16668.com:16668/eureka
   instance:
     instance-id: web8000
     prefer-ip-address: true

@@ -16,6 +16,9 @@
         <module>Sanguo-ES-Server</module>
         <module>Sanguo-NettyChat-Server</module>
         <module>Sanguo-Eureka-16666</module>
+        <module>Sanguo-Web-Consumer-8888</module>
+        <module>Sanguo-Eureka-16667</module>
+        <module>Sanguo-Eureka-16668</module>
     </modules>
 
     <dependencyManagement>
@@ -58,40 +61,26 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <build>
-        <finalName>Sanguo-Card-Game</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>static/**</exclude>
-                    <exclude>mybatis/**</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>false</filtering>
-                <includes>
-                    <include>static/**</include>
-                    <include>mybatis/**</include>
-                </includes>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-resources-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<delimiters>-->
-                        <!--<delimit>$</delimit>-->
-                    <!--</delimiters>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-        </plugins>
-    </build>
+
+    <!--<build>-->
+        <!--<finalName>Sanguo-Card-Game</finalName>-->
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<filtering>true</filtering>-->
+                <!--<excludes>-->
+                    <!--<exclude>static/**</exclude>-->
+                    <!--<exclude>mybatis/**</exclude>-->
+                <!--</excludes>-->
+            <!--</resource>-->
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<filtering>false</filtering>-->
+                <!--<includes>-->
+                    <!--<include>static/**</include>-->
+                    <!--<include>mybatis/**</include>-->
+                <!--</includes>-->
+            <!--</resource>-->
+        <!--</resources>-->
+    <!--</build>-->
 </project>

@@ -1,0 +1,7 @@
+server:
+  port: 8888
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://localhost:16666/eureka

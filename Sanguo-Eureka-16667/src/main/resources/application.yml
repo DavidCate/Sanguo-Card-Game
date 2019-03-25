@@ -1,0 +1,10 @@
+server:
+  port: 16667
+eureka:
+  instance:
+    hostname: eureka16667.com
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://eureka16666.com:16666/eureka/,http://eureka16668.com:16668/eureka/

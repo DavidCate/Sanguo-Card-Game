@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.edu.tute</groupId>
             <artifactId>Sanguo-api</artifactId>
             <version>1.0-SNAPSHOT</version>
