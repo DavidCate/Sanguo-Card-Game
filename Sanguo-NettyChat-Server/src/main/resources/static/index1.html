@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyChat</title>
+</head>
+<body>
+<script type="text/javascript">
+    var socket;
+    var count = 1;
+
+    function connect() {
+        var from = document.getElementById("from").value;
+        if (from.length == 0) {
+            alert('from不能为空');
+        } else {
+            if (count==1){
+                var str = document.getElementById("responseText");
+                str.value = "正在连接...";
+            }
+            if (window.WebSocket) {
+                socket = new WebSocket("ws://localhost:11111");
+                socket.onmessage = function (ev) {
+                    var str = document.getElementById("responseText");
+                    str.value = str.value + "\n" + ev.data;
+                };
+                socket.onopen = function (ev) {
+                    if (count==1){
+                        var str = document.getElementById("responseText");
+                        str.value = "连接开启";
+                        var from = document.getElementById("from");
+                        var new_message = {"from": from.value, "msgType": "regist"};
+                        var json_message = JSON.stringify(new_message);
+                        socket.send(json_message);
+                    } else {
+                        var str = document.getElementById("responseText");
+                        str.value = str.value+"\n"+"重新连接成功..";
+                    }
+                    count = 1;
+                };
+                socket.onclose = function (ev) {
+                    // interval = setInterval(reconnect, 5000);
+                    var str = document.getElementById("responseText");
+                    str.value = str.value + "\n" + "连接断掉,正在尝试重新连接第" + count + "次...";
+                    count=count+1;
+                    sleep(5000);
+                    connect();
+                };
+                // if (socket.readyState==WebSocket.OPEN) {
+                //
+                // }
+            } else {
+                alert('浏览器不支持WebSocket');
+            }
+        }
+    }
+
+    function reconnect() {
+        if (count > 10) {
+            var str = document.getElementById("responseText");
+            str.value = str.value + "\n" + "连接超时..";
+            clearInterval(interval);
+        } else {
+            var str = document.getElementById("responseText");
+            str.value = str.value + "\n" + "连接断掉,正在尝试重新连接第" + count + "次...";
+            socket = new WebSocket("ws://localhost:8899/ws");
+            socket.onopen=function (ev) {
+                str.value=str.value + "\n" + "重新连接成功..";
+                clearInterval(interval);
+                count=1;
+            };
+            socket.onclose=function (ev) {
+                reconnect();
+                count = count + 1;
+            };
+            socket.onmessage = function (ev) {
+                var str = document.getElementById("responseText");
+                str.value = str.value + "\n" + ev.data;
+            };
+
+        }
+    }
+
+    function send(message) {
+        if (!window.WebSocket) {
+            return;
+        }
+        if (socket.readyState == WebSocket.OPEN) {
+            var from = document.getElementById("from");
+            var to = document.getElementById("to");
+            var new_message = {"from": from.value, "to": to.value, "message": message};
+            var json_message = JSON.stringify(new_message);
+            socket.send(json_message);
+        } else {
+            alert("连接未开启");
+        }
+    }
+    
+    function submitAjaxRequest(message) {
+        if (socket!=undefined) {
+            var from = document.getElementById("from");
+            var to = document.getElementById("to");
+            var new_message = {"fromUser": from.value, "toUser": to.value, "msgBody": message};
+            var json_message = JSON.stringify(new_message);
+            var req=new XMLHttpRequest();
+            req.open("POST","http://localhost:8080/service/message",true);
+            req.setRequestHeader("Content-type","application/json");
+            req.send(json_message);
+            return false;
+        }else {
+            alert("连接未开启..");
+        }
+    }
+
+    function sleep(numberMillis) {
+        var now = new Date();
+        var exitTime = now.getTime() + numberMillis;
+        while (true) {
+            now = new Date();
+            if (now.getTime() > exitTime)
+                return;
+        }
+    }
+
+</script>
+<form onsubmit="return false">
+    <div>from:<input id="from" style="position: absolute;left: 80px;" type="text"/>
+        <input id="submitUser" style="position: absolute;left: 260px;" type="button" value="注册" onclick="connect()">
+    </div>
+    <br/>
+    <div>to:<input id="to" style="position: absolute;left: 80px;" type="text"/></div>
+    <br/>
+
+    <div style="position: absolute;top: 90px">消息：</div>
+    <textarea name="message" style="position:absolute;left: 80px;top: 90px; width: 300px;height:16px"></textarea>
+    <div style="position: absolute;left: 400px;top: 90px"><input type="button" value="发送数据"
+                                                                 onclick="submitAjaxRequest(this.form.message.value)"></div>
+    <br/>
+    <h3>服务端输出</h3>
+    <textarea id="responseText" style="width: 400px;height:300px"></textarea>
+    <input type="button" onclick="javascript:document.getElementById('responseText').value=''" value="清空内容">
+</form>
+</body>
+</html>

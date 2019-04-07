@@ -68,6 +68,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
             System.out.println("只支持文本格式");
             ctx.close();
         }
+        System.out.println(ctx.channel().id().asLongText());
         String request = ((TextWebSocketFrame) msg).text();
         System.out.println("收到注册信息:" + request);
         JSONObject jsonObject = null;
