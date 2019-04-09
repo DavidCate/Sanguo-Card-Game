@@ -81,7 +81,8 @@ public class UserServiceImpl implements UserService {
                     httpServletResponse.addCookie(cookie);
                     userLoginInfo.setToken(tokenId.toString());
                     userLoginInfo.setSessionID(sessionId);
-                    redisService.set(sessionId,JSON.toJSONString(userLoginInfo));
+                    redisService.set(session.toString(),JSON.toJSONString(userLoginInfo));
+                    redisService.set(tokenId.toString(), JSON.toJSONString(userLoginInfo));
                     SuccessResponse response=new SuccessResponse();
                     response.setErrorMsg("登录成功");
                     return response.send();

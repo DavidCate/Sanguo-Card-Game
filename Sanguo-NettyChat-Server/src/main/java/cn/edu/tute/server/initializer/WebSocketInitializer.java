@@ -1,4 +1,4 @@
-package cn.edu.tute.server.init;
+package cn.edu.tute.server.initializer;
 
 import cn.edu.tute.server.handler.WebSocketServerHandler;
 import io.netty.channel.ChannelInitializer;

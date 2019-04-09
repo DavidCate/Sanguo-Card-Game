@@ -22,4 +22,6 @@ public interface MsgHandService {
     void handOver(JSONObject jsonMsg, ChannelHandlerContext ctx);
 
     void handResult(JSONObject jsonMsg, ChannelHandlerContext ctx);
+
+    void handToken(JSONObject jsonMsg, ChannelHandlerContext ctx);
 }

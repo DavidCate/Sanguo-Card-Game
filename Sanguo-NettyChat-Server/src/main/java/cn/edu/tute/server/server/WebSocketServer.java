@@ -1,7 +1,6 @@
 package cn.edu.tute.server.server;
 
-import cn.edu.tute.server.init.WebSocketInitializer;
-import io.netty.bootstrap.Bootstrap;
+import cn.edu.tute.server.initializer.WebSocketInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;

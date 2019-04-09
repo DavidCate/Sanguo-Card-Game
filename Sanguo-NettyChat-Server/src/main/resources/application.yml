@@ -22,3 +22,7 @@ spring:
       store-type: redis
 server:
   port: 18080
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
