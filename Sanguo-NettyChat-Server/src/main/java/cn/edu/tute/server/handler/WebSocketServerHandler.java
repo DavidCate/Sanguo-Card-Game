@@ -1,5 +1,6 @@
 package cn.edu.tute.server.handler;
 
+import cn.edu.tute.server.service.MsgHandService;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -15,11 +16,15 @@ import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> {
     private static final Logger logger= LoggerFactory.getLogger(WebSocketServerHandler.class);
 
     private WebSocketServerHandshaker handshaker;
+
+    @Autowired
+    private MsgHandService msgHandService;
 
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg instanceof FullHttpRequest) {
@@ -70,26 +75,40 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         }
         System.out.println(ctx.channel().id().asLongText());
         String request = ((TextWebSocketFrame) msg).text();
-        System.out.println("收到注册信息:" + request);
-        JSONObject jsonObject = null;
+        System.out.println("收到信息:" + request);
+        JSONObject jsonMsg = null;
         try {
-            jsonObject = JSONObject.parseObject(request);
+            jsonMsg = JSONObject.parseObject(request);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (jsonObject == null) {
+        if (jsonMsg == null) {
             return;
         }
-        String from = (String) jsonObject.get("from");
-        String msgType = (String) jsonObject.get("msgType");
-//        String msg1 = "{\"user\":" + "\"" + from + "\"" + "," + "\"netty\":" + "\"" + ctx.channel().localAddress().toString() + "\""+","+"\"http\":"+"\""+NettyServerConfig.getResourceString("httpserver.host")+":"+NettyServerConfig.getResourceString("httpserver.port")+"\""+"}";
-        if (msgType.equals("regist")) {
-//            JedisUtil jedisUtil= JedisUtil.getInstance();
-//
-//            System.out.println("存到redis:" + jedisUtil.set(from, msg1));
-////            JedisUtil jedisUtil=JedisUtil.getInstance();
-////            System.out.println("存到redis："+jedisUtil.set(from,msg1));
-//            Constant.localConnectMap.put(from, ctx);
+        String msgType = (String) jsonMsg.get("type");
+        if (msgType.equals("private")) {
+            msgHandService.handPrivate(jsonMsg,ctx);
+        }
+        if (msgType.equals("world")){
+            msgHandService.handWorld(jsonMsg,ctx);
+        }
+        if (msgType.equals("ready")){
+            msgHandService.handReady(jsonMsg,ctx);
+        }
+        if (msgType.equals("round")){
+            msgHandService.handRound(jsonMsg,ctx);
+        }
+        if (msgType.equals("play")){
+            msgHandService.handPlay(jsonMsg,ctx);
+        }
+        if (msgType.equals("end")){
+            msgHandService.handEnd(jsonMsg,ctx);
+        }
+        if (msgType.equals("over")){
+            msgHandService.handOver(jsonMsg,ctx);
+        }
+        if (msgType.equals("result")){
+            msgHandService.handResult(jsonMsg,ctx);
         }
     }
 

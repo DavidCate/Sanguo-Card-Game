@@ -20,6 +20,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.UUID;
 
 
@@ -72,7 +74,9 @@ public class UserServiceImpl implements UserService {
                 if (validateUserInfo(username,password,userLoginInfo)){
                     UUID tokenId=UUID.randomUUID();
                     //校验通过，生成Cookie 加入token信息
-                    Cookie cookie=new Cookie("JSESSIONID",session.getId());
+                    String sessionInfo;
+                    sessionInfo="sessionId:"+session.getId()+"#tokenId:"+tokenId;
+                    Cookie cookie=new Cookie("Sanguo_SessionInfo",sessionInfo);
                     cookie.setMaxAge(60*30);
                     httpServletResponse.addCookie(cookie);
                     userLoginInfo.setToken(tokenId.toString());
