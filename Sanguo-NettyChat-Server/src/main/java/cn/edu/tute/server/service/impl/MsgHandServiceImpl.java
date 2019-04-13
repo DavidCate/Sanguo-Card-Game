@@ -7,20 +7,25 @@ import com.alibaba.fastjson.JSONObject;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.Map;
 
 
+import java.util.concurrent.ConcurrentHashMap;
+
+@Component
 public class MsgHandServiceImpl implements MsgHandService {
+    public MsgHandServiceImpl(){
+
+    }
     @Autowired
     ConnectManager connectManager;
 
     @Autowired
     RedisService redisService;
 
-    Map<String,ChannelHandlerContext> connections=connectManager.getConnections();
-
     public void handPrivate(JSONObject jsonMsg, ChannelHandlerContext ctx) {
+        ConcurrentHashMap<String,ChannelHandlerContext> connections=connectManager.getConnections();
         String toUserToken=(String) jsonMsg.get("token");
         if (connections.containsKey(toUserToken)){
             ChannelHandlerContext toUserChannel=connections.get(toUserToken);
@@ -59,6 +64,7 @@ public class MsgHandServiceImpl implements MsgHandService {
     }
 
     public void handToken(JSONObject jsonMsg, ChannelHandlerContext ctx) {
-        connections.put((String) jsonMsg.get("token"),ctx);
+
+//        connections.put((String) jsonMsg.get("token"),ctx);
     }
 }

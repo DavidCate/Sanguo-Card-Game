@@ -1,13 +1,11 @@
 package cn.edu.tute.server.handler;
 
 import cn.edu.tute.server.service.MsgHandService;
+import cn.edu.tute.server.service.impl.MsgHandServiceImpl;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
@@ -17,7 +15,12 @@ import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+
+
+@Component
+@ChannelHandler.Sharable
 public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> {
     private static final Logger logger= LoggerFactory.getLogger(WebSocketServerHandler.class);
 
@@ -86,31 +89,31 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
             return;
         }
         String msgType = (String) jsonMsg.get("type");
-        if (msgType.equals("token")){
+        if (msgType.equals("token")&&msgType!=null){
             msgHandService.handToken(jsonMsg,ctx);
         }
-        if (msgType.equals("private")) {
+        if (msgType.equals("private")&&msgType!=null) {
             msgHandService.handPrivate(jsonMsg,ctx);
         }
-        if (msgType.equals("world")){
+        if (msgType.equals("world")&&msgType!=null){
             msgHandService.handWorld(jsonMsg,ctx);
         }
-        if (msgType.equals("ready")){
+        if (msgType.equals("ready")&&msgType!=null){
             msgHandService.handReady(jsonMsg,ctx);
         }
-        if (msgType.equals("round")){
+        if (msgType.equals("round")&&msgType!=null){
             msgHandService.handRound(jsonMsg,ctx);
         }
-        if (msgType.equals("play")){
+        if (msgType.equals("play")&&msgType!=null){
             msgHandService.handPlay(jsonMsg,ctx);
         }
-        if (msgType.equals("end")){
+        if (msgType.equals("end")&&msgType!=null){
             msgHandService.handEnd(jsonMsg,ctx);
         }
-        if (msgType.equals("over")){
+        if (msgType.equals("over")&&msgType!=null){
             msgHandService.handOver(jsonMsg,ctx);
         }
-        if (msgType.equals("result")){
+        if (msgType.equals("result")&&msgType!=null){
             msgHandService.handResult(jsonMsg,ctx);
         }
     }

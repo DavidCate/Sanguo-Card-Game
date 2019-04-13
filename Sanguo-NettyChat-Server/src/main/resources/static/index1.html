@@ -29,7 +29,7 @@
                         var str = document.getElementById("responseText");
                         str.value = "连接开启";
                         var from = document.getElementById("from");
-                        var new_message = {"from": from.value, "msgType": "regist"};
+                        var new_message = {"from": from.value, "type": "private"};
                         var json_message = JSON.stringify(new_message);
                         socket.send(json_message);
                     } else {

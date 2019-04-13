@@ -9,25 +9,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class ConnectManager {
-    ConnectManager(){
-
-    }
-    ConnectManager connectManager=new ConnectManager();
-    private Map<String, ChannelHandlerContext> connections=new ConcurrentHashMap<String, ChannelHandlerContext>();
+    ConcurrentHashMap<String,ChannelHandlerContext> connections=new ConcurrentHashMap<String, ChannelHandlerContext>();
 
     @Autowired
     RedisService redisService;
 
-    public Map<String, ChannelHandlerContext> getConnections() {
+    public  ConcurrentHashMap<String, ChannelHandlerContext> getConnections() {
         return connections;
     }
-
-    public void setConnections(Map<String, ChannelHandlerContext> connections) {
-        this.connections = connections;
+    public  void setConnections(ConcurrentHashMap<String, ChannelHandlerContext> connection) {
+        this.connections=connection;
     }
-
-    public ConnectManager getConnectManager(){
-        return this.connectManager;
-    }
-
 }

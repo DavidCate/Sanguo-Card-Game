@@ -11,7 +11,7 @@
          private List<PlayImg> playImgs;
          private List<Msg> msgs;
     -->
-    <select id="selectInitInfo" resultMap="initInfo">
+    <select id="selectInitInfo" resultMap="initInfoinitInfo">
         select u.u_name u_name,u.u_head u_head,f.f_id f_id,f.f_name f_name
         from `user` u
                  left join friend f on u.u_nid = f.u_id
