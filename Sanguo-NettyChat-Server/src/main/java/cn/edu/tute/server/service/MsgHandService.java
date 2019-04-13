@@ -24,4 +24,10 @@ public interface MsgHandService {
     void handResult(JSONObject jsonMsg, ChannelHandlerContext ctx);
 
     void handToken(JSONObject jsonMsg, ChannelHandlerContext ctx);
+
+    void handCreateRoom(JSONObject jsonMsg, ChannelHandlerContext ctx);
+
+    void handJoinRoom(JSONObject jsonMsg, ChannelHandlerContext ctx);
+
+    void handMatch(JSONObject jsonMsg, ChannelHandlerContext ctx);
 }

@@ -18,11 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-
 @Component
 @ChannelHandler.Sharable
 public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> {
-    private static final Logger logger= LoggerFactory.getLogger(WebSocketServerHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebSocketServerHandler.class);
 
     private WebSocketServerHandshaker handshaker;
 
@@ -89,36 +88,33 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
             return;
         }
         String msgType = (String) jsonMsg.get("type");
-        if (msgType.equals("token")&&msgType!=null){
-            msgHandService.handToken(jsonMsg,ctx);
-        }else
-        if (msgType.equals("private")&&msgType!=null) {
-            msgHandService.handPrivate(jsonMsg,ctx);
-        }else
-        if (msgType.equals("world")&&msgType!=null){
-            msgHandService.handWorld(jsonMsg,ctx);
-        }else
-        if (msgType.equals("ready")&&msgType!=null){
-            msgHandService.handReady(jsonMsg,ctx);
-        }else
-        if (msgType.equals("round")&&msgType!=null){
-            msgHandService.handRound(jsonMsg,ctx);
-        }else
-        if (msgType.equals("play")&&msgType!=null){
-            msgHandService.handPlay(jsonMsg,ctx);
-        }else
-        if (msgType.equals("end")&&msgType!=null){
-            msgHandService.handEnd(jsonMsg,ctx);
-        }else
-        if (msgType.equals("over")&&msgType!=null){
-            msgHandService.handOver(jsonMsg,ctx);
-        }else
-        if (msgType.equals("result")&&msgType!=null){
-            msgHandService.handResult(jsonMsg,ctx);
+        if (msgType.equals("token") && msgType != null) {
+            msgHandService.handToken(jsonMsg, ctx);
+        } else if (msgType.equals("private") && msgType != null) {
+            msgHandService.handPrivate(jsonMsg, ctx);
+        } else if (msgType.equals("world") && msgType != null) {
+            msgHandService.handWorld(jsonMsg, ctx);
+        } else if (msgType.equals("ready") && msgType != null) {
+            msgHandService.handReady(jsonMsg, ctx);
+        } else if (msgType.equals("round") && msgType != null) {
+            msgHandService.handRound(jsonMsg, ctx);
+        } else if (msgType.equals("play") && msgType != null) {
+            msgHandService.handPlay(jsonMsg, ctx);
+        } else if (msgType.equals("end") && msgType != null) {
+            msgHandService.handEnd(jsonMsg, ctx);
+        } else if (msgType.equals("over") && msgType != null) {
+            msgHandService.handOver(jsonMsg, ctx);
+        } else if (msgType.equals("result") && msgType != null) {
+            msgHandService.handResult(jsonMsg, ctx);
+        } else if (msgType.equals("createRoom") && msgType != null) {
+            msgHandService.handCreateRoom(jsonMsg, ctx);
+        } else if (msgType.equals("joinRoom") && msgType != null) {
+            msgHandService.handJoinRoom(jsonMsg, ctx);
+        } else if (msgType.equals("match")&& msgType!=null){
+            msgHandService.handMatch(jsonMsg,ctx);
         }
 
     }
-
 
 
     private static boolean isKeepAlive(FullHttpRequest request) {
