@@ -1,5 +1,6 @@
 package cn.edu.tute.server.service.impl;
 
+import cn.edu.tute.netty.jsonMsgPoJo.WorldMsg;
 import cn.edu.tute.server.component.ConnectManager;
 import cn.edu.tute.server.redis.RedisService;
 import cn.edu.tute.server.service.MsgHandService;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -36,11 +39,22 @@ public class MsgHandServiceImpl implements MsgHandService {
     }
 
     public void handWorld(JSONObject jsonMsg, ChannelHandlerContext ctx) {
+        WorldMsg worldMsg=JSONObject.parseObject(jsonMsg.toJSONString(),WorldMsg.class);
+        ConcurrentHashMap<String,ChannelHandlerContext> connections=connectManager.getConnections();
+        Enumeration<ChannelHandlerContext> enumeration=connections.elements();
+        while (enumeration.hasMoreElements()){
+            ChannelHandlerContext channelHandlerContext=enumeration.nextElement();
 
+
+            channelHandlerContext.channel().write(new TextWebSocketFrame());
+        }
     }
 
     public void handReady(JSONObject jsonMsg, ChannelHandlerContext ctx) {
+        String value=(String) jsonMsg.get("value");
+        if (value.equals("true")){
 
+        }
     }
 
     public void handRound(JSONObject jsonMsg, ChannelHandlerContext ctx) {
@@ -64,7 +78,16 @@ public class MsgHandServiceImpl implements MsgHandService {
     }
 
     public void handToken(JSONObject jsonMsg, ChannelHandlerContext ctx) {
-
+        String token=(String) jsonMsg.get("token");
+        ConcurrentHashMap<String,ChannelHandlerContext> connections=connectManager.getConnections();
+        //通过已经登录得到的token绑定相应的channel
+        if (connections.containsKey(token)){
+            //连接管理中已经有token了  说明断线重连
+        }else {
+            //登录后绑定连接
+            connections.put(token,ctx);
+            connectManager.setConnections(connections);
+        }
 //        connections.put((String) jsonMsg.get("token"),ctx);
     }
 }

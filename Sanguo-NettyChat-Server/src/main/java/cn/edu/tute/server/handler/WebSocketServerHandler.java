@@ -91,31 +91,32 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         String msgType = (String) jsonMsg.get("type");
         if (msgType.equals("token")&&msgType!=null){
             msgHandService.handToken(jsonMsg,ctx);
-        }
+        }else
         if (msgType.equals("private")&&msgType!=null) {
             msgHandService.handPrivate(jsonMsg,ctx);
-        }
+        }else
         if (msgType.equals("world")&&msgType!=null){
             msgHandService.handWorld(jsonMsg,ctx);
-        }
+        }else
         if (msgType.equals("ready")&&msgType!=null){
             msgHandService.handReady(jsonMsg,ctx);
-        }
+        }else
         if (msgType.equals("round")&&msgType!=null){
             msgHandService.handRound(jsonMsg,ctx);
-        }
+        }else
         if (msgType.equals("play")&&msgType!=null){
             msgHandService.handPlay(jsonMsg,ctx);
-        }
+        }else
         if (msgType.equals("end")&&msgType!=null){
             msgHandService.handEnd(jsonMsg,ctx);
-        }
+        }else
         if (msgType.equals("over")&&msgType!=null){
             msgHandService.handOver(jsonMsg,ctx);
-        }
+        }else
         if (msgType.equals("result")&&msgType!=null){
             msgHandService.handResult(jsonMsg,ctx);
         }
+
     }
 
 
