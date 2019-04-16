@@ -90,7 +90,7 @@ public class MsgHandServiceImpl implements MsgHandService {
             //登录后绑定连接
             connections.put(token, ctx);
             connectManager.setConnections(connections);
-
+            redisService.set(ctx.channel().id().toString(),token);
         }
 //        connections.put((String) jsonMsg.get("token"),ctx);
     }
