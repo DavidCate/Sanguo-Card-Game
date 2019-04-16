@@ -13,7 +13,7 @@ public interface MsgHandService {
 
     void handReady(JSONObject jsonMsg, ChannelHandlerContext ctx);
 
-    void handRound(JSONObject jsonMsg, ChannelHandlerContext ctx);
+//    void handRound(JSONObject jsonMsg, ChannelHandlerContext ctx);
 
     void handPlay(JSONObject jsonMsg, ChannelHandlerContext ctx);
 
@@ -21,7 +21,7 @@ public interface MsgHandService {
 
     void handOver(JSONObject jsonMsg, ChannelHandlerContext ctx);
 
-    void handResult(JSONObject jsonMsg, ChannelHandlerContext ctx);
+//    void handResult(JSONObject jsonMsg, ChannelHandlerContext ctx);
 
     void handToken(JSONObject jsonMsg, ChannelHandlerContext ctx);
 

@@ -52,8 +52,7 @@ public class GamLogicServiceImpl implements GameLogicService {
         }
         if (room != null) {
             //redis存储新创建的房间信息
-            String roomInfo = JSONObject.toJSONString(room);
-            redisService.set("roomId:" + roomMaster, roomInfo);
+            redisService.set("roomId:" + roomMaster, room);
             IdleRoom idleRoom = redisService.get("idleRooms", IdleRoom.class);
             //idleRoom 不为空说明有待加入的房间，需要先判断要新创建的房间是否 已经存在于idle列表
             if (idleRoom != null) {
@@ -61,7 +60,7 @@ public class GamLogicServiceImpl implements GameLogicService {
                 if (!idleRooms.contains("roomId:" + roomMaster)) {
                     //空闲列表没有这个房间id 就把这个房间id 加入空闲列表
                     idleRoom.getIdleRooms().add("roomId:" + roomMaster);
-                    redisService.set("idleRooms", JSONObject.toJSONString(idleRoom));
+                    redisService.set("idleRooms", idleRoom);
                 }
             } else {
                 //把新创建的房间放进idleRooms
@@ -69,8 +68,7 @@ public class GamLogicServiceImpl implements GameLogicService {
                 List<String> idleRoomList = new LinkedList<String>();
                 idleRoomList.add("roomId:" + roomMaster);
                 idleRoom1.setIdleRooms(idleRoomList);
-                String jsonIdleRooms = JSONObject.toJSONString(idleRoom1);
-                redisService.set("idleRooms", jsonIdleRooms);
+                redisService.set("idleRooms", idleRoom1);
             }
         } else {
             //该用户已经存在一个房间
@@ -91,8 +89,9 @@ public class GamLogicServiceImpl implements GameLogicService {
             Room room = JSONObject.parseObject(roomInfo, Room.class);
             String userToken=redisService.get(ctx.channel().id().toString());
             room.setPlayer2(userToken);
-            String roomJson=JSONObject.toJSONString(room);
-            redisService.set("roomId:"+joinRoomId,roomJson);
+            redisService.set("roomId:"+joinRoomId,room);
+            redisService.set("roomIdForToken:"+room.getPlayer1(),"roomId"+room.getPlayer1());
+            redisService.set("roomIdForToken:"+room.getPlayer2(),"roomId"+room.getPlayer1());
         } else {
             JoinMsg joinMsg=new JoinMsg();
             joinMsg.setIsSuccess("false");
@@ -109,12 +108,12 @@ public class GamLogicServiceImpl implements GameLogicService {
         String roomId=idleRooms.get(index);
         //清除空闲列表中的选中的房间号
         idleRooms.remove(index);
-        redisService.set("idleRooms",JSONObject.toJSONString(idleRoom));
+        redisService.set("idleRooms",idleRoom);
         //修改房间信息
         Room room=redisService.get(roomId,Room.class);
         String userToken=redisService.get(ctx.channel().id().toString());
         room.setPlayer2(userToken);
-        redisService.set("roomId:"+room.getPlayer1(),JSONObject.toJSON(room));
+        redisService.set("roomId:"+room.getPlayer1(),room);
         //通知被选中的房间里的玩家
         ConcurrentHashMap<String, ChannelHandlerContext> connections=connectManager.getConnections();
         ChannelHandlerContext toUserConnect=connections.get(room.getPlayer1());

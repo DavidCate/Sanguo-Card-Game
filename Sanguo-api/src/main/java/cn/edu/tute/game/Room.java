@@ -6,7 +6,7 @@ public class Room implements Serializable {
     private String name;
     private String player1;
     private String player2;
-    private String readyStatus;
+    private String readyStatus="0";
     private String round;
 
     public String getName() {
