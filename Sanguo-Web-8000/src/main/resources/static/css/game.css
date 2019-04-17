@@ -5,10 +5,10 @@ html,body {
     overflow:hidden;
     cursor:url('../image/ico/mouseMain.ico'),auto;
 }
-button,input{
+img,button,input{
     cursor:url('../image/ico/mouseAction.ico'),auto;
 }
-button:active{
+img,button:active{
     cursor:url('../image/ico/mouseInput.ico'),auto;
 }
 input:focus{
@@ -48,17 +48,37 @@ body div{
 #game-up-second{
     right: 11%;
 }
+.game-up-user{
+    position: absolute;
+    right: 22%;
+    width: 20%;
+    height: 100%;
+    background: url(../image/png/game/gameUser.png) no-repeat;
+    background-size: 100% 100%;
+    transform:rotate(180deg);
+}
 .game-up-hand{
     position: absolute;
     left: 0;
+    top: 0;
     width: 57.5%;
-    height: 100%;/*
+    height: 89%;
     background: url(../image/png/game/gameHand.png) no-repeat;
     background-size: 100% 100%;
-    transform:rotate(180deg);*/
+    transform:rotate(180deg);
 }
 /*出牌区*/
+.game-card-bg{
+    position: absolute;
+    top: 20px;
+    width: 121px;
+    height: 170px;
+    background: url(../image/card/cardbg.png) no-repeat;
+    background-size: 100% 100%;
+    z-index: 10;
+}
 .game-middle{
+    position: relative;
     width: 100%;
     height: 40%;
 }
@@ -69,16 +89,34 @@ body div{
     outline: none;
 }
 #game-ready{
+    position: absolute;
+    right: 100px;
+    bottom: 50px;
     background: url(../image/png/game/gameReadyBtn0.png) no-repeat;
     background-size: 100% 100%;
+    display: block;
 }
 #game-play{
+    position: absolute;
+    right: 200px;
+    bottom: 20px;
     background: url(../image/png/game/gamePlayBtn0.png) no-repeat;
     background-size: 100% 100%;
+    display: none;
 }
 #game-cancel{
+    position: absolute;
+    right: 100px;
+    bottom: 20px;
     background: url(../image/png/game/gameNoBtn0.png) no-repeat;
     background-size: 100% 100%;
+    display: none;
+}
+#game-end{
+    position: absolute;
+    right: 0px;
+    bottom: 20px;
+    display: none;
 }
 /*自己区*/
 .game-down{
@@ -141,9 +179,15 @@ body div{
     height: 70%;
 }
 #talk-middle-person{
+    position: relative;
+    overflow-y:scroll;
+    background: #fff;
     display: block;
 }
 #talk-middle-world{
+    position: relative;
+    overflow-y:scroll;
+    background: #fff;
     display: none;
 }
 .game-talk-btn{
@@ -208,4 +252,33 @@ body div{
 #send-talk-btn:hover{
     width: 46px;
     height: 23px;
+}
+
+
+.game-card{
+    position: relative;
+    height: 100%;
+}
+.no-click{
+    pointer-events:none;
+}
+
+.my-msg{
+    position: absolute;
+    right: 0px;
+}
+.other-msg{
+    position: absolute;
+    left: 0px;
+}
+
+.user-number{
+    color: #ffffff;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 50px;
+    width: 50px;
+    font-size: 40px;
+    z-index: 30;
 }

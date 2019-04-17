@@ -11,8 +11,8 @@
          private List<PlayImg> playImgs;
          private List<Msg> msgs;
     -->
-    <select id="selectInitInfo" resultMap="initInfoinitInfo">
-        select u.u_name u_name,u.u_head u_head,f.f_id f_id,f.f_name f_name
+    <select id="selectInitInfo" resultMap="initInfo">
+        select u.u_name u_name,u.u_head u_head,f.f_head f_head,f.f_name f_name
         from `user` u
                  left join friend f on u.u_nid = f.u_id
         where u_nid = #{userId}
@@ -24,8 +24,8 @@
             <result column="u_name" property="userName"/>
         </association>
         <collection property="userFriends" ofType="cn.edu.tute.entities.UserFriend">
-            <result column="f_id" property="friendId"/>
-            <result column="f_name" property="firendName"/>
+            <result column="f_head" property="friendImg"/>
+            <result column="f_name" property="friendName"/>
         </collection>
     </resultMap>
 

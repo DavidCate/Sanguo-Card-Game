@@ -91,7 +91,7 @@ $(document).ready(function(){
             data: $('#login-form').serialize(),
             dataType: "json",
             success:function(){
-                window.location.href = "#";
+                window.location.href = "http://localhost:8000/html/main.html";
             },
             error:function () {
                 /**

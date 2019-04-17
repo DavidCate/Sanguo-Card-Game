@@ -97,7 +97,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         } else if (msgType.equals("ready") && msgType != null) {
             msgHandService.handReady(jsonMsg, ctx);
         } else if (msgType.equals("round") && msgType != null) {
-            msgHandService.handRound(jsonMsg, ctx);
+//            msgHandService.handRound(jsonMsg, ctx);
         } else if (msgType.equals("play") && msgType != null) {
             msgHandService.handPlay(jsonMsg, ctx);
         } else if (msgType.equals("end") && msgType != null) {
@@ -105,7 +105,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         } else if (msgType.equals("over") && msgType != null) {
             msgHandService.handOver(jsonMsg, ctx);
         } else if (msgType.equals("result") && msgType != null) {
-            msgHandService.handResult(jsonMsg, ctx);
+//            msgHandService.handResult(jsonMsg, ctx);
         } else if (msgType.equals("createRoom") && msgType != null) {
             msgHandService.handCreateRoom(jsonMsg, ctx);
         } else if (msgType.equals("joinRoom") && msgType != null) {

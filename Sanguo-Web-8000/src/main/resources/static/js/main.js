@@ -22,9 +22,9 @@ $(function(){
             /**
              * 好友信息（头像，名称）
              */
-            for(var i=0;i<data.user_friends.length;i++){
-                var img1 = data.user_friends[i].img;
-                var name1= data.user_friends[i].names;
+            for(var i=0;i<data.userFriends.length;i++){
+                var img1 = data.userFriends[i].friendId;
+                var name1= data.userFriends[i].friendName;
                 $('.main-right-bottom').append("<div id='"+ i +"' style=\"position:absolute;width:100%;height:30px;left:5%;top:"+ (i*50+10) +"px;border-bottom:2px solid #fff\"\"/>")
                 $('#'+i).append("<img style=\"position:absolute;width:30px;height:100%\" id='user"+ i +"' src='"+ img1 +"'/>");
                 $('#'+i).append("<span style=\"position:absolute;left: 20%;color:#ffffff\">"+ name1 +"</span>");
@@ -32,18 +32,19 @@ $(function(){
             /**
              * div轮播图url（5 张，每张包含一个链接url）
              */
-            $('#div1').attr('src',data.playImg[0]);
-            $('#div2').attr('src',data.playImg[1]);
-            $('#div3').attr('src',data.playImg[2]);
-            $('#div4').attr('src',data.playImg[3]);
-            $('#div5').attr('src',data.playImg[4]);
+            $('#div1').attr('src',data.playImgs[0].imgUrl);
+            $('#div2').attr('src',data.playImgs[1].imgUrl);
+            $('#div3').attr('src',data.playImgs[2].imgUrl);
+            $('#div4').attr('src',data.playImgs[3].imgUrl);
+            $('#div5').attr('src',data.playImgs[4].imgUrl);
             /**
              * 公告（4 条）
              */
-            $('#s1').html(data.msg[0]);
-            $('#s2').html(data.msg[1]);
-            $('#s3').html(data.msg[2]);
-            $('#s4').html(data.msg[3]);
+            $('#s1').html(data.msgs[0].msg);
+            $('#s2').html(data.msgs[1].msg);
+            $('#s3').html(data.msgs[2].msg);
+            $('#s4').html(data.msgs[3].msg);
+            // $('#s5').html(data.msgs[4].msg);
         },
         error:function () {
             console.log("failed");

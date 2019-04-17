@@ -38,25 +38,25 @@ public class MsgHandServiceImpl implements MsgHandService {
     GameLogicService gameLogicService;
 
     public void handPrivate(JSONObject jsonMsg, ChannelHandlerContext ctx) {
+//        ctx.writeAndFlush(new TextWebSocketFrame(jsonMsg.toJSONString()));
         ConcurrentHashMap<String, ChannelHandlerContext> connections = connectManager.getConnections();
         String toUserToken = (String) jsonMsg.get("token");
         if (connections.containsKey(toUserToken)) {
             ChannelHandlerContext toUserChannel = connections.get(toUserToken);
             toUserChannel.channel().write(new TextWebSocketFrame((String) jsonMsg.get("msg")));
         } else {
-            ctx.channel().write(new TextWebSocketFrame("用户不存在或不在线。"));
+            ctx.channel().writeAndFlush(new TextWebSocketFrame("用户不存在或不在线。"));
         }
     }
 
     public void handWorld(JSONObject jsonMsg, ChannelHandlerContext ctx) {
-        WorldMsg worldMsg = JSONObject.parseObject(jsonMsg.toJSONString(), WorldMsg.class);
         ConcurrentHashMap<String, ChannelHandlerContext> connections = connectManager.getConnections();
         Enumeration<ChannelHandlerContext> enumeration = connections.elements();
         while (enumeration.hasMoreElements()) {
             ChannelHandlerContext channelHandlerContext = enumeration.nextElement();
-
-
-            channelHandlerContext.channel().write(new TextWebSocketFrame());
+            if (ctx!=channelHandlerContext){
+                channelHandlerContext.channel().writeAndFlush(new TextWebSocketFrame(jsonMsg.toJSONString()));
+            }
         }
     }
 
@@ -109,6 +109,7 @@ public class MsgHandServiceImpl implements MsgHandService {
         ConcurrentHashMap<String, ChannelHandlerContext> connect = connectManager.getConnections();
         ChannelHandlerContext player1 = connect.get(room.getPlayer1());
         ChannelHandlerContext player2 = connect.get(room.getPlayer2());
+
 //        String currentUserToken=redisService.get(ctx.channel().id().toString());
     }
 
@@ -154,7 +155,7 @@ public class MsgHandServiceImpl implements MsgHandService {
 //    }
 
     public void handToken(JSONObject jsonMsg, ChannelHandlerContext ctx) {
-        String token = (String) jsonMsg.get("token");
+        String token = (String) jsonMsg.get("value");
         ConcurrentHashMap<String, ChannelHandlerContext> connections = connectManager.getConnections();
         //通过已经登录得到的token绑定相应的channel
         if (connections.containsKey(token)) {

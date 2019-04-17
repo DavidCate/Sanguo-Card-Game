@@ -25,10 +25,14 @@ public class InitServiceImpl implements InitService {
 
     public void initCardsInfo(){
         List<Card> cards=initMapper.getCardsInfo();
-        for (int i=0;i<cards.size();i++){
-            Card card=cards.get(i);
-            String redisKey="cardName:"+card.getName();
-            redisService.set(redisKey, JSON.toJSONString(card));
-        }
+        CardsInfo cardsInfo=new CardsInfo();
+        cardsInfo.setCards(cards);
+        redisService.set("cards",cardsInfo,100000);
+
+//        for (int i=0;i<cards.size();i++){
+//            Card card=cards.get(i);
+//            String redisKey="cardName:"+card.getName();
+//            redisService.set(redisKey, JSON.toJSONString(card));
+//        }
     }
 }

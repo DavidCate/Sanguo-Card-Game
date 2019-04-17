@@ -22,6 +22,7 @@
                 socket = new WebSocket("ws://localhost:11111");
                 socket.onmessage = function (ev) {
                     var str = document.getElementById("responseText");
+                    console.log(ev.data);
                     str.value = str.value + "\n" + ev.data;
                 };
                 socket.onopen = function (ev) {

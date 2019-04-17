@@ -18,12 +18,12 @@ $(function(){
         $("#world-talk-btn").css('background','url(../image/png/game/gameWorldTalk.png) no-repeat');
         $("#world-talk-btn").css('background-size','100% 100%');
     })
-    $("#send-talk-btn").bind("click",function(){
+    /*$("#send-talk-btn").bind("click",function(){
         var word = $("input[name='talk-input']").val();
-        /*var msg ={"msg" : word };*/
-        /*var sendMsg = JSON.stringify(word);*/
+        /!*var msg ={"msg" : word };*!/
+        /!*var sendMsg = JSON.stringify(word);*!/
         console.log(word);
-    })
+    })*/
 });
 /**
  * 卡牌区按钮
@@ -32,7 +32,7 @@ $(function(){
     /**
      * 准备
      */
-    $("#game-ready").mousedown(function(){
+    /*$("#game-ready").mousedown(function(){
         if($('#game-ready').attr("name") === "false"){
             $("#game-ready").css('background','url(../image/png/game/gameReadyBtn.png) no-repeat');
             $("#game-ready").css('background-size','100% 100%');
@@ -53,7 +53,7 @@ $(function(){
             $('#game-ready').attr("name","false");
             console.log($('#game-ready').attr("name"));
         }
-    });
+    });*/
     /**
      * 出牌
      */
@@ -71,12 +71,12 @@ $(function(){
     /**
      * 取消
      */
-    $("#game-cancel").mousedown(function(){
+    /*$("#game-cancel").mousedown(function(){
         $("#game-cancel").css('background','url(../image/png/game/gameNoBtn.png) no-repeat');
         $("#game-cancel").css('background-size','100% 100%');
     });
     $("#game-cancel").mouseup(function(){
         $("#game-cancel").css('background','url(../image/png/game/gameNoBtn0.png) no-repeat');
         $("#game-cancel").css('background-size','100% 100%');
-    });
+    });*/
 });

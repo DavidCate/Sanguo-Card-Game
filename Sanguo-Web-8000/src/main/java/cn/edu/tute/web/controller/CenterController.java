@@ -76,6 +76,11 @@ public class CenterController {
         return userService.login(username, password, httpServletRequest, httpServletResponse);
     }
 
+    @GetMapping("game")
+    public ModelAndView game(ModelAndView modelAndView){
+        modelAndView.setViewName("/html/game");
+        return modelAndView;
+    }
 
     @PostMapping("register")
     public String register(RegisterUserInfo registerUserInfo) {

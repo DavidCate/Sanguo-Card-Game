@@ -3,22 +3,22 @@ package cn.edu.tute.entities;
 import java.io.Serializable;
 
 public class UserFriend implements Serializable {
-    private String friendId;
-    private String firendName;
+    private String friendImg;
+    private String friendName;
 
-    public String getFriendId() {
-        return friendId;
+    public String getFriendImg() {
+        return friendImg;
     }
 
-    public void setFriendId(String friendId) {
-        this.friendId = friendId;
+    public void setFriendImg(String friendImg) {
+        this.friendImg = friendImg;
     }
 
-    public String getFirendName() {
-        return firendName;
+    public String getFriendName() {
+        return friendName;
     }
 
-    public void setFirendName(String firendName) {
-        this.firendName = firendName;
+    public void setFriendName(String friendName) {
+        this.friendName = friendName;
     }
 }
