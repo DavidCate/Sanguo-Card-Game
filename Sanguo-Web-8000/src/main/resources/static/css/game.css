@@ -26,7 +26,16 @@ body div{
     width: 80%;
     height: 100%;
 }
-
+.game-begin{
+    position: absolute;
+    width: 668px;
+    height: 245px;
+    top: 30%;
+    left: 18%;
+    background: url(../image/png/game/begin0.png) no-repeat;
+    background-size: 100% 100%;
+    display: none;
+}
 /*对手区*/
 .game-up{
     position: relative;
@@ -36,26 +45,40 @@ body div{
 .up-equip-card{
     position: absolute;
     top: 0;
-    width: 10.5%;
-    height: 85%;
+    width: 12%;
+    height: 89.5%;
     background: url(../image/png/game/gameNoCard.png) no-repeat;
     background-size: 100% 100%;
-    transform:rotate(180deg);
+    /*transform:rotate(180deg);*/
 }
 #game-up-first{
     right: 0;
 }
 #game-up-second{
-    right: 11%;
+    right: 12%;
 }
 .game-up-user{
     position: absolute;
-    right: 22%;
-    width: 20%;
+    right: 24%;
+    width: 18%;
     height: 100%;
     background: url(../image/png/game/gameUser.png) no-repeat;
     background-size: 100% 100%;
     transform:rotate(180deg);
+}
+.img-blood{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform:rotate(180deg);
+    display: none;
+}
+.up-head{
+    position: absolute;
+    right: 24%;
+    width: 17%;
+    height: 95%;
+    z-index: -5;
 }
 .game-up-hand{
     position: absolute;
@@ -63,9 +86,16 @@ body div{
     top: 0;
     width: 57.5%;
     height: 89%;
-    background: url(../image/png/game/gameHand.png) no-repeat;
+    background: url(../image/png/game/gameHand0.png) no-repeat;
     background-size: 100% 100%;
-    transform:rotate(180deg);
+    /*transform:rotate(180deg);*/
+}
+.up-card{
+    position: absolute;
+    right: 1%;
+    top: 4%;
+    width: 95%;
+    height: 92%;
 }
 /*出牌区*/
 .game-card-bg{
@@ -116,6 +146,8 @@ body div{
     position: absolute;
     right: 0px;
     bottom: 20px;
+    background: url(../image/png/game/btnEnd.png) no-repeat;
+    background-size: 100% 100%;
     display: none;
 }
 /*自己区*/
@@ -127,8 +159,8 @@ body div{
 .down-equip-card{
     position: absolute;
     bottom: 0;
-    width: 10.5%;
-    height: 85%;
+    width: 12%;
+    height: 89.5%;
     background: url(../image/png/game/gameNoCard.png) no-repeat;
     background-size: 100% 100%;
 }
@@ -136,15 +168,29 @@ body div{
     left: 0;
 }
 #game-down-second{
-    left: 11%;
+    left: 12%;
 }
 .game-down-user{
     position: absolute;
-    left: 22%;
-    width: 20%;
+    left: 24%;
+    width: 18%;
     height: 100%;
     background: url(../image/png/game/gameUser.png) no-repeat;
     background-size: 100% 100%;
+}
+.img-blood0{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+.down-head{
+    position: absolute;
+    left: 24%;
+    bottom: 0;
+    width: 17%;
+    height: 95%;
+    z-index: -5;
 }
 .game-down-hand{
     position: absolute;
@@ -155,6 +201,13 @@ body div{
     background: url(../image/png/game/gameHand.png) no-repeat;
     background-size: 100% 100%;
     /*transform:rotate(180deg);*/
+}
+.down-card{
+    position: absolute;
+    left: 1%;
+    top: 4%;
+    width: 95%;
+    height: 92%;
 }
 
 /*聊天室*/
@@ -176,18 +229,21 @@ body div{
     top: 5%;
     left: 5%;
     width: 90%;
-    height: 70%;
+    height: 75%;
+    color: #ffffff;
+    /*font-family: '楷体';
+    font-size: 18px;*/
+    background: url("../image/png/game/talkbg.png");
+    background-size: 100% 100%;
 }
 #talk-middle-person{
     position: relative;
     overflow-y:scroll;
-    background: #fff;
     display: block;
 }
 #talk-middle-world{
     position: relative;
     overflow-y:scroll;
-    background: #fff;
     display: none;
 }
 .game-talk-btn{
@@ -256,7 +312,12 @@ body div{
 
 
 .game-card{
-    position: relative;
+    position: absolute;
+    height: 100%;
+    float: left;
+}
+.game-card0{
+    position: absolute;
     height: 100%;
 }
 .no-click{
@@ -266,19 +327,61 @@ body div{
 .my-msg{
     position: absolute;
     right: 0px;
+    font-family: '楷体';
+    font-size: 16px;
+    color: #be921d;
 }
 .other-msg{
     position: absolute;
     left: 0px;
+    font-family: '楷体';
+    font-size: 16px;
+    color: #be921d;
 }
 
 .user-number{
-    color: #ffffff;
+    color: #be921d;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    bottom: 0px;
+    right: 6px;
     height: 50px;
     width: 50px;
     font-size: 40px;
+    font-family: '楷体';
     z-index: 30;
+}
+#user-up-number{
+    transform:rotate(180deg);
+    right: 14px;
+}
+
+.down-status{
+    position: absolute;
+    top: 0;
+    left: 45%;
+    display: none;
+}
+.up-status{
+    position: absolute;
+    bottom: 0;
+    right: 45%;
+    display: none;
+}
+
+.detail-card{
+    position: absolute;
+    width: 203px;
+    height: 202px;
+    font-size: 14px;
+    background: url(../image/png/game/singleCard.png) no-repeat;
+    background-size: 100% 100%;
+    top: -210px;
+    z-index: 10;
+}
+.span-detail{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
 }

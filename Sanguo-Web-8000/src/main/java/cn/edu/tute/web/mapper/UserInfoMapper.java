@@ -9,14 +9,14 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface UserInfoMapper {
 
-    @Results({@Result(property = "username" ,column = "u_nid"),@Result(property = "password",column = "u_password")})
-    @Select("select u_nid,u_password from user where u_nid=#{userName}")
+    @Results({@Result(property = "username" ,column = "username"),@Result(property = "password",column = "password")})
+    @Select("select username,password from user where username=#{userName}")
     UserLoginInfo getUserLoginInfo(String userName);
 
     @Results({@Result(property = "user",column = "u_nid")})
-    @Select("select u_nid from user where u_nid=#{userCount}")
+    @Select("select username from user where username=#{userCount}")
     RegisterUserInfo getRegisterUserInfo(String userCount);
 
-    @Insert("insert into user(u_name,u_sex,u_nid,u_password,u_phone) values(#{userName},#{sex},#{userCount},#{password},#{telNum})")
+    @Insert("insert into user(username,name,password,phone,sex) values(#{username},#{name},#{password},#{phone},#{sex})")
     void registUserInfo(RegisterUserInfo registerUserInfo);
 }

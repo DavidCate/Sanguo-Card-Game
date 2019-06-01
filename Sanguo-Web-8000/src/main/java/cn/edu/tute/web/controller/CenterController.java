@@ -1,10 +1,12 @@
 package cn.edu.tute.web.controller;
 
 
-
 import cn.edu.tute.entities.RegisterUserInfo;
+import cn.edu.tute.game.Room;
+import cn.edu.tute.web.mapper.FriendInfoMapper;
 import cn.edu.tute.web.mapper.InitInfoMapper;
 import cn.edu.tute.web.mapper.UserInfoMapper;
+import cn.edu.tute.web.redis.RedisService;
 import cn.edu.tute.web.service.InitMainPageService;
 import cn.edu.tute.web.service.UserService;
 import org.slf4j.Logger;
@@ -46,7 +48,14 @@ public class CenterController {
     UserInfoMapper userInfoMapper;
 
     @Autowired
+    FriendInfoMapper friendInfoMapper;
+
+    @Autowired
     InitMainPageService initMainPageService;
+
+    @Autowired
+    RedisService redisService;
+
 
     @RequestMapping("/")
     public ModelAndView index(ModelAndView modelAndView) throws IOException {
@@ -77,7 +86,7 @@ public class CenterController {
     }
 
     @GetMapping("game")
-    public ModelAndView game(ModelAndView modelAndView){
+    public ModelAndView game(ModelAndView modelAndView) {
         modelAndView.setViewName("/html/game");
         return modelAndView;
     }
@@ -94,8 +103,8 @@ public class CenterController {
             System.out.println(xxx);
         }
         List<ServiceInstance> serviceInstanceList = discoveryClient.getInstances("Sanguo-Web");
-        for (ServiceInstance instance:serviceInstanceList){
-            System.out.println(instance.getServiceId()+instance.getHost()+instance.getMetadata()+instance.getHost()+instance.getPort()+instance.getUri());
+        for (ServiceInstance instance : serviceInstanceList) {
+            System.out.println(instance.getServiceId() + instance.getHost() + instance.getMetadata() + instance.getHost() + instance.getPort() + instance.getUri());
         }
 
 //        UserInfo userInfo=userInfoMapper.getUserInfo("test");
@@ -110,8 +119,6 @@ public class CenterController {
         initInfoMapper.selectInitInfo("xxx");
         initInfoMapper.selectInitInfo("xxx");
         initInfoMapper.selectInitInfo("xxx");
-        logger.warn("mapperMsgInfo============>>" + initInfoMapper.selectAllMsg().toString());
-        logger.warn("mapperImgInfo============>>" + initInfoMapper.selectAllPlayImg().toString());
         return "success";
     }
 
@@ -132,7 +139,26 @@ public class CenterController {
     }
 
     @PostMapping("initMainPage")
-    public String initMainPage(@RequestParam("user") String userId) {
-        return initMainPageService.getInitInfo(userId);
+    public String initMainPage(@RequestParam("userName") String userName) {
+        return initMainPageService.getInitInfo(userName);
+    }
+
+    @PostMapping("deleteFriend")
+    public String deleteFriend(@RequestParam("user") String userName,@RequestParam("friend") String friendName) {
+        try {
+            int i=friendInfoMapper.deleteFriend(userName,friendName);
+            if (i!=0){
+                return "true";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return "false";
+        }
+        return "false";
+    }
+
+    @GetMapping("match")
+    public String match(@RequestParam("token") String token, HttpServletRequest request, HttpServletResponse response) {
+        return "";
     }
 }

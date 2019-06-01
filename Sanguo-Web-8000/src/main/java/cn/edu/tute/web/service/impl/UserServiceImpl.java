@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public String register(RegisterUserInfo registerUserInfo) {
-        RegisterUserInfo selected=userInfoMapper.getRegisterUserInfo(registerUserInfo.getUser());
+        RegisterUserInfo selected=userInfoMapper.getRegisterUserInfo(registerUserInfo.getUsername());
         if (selected!=null){
             FailureResponse failureResponse=new FailureResponse();
             failureResponse.setErrorMsg("用户名已存在");

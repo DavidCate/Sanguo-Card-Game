@@ -28,6 +28,11 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
     @Autowired
     private MsgHandService msgHandService;
 
+    @Override
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+        logger.info(ctx.channel().id().toString());
+    }
+
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg instanceof FullHttpRequest) {
             handleHttpRequest(ctx, (FullHttpRequest) msg);
@@ -115,7 +120,6 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         }
 
     }
-
 
     private static boolean isKeepAlive(FullHttpRequest request) {
         return false;

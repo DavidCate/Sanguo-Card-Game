@@ -28,12 +28,7 @@ public class InitMainPageServiceImpl implements InitMainPageService {
 
     public String getInitInfo(String userId) {
         InitInfo initInfo=initInfoMapper.selectInitInfo(userId);
-        List<Msg> msgList=initInfoMapper.selectAllMsg();
-        List<PlayImg> imgList=initInfoMapper.selectAllPlayImg();
-//        System.out.println("sout+++++++++"+imgList.toString());
-        initInfo.setMsgs(msgList);
-        initInfo.setPlayImgs(imgList);
-//        logger.warn("jsonMsg=====>"+JSON.toJSONString(initInfoMapper.selectInitInfo(userId)));
+        logger.info(JSON.toJSONString(initInfo));
         return JSON.toJSONString(initInfo);
     }
 

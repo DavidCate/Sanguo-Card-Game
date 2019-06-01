@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.tute.web.mapper.InitInfoMapper">
-    <cache/>
+    <!--<cache/>-->
     <!--
          private String headImg;
          private UserInfo userInfo;
@@ -12,36 +12,71 @@
          private List<Msg> msgs;
     -->
     <select id="selectInitInfo" resultMap="initInfo">
-        select u.u_name u_name,u.u_head u_head,f.f_head f_head,f.f_name f_name
-        from `user` u
-                 left join friend f on u.u_nid = f.u_id
-        where u_nid = #{userId}
+        SELECT
+            u.username,
+            u.head,
+            f.friendImg,
+            f.friendName,
+            r.time,
+            r.player,
+            r.result,
+            i.img_url,
+            i.img_info,
+            m.msg,
+            t.taskname,
+            t.taskcontent
+        FROM
+            (`user` u,
+                image i,
+                msg m,
+                task t )
+                LEFT JOIN friend f ON f.masterId = u.username
+                LEFT JOIN record r ON r.userid = u.id
+        WHERE
+            u.username = #{userName}
     </select>
 
     <resultMap id="initInfo" type="cn.edu.tute.entities.InitInfo">
-        <result property="headImg" column="u_head"/>
-        <association property="userInfo" javaType="cn.edu.tute.entities.UserInfo">
-            <result column="u_name" property="userName"/>
-        </association>
+        <result property="headImg" column="head"/>
+        <result property="userName" column="username"/>
+        <!--<association property="userInfo" javaType="cn.edu.tute.entities.UserInfo">-->
+        <!--<result column="u_name" property="userName"/>-->
+        <!--</association>-->
         <collection property="userFriends" ofType="cn.edu.tute.entities.UserFriend">
-            <result column="f_head" property="friendImg"/>
-            <result column="f_name" property="friendName"/>
+            <result column="friendImg" property="friendImg"/>
+            <result column="friendName" property="friendName"/>
+        </collection>
+        <collection property="playImgs" ofType="cn.edu.tute.entities.PlayImg">
+            <result column="img_url" property="imgUrl"/>
+            <result column="img_info" property="imgInfo"/>
+        </collection>
+        <collection property="msgs" ofType="cn.edu.tute.entities.Msg">
+            <result column="msg" property="msg"/>
+        </collection>
+        <collection property="gameRecords" ofType="cn.edu.tute.entities.GameRecord">
+            <result column="time" property="time0"/>
+            <result column="player" property="player"/>
+            <result column="result" property="result"/>
+        </collection>
+        <collection property="tasks" ofType="cn.edu.tute.entities.Task">
+            <result column="taskname" property="taskName"/>
+            <result column="taskcontent" property="taskContent"/>
         </collection>
     </resultMap>
 
-    <select id="selectAllMsg" resultType="cn.edu.tute.entities.Msg">
-        select msg
-        from msg
-    </select>
+    <!--<select id="selectAllMsg" resultType="cn.edu.tute.entities.Msg">-->
+    <!--select msg-->
+    <!--from msg-->
+    <!--</select>-->
 
-    <select id="selectAllPlayImg" resultMap="playImg">
-        select *
-        from image
-    </select>
+    <!--<select id="selectAllPlayImg" resultMap="playImg">-->
+    <!--select *-->
+    <!--from image-->
+    <!--</select>-->
 
-    <resultMap id="playImg" type="cn.edu.tute.entities.PlayImg">
-        <result column="u_id" property="uId"/>
-        <result column="img_url" property="imgUrl"/>
-        <result column="img_info" property="imgInfo"/>
-    </resultMap>
+    <!--<resultMap id="playImg" type="cn.edu.tute.entities.PlayImg">-->
+    <!--<result column="u_id" property="uId"/>-->
+    <!--<result column="img_url" property="imgUrl"/>-->
+    <!--<result column="img_info" property="imgInfo"/>-->
+    <!--</resultMap>-->
 </mapper>

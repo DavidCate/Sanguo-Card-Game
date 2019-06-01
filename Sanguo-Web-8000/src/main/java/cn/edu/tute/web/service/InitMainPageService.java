@@ -4,6 +4,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface InitMainPageService {
-    String getInitInfo(String userId);
+    String getInitInfo(String userName);
     String getCardInfo();
 }

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>战三国游戏平台</title>
     <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
     <link rel="stylesheet" href="../css/game.css" type="text/css"/>
     <script type="text/javascript" src="../js/game.js"></script>
     <script type="text/javascript" src="../js/play.js"></script>
@@ -13,23 +12,58 @@
 <body>
 <div class="game-main">
     <div class="game-up">
+        <img class="up-status" src="../image/png/game/readyed.png">
         <div class="up-equip-card" id="game-up-first"></div>
         <div class="up-equip-card" id="game-up-second"></div>
-        <div class="game-up-user"></div>
-        <div class="game-up-hand"></div>
+        <div class="game-up-user">
+            <img class="img-blood" src="../image/png/game/x1.png">
+        </div>
+        <img class="up-head" src="../image/png/main/user-default.png">
+        <div class="game-up-hand">
+            <div class="up-card"></div>
+        </div>
     </div>
     <div class="game-middle">
+        <audio class="voice-d" id="voice-d">
+            <source src="../voice/diwang.mp3" type="audio/mpeg" />
+        </audio>
+        <audio class="voice-p" id="voice-p">
+            <source src="../voice/wujiang.mp3" type="audio/mpeg" />
+        </audio>
+        <audio class="voice-j" id="voice-j">
+            <source src="../voice/junshi.mp3" type="audio/mpeg" />
+        </audio>
+        <audio class="voice-y" id="voice-y">
+            <source src="../voice/yuxi.mp3" type="audio/mpeg" />
+        </audio>
+        <audio class="voice-z" id="voice-z">
+            <source src="../voice/zhaungbei.mp3" type="audio/mpeg" />
+        </audio>
+        <audio class="voice-s" id="voice-s">
+            <source src="../voice/shanghai.mp3" type="audio/mpeg" />
+        </audio>
         <div class="game-card-bg"></div>
         <button class="game-middle-btn" id="game-ready" name="false"></button>
         <button class="game-middle-btn" id="game-play"></button>
         <button class="game-middle-btn" id="game-cancel"></button>
-        <button class="game-middle-btn" id="game-end">结束回合</button>
+        <button class="game-middle-btn" id="game-end"></button>
     </div>
     <div class="game-down">
+        <img class="down-status" src="../image/png/game/readyed.png">
         <div class="down-equip-card" id="game-down-first"></div>
         <div class="down-equip-card" id="game-down-second"></div>
-        <div class="game-down-user"></div>
-        <div class="game-down-hand"></div>
+        <div class="game-down-user">
+            <img class="img-blood0" src="../image/png/game/x1.png">
+        </div>
+        <img class="down-head" src="../image/png/main/user-default.png">
+        <div class="game-down-hand">
+            <div class="down-card"></div>
+        </div>
+    </div>
+    <div class="game-begin">
+        <audio class="bj-voice" id="voice-one">
+            <source src="../voice/bajian.mp3" type="audio/mpeg" />
+        </audio>
     </div>
 </div>
 <div class="game-talk">

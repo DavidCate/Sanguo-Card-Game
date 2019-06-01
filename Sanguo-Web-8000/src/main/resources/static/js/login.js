@@ -1,64 +1,56 @@
 ﻿/**
  *声音
  */
-$(document).ready(function(){
-    $("#voice").bind("click",function(){
-        if($("#voice-one").attr('name') === 'true'){
-            $('#voice').css('background','url('+ '../image/png/login/closed.png' +') no-repeat');
-            $("#voice-one").attr('name','false');
-            $('#voice-one').pause();
-            $('#voice-one').load();
-        }else if($('#voice-one').attr('name') === 'false'){
-            $('#voice').css('background','url('+ '../image/png/login/open.png' +') no-repeat');
-            $("#voice-one").attr('name','true');
-            $('#voice-one').play();
+$(document).ready(function () {
+    var audio = $("#voice-one");
+    var au = audio[0];
+    $("#voice").bind("click", function () {
+        if ($("#voice-one").attr('name') === 'true') {
+            $('#voice').css('background', 'url(' + '../image/png/login/closed.png' + ') no-repeat');
+            $("#voice-one").attr('name', 'false');
+            au.pause();
+        } else if ($('#voice-one').attr('name') === 'false') {
+            $('#voice').css('background', 'url(' + '../image/png/login/open.png' + ') no-repeat');
+            $("#voice-one").attr('name', 'true');
+            au.play();
         }
-    })/*
-    $("#voice").mouseenter(function(){
-        $('#voice').attr('src','../image/png/login/closing.png');
-    });
-    $("#voice").mouseleave(function(){
-        if($('#voice-one').attr('name') === 'true'){
-            $('#voice').attr('src','../image/png/login/open.png');
-        }else if($('#voice-one').attr('name') === 'false'){
-            $('#voice').attr('src','../image/png/login/closed.png');
-        }
-    });*/
+    })
 });
 /**
  *注册
  */
-$(function(){
-    $("#left-reg-button").bind("click",function(){
-        $('#register').css('display','block');
+$(function () {
+    $("#left-reg-button").bind("click", function () {
+        $('#register').css('display', 'block');
     })
-    $("#close-reg").bind("click",function(){
-        $('#register').css('display','none');
+    $("#close-reg").bind("click", function () {
+        $('#register').css('display', 'none');
     })
 });
-$(document).ready(function(){
-    $("#reg-button").bind("click",function(){
+$(document).ready(function () {
+    $("#reg-button").bind("click", function () {
         /**
          * 目前输入字段还未做限制条件
          * @type {*|jQuery}
          */
+
         /**
          * result可返回/不返回
          * 参数 ： from表单
          */
         $.ajax({
             type: "POST",
-            url:  "/register",
+            url: "/register",
             data: $('#reg-form').serialize(),
             dataType: "json",
-            success:function(){
+            success: function () {
                 /**
                  * 注册成功/失败未渲染
                  */
                 console.log("register success");
-                $('#register').css('display','none');
+                $('#register').css('display', 'none');
             },
-            error:function () {
+            error: function () {
                 console.log("failed");
             }
         });
@@ -67,8 +59,8 @@ $(document).ready(function(){
 /**
  *登录
  */
-$(document).ready(function(){
-    $("#login-button").bind("click",function(){
+$(document).ready(function () {
+    $("#login-button").bind("click", function () {
         /**
          * 两种
          * (post):url;参数
@@ -90,10 +82,17 @@ $(document).ready(function(){
             url: "/login",
             data: $('#login-form').serialize(),
             dataType: "json",
-            success:function(){
-                window.location.href = "http://localhost:8000/html/main.html";
+            success: function (data) {
+                var user = $(".one-In").val();
+                var data0 = data.iS_SUCCESS;
+                var data1 = data.errorMsg;
+                if (data0=="true") {
+                    window.location.href = "http://localhost:8000/html/main.html?user="+user+"";
+                } else {
+                    alert(data1);
+                }
             },
-            error:function () {
+            error: function () {
                 /**
                  * 登录失败未渲染
                  */

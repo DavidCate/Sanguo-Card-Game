@@ -45,12 +45,17 @@ button:active{
     z-index: 6;
 }
 .top-begin {
-    width: 80px;
-    height: 30px;
+    /*width: 91px;
+    height: 39px;*/
+    width: 114.5px;
+    height: 39.5px;
     position: absolute;
     top: 30%;
     left: 50px;
-
+    border: none;
+    outline: none;
+    background: url(../image/png/main/begin.png) no-repeat;
+    background-size: 100% 100%;
 }
 .top-column {
     /*padding: 0;
@@ -64,13 +69,22 @@ button:active{
 }
 
 .top-column li {
-    padding: 10px 10px;
+    top: 0px;
+    position: relative;
+    width: 100px;
+    height: 35px;
+    padding: 10px 0px;
     display: inline-block;
     cursor: pointer;
+    text-align:center;
 }
 
-.top-column li:hover {
+/*.top-column li:hover {
     background-color: #000000;
+}*/
+.top-column li a:hover {
+    /*font-size: 25px;*/
+    color: #614814;
 }
 
 .top-column-more {
@@ -78,10 +92,10 @@ button:active{
     position: absolute;
     display: none;
     z-index: 15;
-    background: #37373c;
+    background: rgba(22, 11, 6, 0.94);
 }
 .top-column-more li:hover a {
-    background-color: #000000;
+    color: #614814;
 }
 .top-column-more li{
     padding: 5px 5px;
@@ -95,12 +109,19 @@ button:active{
 .top-column a {
     text-decoration: none;
     height: 50px;
-    font-family: "微软雅黑", "Microsoft Yahei", "Hiragino Sans GB", tahoma, arial, "宋体";
-    font-size: 20px;
+    font-family: '楷体';
+    font-size: 25px;
     text-align: center;
-    color: #fff;
+    font-weight:500;
+    color: #DAA520;
+    margin:0 auto;
 }
-
+.img-fire{
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    height: 100%;
+}
 /*切换层*/
 .img-col{
     position: fixed;
@@ -111,6 +132,14 @@ button:active{
     min-width: 1086px;
     min-height: 40px;
     z-index: 5;
+}
+.img-title{
+    position: fixed;
+    right: 22%;
+    top: 15%;
+    width: 541px;
+    height: 86px;
+    z-index: -2;
 }
 .main-middle {
     position: fixed;
@@ -124,14 +153,34 @@ button:active{
     z-index: 2;
 }
 #btn-match{
+    width: 142px;
+    height: 50px;
     position: absolute;
     top:7%;
-    left: 10%;
+    left: 7%;
+    /*border: none;
+    outline: none;*/
+    background: url(../image/png/main/pipei.png) no-repeat;
+    background-size: 100% 100%;
+}
+#btn-match:hover{
+    width: 150px;
+    height: 52px;
 }
 #btn-story{
     position: absolute;
     top:7%;
-    left: 20%;
+    left: 25%;
+    width: 142px;
+    height: 50px;
+    /*border: none;
+    outline: none;*/
+    background: url(../image/png/main/gushi.png) no-repeat;
+    background-size: 100% 100%;
+}
+#btn-story:hover{
+    width: 150px;
+    height: 52px;
 }
 /*div轮播图*/
 .box ul {
@@ -196,9 +245,9 @@ button:active{
     opacity: 0.5;
     border: 1px solid #fff;
 }
-/*#arr span:hover{*/
-    /*cursor:url('../image/ico/mouseAction.ico'),auto;*/
-/*}*/
+/*#arr span:hover{
+    cursor:url('../image/ico/mouseAction.ico'),auto;
+}*/
 #arr span:active{
     cursor:url('../image/ico/mouseInput.ico'),auto;
 }
@@ -210,15 +259,64 @@ button:active{
 /*公告*/
 .main-middle-notice{
     position: absolute;
-    width: 350px;
-    height: 250px;
+    width: 424px;
+    height: 265px;
+    top: 35%;
+    left: 42%;
+    background: url(../image/png/main/maingonggao.png) no-repeat;
+    background-size: 100% 100%;
+    z-index: 2;
+}
+.li-notice{
+    list-style: none;
+}
+.span-notice{
+    position: absolute;
+    left: 12%;
+    font-size: 18px;
+    font-family: '楷体';
+    color: #634a12;
+    border: 1px #634a12 solid;
+}
+#n2{
+    color: #3972af;
+    border: 1px #3972af solid;
+}
+#n1,#s1,#d1{
+    top: 25%;
+}
+#n2,#s2,#d2{
     top: 40%;
-    left: 45%;
-    background: #1d1d1d;
+}
+#n3,#s3,#d3{
+    top: 55%;
 }
 .main-notice{
-    font-size: 15px;
-    color: #fff;
+    position: absolute;
+    top: 23%;
+    left: 24%;
+    font-size: 18px;
+    font-family: '楷体';
+    color: #000000;/*
+    text-decoration:none;*/
+}
+.main-notice :active{
+    cursor:url('../image/ico/mouseInput.ico'),auto;
+}
+.span-date{
+    position: absolute;
+    right: 10%;
+    font-size: 17px;
+    font-family: '楷体';
+    color: #5b5b5b;
+}
+
+.version{
+    position: absolute;
+    bottom: 3%;
+    left: 68%;
+    font-weight: bold;
+    color: #b88a20;
 }
 /*
 .main-rig {
@@ -331,6 +429,92 @@ button:active{
     bottom: 10%;
     left: 47%;
 }
+/*房间大厅*/
+.main-room{
+    position: fixed;
+    left: 0;
+    top: 13.1%;
+    width: 79.5%;
+    /*min-width: 900px;*/
+    height: 87%;
+    min-width: 1086px;
+    min-height: 572px;
+    /*background-size: cover;*/
+    background: url("../image/png/main/roombg.png") no-repeat;
+    background-size: 100% 100%;
+    /*background: #b4201d;*/
+    display: none;
+    z-index: 4;
+}
+.room-list{
+    position: absolute;
+    top: 5%;
+    left: 3%;
+    width: 80%;
+    height: 80%;
+    /*background: url("../image/png/main/lbg.png") no-repeat;
+    background-size: 100% 100%;*/
+    /*filter: alpha(Opacity=80);
+    -moz-opacity: 0.8;
+    opacity: 0.8;*/
+}
+.img-list{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    filter: alpha(Opacity=80);
+    -moz-opacity: 0.8;
+    opacity: 0.8;
+}
+.img-name{
+    position: absolute;
+    top: 4%;
+    left: 5.8%;
+    width: 90%;
+    height: 45px;
+}
+/*.room-li{
+    position: absolute;
+    top: 15%;
+    left: 5.8%;
+    width: 90%;
+    height: 40px;
+}*/
+.room-btn{
+    position: absolute;
+    width: 97.6px;
+    height: 34.8px;
+    bottom: 5%;
+    border: none;
+    outline: none;
+}
+#rb1{
+    right: 31%;
+    background: url("../image/png/main/refush.png") no-repeat;
+    background-size: 100% 100%;
+}
+#rb1:hover{
+    background: url("../image/png/main/refush1.png") no-repeat;
+    background-size: 100% 100%;
+}
+#rb2{
+    right: 18%;
+    background: url("../image/png/main/creatRoom.png") no-repeat;
+    background-size: 100% 100%;
+}
+#rb2:hover{
+    background: url("../image/png/main/creatRoom1.png") no-repeat;
+    background-size: 100% 100%;
+}
+#rb3{
+    right: 5%;
+    background: url("../image/png/main/joinRoom.png") no-repeat;
+    background-size: 100% 100%;
+}
+#rb3:hover{
+    background: url("../image/png/main/joinRoom1.png") no-repeat;
+    background-size: 100% 100%;
+}
 /*侧边用户栏*/
 .main-right {
     position: fixed;
@@ -401,6 +585,12 @@ button:active{
     background: url("../image/png/main/mainFriend.png") no-repeat;
     background-size: 100% 100%;
 }
+.main-friend-bg{
+    position: absolute;
+    width: 280px;
+    height: 570px;
+    z-index: -15;
+}
 .main-right-head{
     position: absolute;
     top: 0;
@@ -445,25 +635,52 @@ button:active{
     color: #ffffff;
     font-size: 14px;
 }
+.main-right-back{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:5%;
+    /*background: #29252a;*/
+    z-index: -1;
+}
 .main-friend-open{
     position: absolute;
-    top: 7px;
-    left: 20%;
+    top: 6px;
+    left: 11%;
+    width: 130px;
+    height: 25px;
+    outline: none;
+    border: none;
+    background: url("../image/png/main/closeFriend.png");
+    background-size: 100% 100%;
+    /*background: rgba(255,255,255,0);
+    font-size: 16px;
+    font-weight: 300;
+    font-family: '楷体';
+    color: #DAA520;*/
 }
 .main-friend-add{
     position: absolute;
-    top: 7px;
-    left: 55%;
+    top: 6px;
+    left: 57%;
+    width: 90px;
+    height: 25px;
+    outline: none;
+    border: none;
+    background: url("../image/png/main/addFriend.png");
+    background-size: 100% 100%;
 }
 .main-right-bottom{
     position: absolute;
-    top: 5%;
+    top: 7%;
     left: 0;
     width: 100%;
-    height:95%;
-    background: #1d1d1d;
+    height:93%;
+    /*background: url("../image/jpg/main/friend.jpg");
+    background-size: 100% 120%;*/
     display: block;
-    z-index: -1;
+    z-index: 8;
 }
 
 
@@ -473,17 +690,315 @@ button:active{
 个人资料
  */
 #main-middle-detail{
-    background: url("../image/png/main/mainDetail.png");
+    /*background: url("../image/png/main/mainDetail.png");*/
+    background: url("../image/png/main/mainPerson.png");
     background-size: 100% 100%;
     display: none;
+}
+.user-col{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 512px;
+    height: 164px;
+    background: url("../image/png/main/user.png");
+    background-size: 100% 100%;
+}
+.user-head{
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    top: 20%;
+    left: 8%;
+    z-index: -1;
+}
+.span-user{
+    position: absolute;
+    left: 50%;
+    font-size: 20px;
+    font-weight: 500;
+    /*font-family: '楷体';*/
+    color: #000000;
+}
+#su1{
+    top: 24%;
+}
+#su2{
+    top: 46%;
+}
+#su3{
+    top: 69%;
+}
+.btn-detail{
+    position: absolute;
+    bottom: 17%;
+    right: 7%;
+    width: 68px;
+    height: 25px;
+    border: none;
+    outline: none;
+    background: url("../image/png/main/btnDetail.png");
+    background-size: 100% 100%;
+}
+.btn-change{
+    position: absolute;
+    top: 25%;
+    right: 7%;
+    width: 68px;
+    height: 25px;
+    border: none;
+    outline: none;
+    background: url("../image/png/main/btnChange.png");
+    background-size: 100% 100%;
+}
+.user-record{
+    position: absolute;
+    left: 6%;
+    top: 35%;
+    width: 900px;
+    height: 350px;
+    background: url("../image/png/main/mainRecord.png");
+    /*background: url("../image/png/main/recordBg.png");*/
+    background-size: 100% 100%;
+}
+.div-record{
+    position: absolute;
+    left: 5%;
+    top: 10%;
+    width: 80%;
+    height: 80%;
+}
+/*卡牌查看*/
+.card-detail{
+    position: absolute;
+    top: 3%;
+    left: 15%;
+    width: 783px;
+    height: 532.5px;
+    background: url("../image/png/main/cardDetailBg.png");
+    background-size: 100% 100%;
+    z-index: 2;
+    display: none;
+    white-space: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling:touch;
+    float: left;
+}
+.div-card{
+    position: absolute;
+    top: 100px;
+    left: 62px;
+    width: 660px;
+    height: 340px;
+}
+.ul-card{
+    list-style: none;
+    overflow: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.li-card{
+    list-style: none;
+    height:300px;
+    width: 213px;
+    margin-right: 10px;
+    display: inline-block;
+}
+#lc1{
+    background: url("../image/card/caocao.png");
+    background-size: 100% 100%;
+}
+#lc2{
+    background: url("../image/card/liubei.png");
+    background-size: 100% 100%;
+}
+#lc3{
+    background: url("../image/card/sunquan.png");
+    background-size: 100% 100%;
+}
+#lc4{
+    background: url("../image/card/zhugeliang.png");
+    background-size: 100% 100%;
+}
+#lc5{
+    background: url("../image/card/guanyu.png");
+    background-size: 100% 100%;
+}
+#lc6{
+    background: url("../image/card/lvbu.png");
+    background-size: 100% 100%;
+}
+#lc7{
+    background: url("../image/card/zhaoyun.png");
+    background-size: 100% 100%;
+}
+#lc8{
+    background: url("../image/card/zhangfei.png");
+    background-size: 100% 100%;
+}
+#lc9{
+    background: url("../image/card/zhangliao.png");
+    background-size: 100% 100%;
+}
+#lc10{
+    background: url("../image/card/zhouyu.png");
+    background-size: 100% 100%;
+}
+#lc11{
+    background: url("../image/card/yuxi.png");
+    background-size: 100% 100%;
+}
+#lc12{
+    background: url("../image/card/jingzhou.png");
+    background-size: 100% 100%;
+}
+#lc13{
+     background: url("../image/card/machao.png");
+     background-size: 100% 100%;
+}
+#lc14{
+    background: url("../image/card/huangzhong.png");
+    background-size: 100% 100%;
+}
+#lc15{
+     background: url("../image/card/xuchu.png");
+     background-size: 100% 100%;
+}
+#lc16{
+    background: url("../image/card/xuhuang.png");
+    background-size: 100% 100%;
+}
+
+#close-card{
+    position: absolute;
+    top: 12%;
+    right: 8%;
 }
 /**
 任务
  */
 #main-middle-mark{
-    background: url("../image/png/main/mainMark1.png");
+    background: url("../image/png/main/mainPerson.png");
     background-size: 100% 100%;
     display: none;
+}
+.main-mark{
+    position: absolute;
+    top: 7%;
+    left: 5%;
+    width: 700px;
+    height: 500px;
+    background: url("../image/png/main/mainMark0.png");
+    background-size: 100% 100%;
+}
+.single-mark{
+    position: absolute;
+    top: 10%;
+    left: 15%;
+    width: 800px;
+    height: 480px;
+    background: url("../image/png/main/singleMark.png");
+    background-size: 100% 100%;
+    display: none;
+}
+.mark-msg{
+    position: absolute;
+    top: 11%;
+    left: 11%;
+    width: 78%;
+    height: 78%;
+}
+#mark-close{
+    position: absolute;
+    top: 6%;
+    right: 7.5%;
+}
+.btn-mark{
+    position: absolute;
+    width: 120px;
+    height: 68px;
+    border: none;
+    outline: none;
+}
+.btn-mark:hover{
+    width: 140px;
+    height: 79px;
+}
+#m0{
+    top: 20%;
+    right: 27%;
+    background: url("../image/png/main/markTyjy.png");
+    background-size: 100% 100%;
+}
+#m1{
+    top: 51%;
+    right: 25%;
+    background: url("../image/png/main/markSyzlb.png");
+    background-size: 100% 100%;
+}
+#m2{
+    top: 35%;
+    right: 20%;
+    background: url("../image/png/main/markSgml.png");
+    background-size: 100% 100%;
+}
+#m3{
+    top: 61%;
+    right: 45%;
+    background: url("../image/png/main/markCbdz.png");
+    background-size: 100% 100%;
+}
+#m4{
+    top: 35%;
+    right: 50%;
+    background: url("../image/png/main/markYfcc.png");
+    background-size: 100% 100%;
+}
+.btn-begin-mark{
+    position: absolute;
+    bottom: 3%;
+    right: 10%;
+    width: 122px;
+    height: 34px;
+    border: none;
+    outline: none;
+    background: url("../image/png/main/beginMark.png");
+    background-size: 100% 100%;
+}
+.get-card{
+    position: absolute;
+    bottom: 25%;
+    right: 40%;
+    width: 230px;
+    height: 366px;
+    background: url("../image/png/main/getA.png");
+    background-size: 100% 100%;
+    z-index: 7;
+    display: none;
+}
+.btn-get-card{
+    position: absolute;
+    bottom: 3%;
+    right: 1%;
+    width: 256px;
+    height: 94px;
+    border: none;
+    outline: none;
+    background: url("../image/png/main/getCard.png");
+    background-size: 100% 100%;
+}
+.btn-get-card:hover{
+
+}
+.img-box{
+    position: absolute;
+    bottom: 12%;
+    right: 7%;
+    width: 128px;
+    height: 128px;
+}
+.no-click{
+    pointer-events:none;
 }
 /**
 游戏规则
@@ -493,25 +1008,51 @@ button:active{
     background-size: 100% 100%;
     display: none;
 }
+.div-rule{
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    line-height: 70px;
+}
+.span-rule{
+    position: absolute;
+    line-height: 25px;
+    font-family: '楷体';
+    font-size: 22px;
+    font-weight:600;
+    color: #1c0101;
+}
 /**
 关于我们
  */
 #main-middle-us{
     position: fixed;
-    left: 10%;
-    top: 13.1%;
-    width: 58.5%;
-    height: 77%;
-    min-width: 799px;
-    min-height: 506px;
+    left: 20%;
+    top: 25%;
+    width: 43.8%;
+    height: 60%;
+    min-width: 599px;
+    min-height: 393px;
     z-index: 5;
-    background: url("../image/png/main/mainUs.png");
+    background: url("../image/png/main/gonggao.png");
     background-size: 100% 100%;
     display: none;
 }
+.span-us{
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    width: 70%;
+    font-family: '楷体';
+    font-size: 22px;
+    font-weight:500;
+    color: #654c12;
+}
 .btn-us{
     position: absolute;
-    top: 11%;
+    top: 7%;
     right: 8%;
     width: 32px;
     height: 32px;
@@ -539,6 +1080,7 @@ button:active{
     background-size: 100% 100%;
     display: none;
     z-index: 5;
+    text-align:center;
 }
 .btn-close-set{
     position: absolute;
@@ -554,4 +1096,118 @@ button:active{
 .btn-close-set:hover{
     background: url("../image/png/main/mainClose0.png") no-repeat;
     background-size: 100% 100%;
+}
+.set-music{
+    position: relative;
+    top: 20%;
+    font-family: '楷体';
+    font-size: 25px;
+    font-weight:600;
+    color: #DAA520;
+}
+.open-set-music{
+    position: relative;
+    top: 20%;
+    width: 17px;
+    height: 17px;
+}
+.set-save{
+    position: absolute;
+    bottom: 10%;
+    left: 40%;
+    width: 80px;
+    height: 32px;
+    outline: none;
+    background: rgba(117, 46, 7, 0.82);
+    font-size: 25px;
+    font-weight: 600;
+    font-family: '楷体';
+    color: #DAA520;
+}
+
+/*注销*/
+.main-close-page{
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    width: 35%;
+    height: 44.3%;
+    min-width: 478px;
+    min-height: 291px;
+    background: url("../image/png/main/mainSetPage.png") no-repeat;
+    background-size: 100% 100%;
+    display: none;
+    z-index: 5;
+    text-align:center;
+}
+.span-ques{
+    position: relative;
+    top: 30%;
+    font-family: '楷体';
+    font-size: 25px;
+    font-weight:600;
+    color: #DAA520;
+}
+.close-user{
+    position: absolute;
+    bottom: 30%;
+    width: 80px;
+    height: 32px;
+    outline: none;
+    background: rgba(117, 46, 7, 0.82);
+    font-size: 25px;
+    font-weight: 600;
+    font-family: '楷体';
+    color: #DAA520;
+}
+#t1{
+    left: 25%;
+}
+#t2{
+    left: 57%;
+}
+/*添加好友*/
+.main-add-page{
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    width: 35%;
+    height: 44.3%;
+    min-width: 478px;
+    min-height: 291px;
+    background: url("../image/png/main/mainSetPage.png") no-repeat;
+    background-size: 100% 100%;
+    display: none;
+    z-index: 5;
+    text-align:center;
+}
+.add-search{
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    background: url(../image/png/login/input.png);
+    background-size: 100% 100%;
+    width: 180px;
+    height: 26px;
+    font-size: 15px;
+}
+.btn-add-page{
+    width: 80px;
+    height: 32px;
+    outline: none;
+    background: rgba(117, 46, 7, 0.82);
+    font-size: 25px;
+    font-weight: 600;
+    font-family: '楷体';
+    color: #DAA520;
+}
+#btn-search{
+    position: absolute;
+    top: 20%;
+    right: 20%;
+}
+#btn-add{
+    position: absolute;
+    bottom: 20%;
+    left: 42%;
 }

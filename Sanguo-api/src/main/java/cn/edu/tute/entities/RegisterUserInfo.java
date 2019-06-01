@@ -3,19 +3,19 @@ package cn.edu.tute.entities;
 import java.io.Serializable;
 
 public class RegisterUserInfo implements Serializable {
-    private String user;
+    private String username;
     private String name;
-    private String passwd;
+    private String password;
     private String phone;
     //男：0，女：1
-    private int sex;
+    private String sex;
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getName() {
@@ -26,12 +26,12 @@ public class RegisterUserInfo implements Serializable {
         this.name = name;
     }
 
-    public String getPasswd() {
-        return passwd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhone() {
@@ -42,11 +42,11 @@ public class RegisterUserInfo implements Serializable {
         this.phone = phone;
     }
 
-    public int getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 }

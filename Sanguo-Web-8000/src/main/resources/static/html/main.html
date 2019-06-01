@@ -9,9 +9,13 @@
     <link rel="shortcut icon" href="../image/ico/web.ico"/>
 </head>
 <body>
+<!--声音-->
+<audio loop="loop" autoplay="autoplay" class="bg-voice" id="voice-one" name="true">
+    <source src="../voice/mainbg.mp3" type="audio/mpeg" />
+</audio>
 <!--顶部栏-->
 <div class="main-top">
-    <button class="top-begin" id="top-begin">开始</button>
+    <button class="top-begin" id="top-begin"></button>
     <ul class="top-column">
         <li><a href="#" class="main-choose" name="main-middle-page" onclick="choose(this.name)">首页</a></li>
         <li><a href="#" class="main-choose" name="main-middle-detail" onclick="choose(this.name)">个人资料</a></li>
@@ -24,22 +28,24 @@
             </ul>
         </li>
     </ul>
+    <!--<img class="img-fire" src="../image/png/main/fire1.png">-->
 </div>
 <img class="img-col" src="../image/png/main/mainColu.png">
+<img class="img-title" src="../image/png/main/title.png">
 <!--首页栏-->
 <div class="main-middle" id="main-middle-page">
-    <button class="main-model-btn" id="btn-match">匹配模式</button>
-    <button class="main-model-btn" id="btn-story">故事模式</button>
+    <button class="main-model-btn" id="btn-match"></button>
+    <button class="main-model-btn" id="btn-story"></button>
 </div>
 <div class="box" id="box">
-    <div class="inner">
+        <div class="inner">
         <!--轮播图-->
         <ul>
-            <li><a href="#"><img id="div1" src="../image/png/main/An01.png" alt=""></a></li>
-            <li><a href="#"><img id="div2" src="../image/png/main/An02.png" alt=""></a></li>
-            <li><a href="#"><img id="div3" src="../image/png/main/An03.png" alt=""></a></li>
-            <li><a href="#"><img id="div4" src="../image/png/main/An04.png" alt=""></a></li>
-            <li><a href="#"><img id="div5" src="../image/png/main/An05.png" alt=""></a></li>
+            <li><a href="#"><img id="div1" src="../image/png/main/d01.png" alt=""></a></li>
+            <li><a href="#"><img id="div2" src="../image/png/main/d02.png" alt=""></a></li>
+            <li><a href="#"><img id="div3" src="../image/png/main/d03.png" alt=""></a></li>
+            <li><a href="#"><img id="div4" src="../image/png/main/d04.png" alt=""></a></li>
+            <!--<li><a href="#"><img id="div5" src="../image/png/main/An05.png" alt=""></a></li>-->
         </ul>
         <!--左右焦点-->
         <div id="arr">
@@ -53,11 +59,25 @@
     </div>
 </div>
 <div class="main-middle-notice">
-    <span class="main-notice" id="s1"></span><br>
-    <span class="main-notice" id="s2"></span><br>
-    <span class="main-notice" id="s3"></span><br>
-    <span class="main-notice" id="s4"></span>
+    <ul>
+        <li class="li-notice">
+            <span class="span-notice" id="n1">公告</span>
+            <a href="http://www.baidu.com" class="main-notice" id="s1"></a>
+            <span class="span-date" id="d1">04-28</span>
+        </li>
+        <li class="li-notice">
+            <span class="span-notice" id="n2">版本</span>
+            <a href="#" class="main-notice" id="s2"></a>
+            <span class="span-date" id="d2">05-01</span>
+        </li>
+        <li class="li-notice">
+            <span class="span-notice" id="n3">公告</span>
+            <a href="#" class="main-notice" id="s3"></a>
+            <span class="span-date" id="d3">05-02</span>
+        </li>
+    </ul>
 </div>
+<span class="version">当前游戏版本：1.0</span>
 <!--模式选择栏-->
 <div class="main-middle-two">
     <input type="radio" class="main-model" name="model" id="main-model-left" value="match">
@@ -67,25 +87,38 @@
     <button class="main-begin-game">开始游戏</button>
     <button class="close-two" id="close-two"></button>
 </div>
+<!--房间大厅-->
+<div class="main-room">
+    <div class="room-list">
+        <img class="img-list" src="../image/png/main/lbg.png">
+        <img class="img-name" src="../image/png/main/roomName.png">
+        <span class="room-li"></span>
+    </div>
+    <button class="room-btn" id="rb1"></button>
+    <button class="room-btn" id="rb2"></button>
+    <button class="room-btn" id="rb3"></button>
+</div>
 <!--右侧用户栏-->
 <div class="main-right">
     <button class="main-btn" id="main-close"></button>
     <button class="main-btn" id="main-set"></button>
     <button class="main-btn" id="main-msg"></button>
     <div class="main-right-top">
-        <img class="img-head" src="">
+        <img class="img-head" src="../image/png/main/user-default.png">
         <div class="main-right-head">
         </div>
         <div class="main-right-name">
-            <span class="user-name">夜雨声烦</span>
+            <span class="user-name">未命名</span>
             <img class="main-line" src="../image/png/main/mainOnline%20.png">
             <span class="main-line-msg">在线</span>
         </div>
         <span></span>
     </div>
     <div class="main-friend">
-        <button class="main-friend-open">收起好友列表</button>
-        <button class="main-friend-add">添加好友</button>
+        <img class="main-friend-bg" src="../image/png/main/friendBg.png">
+        <div class="main-right-back"></div>
+        <button class="main-friend-open"></button>
+        <button class="main-friend-add"></button>
         <div class="main-right-bottom" name="true"></div>
     </div>
 
@@ -95,28 +128,102 @@
 </div>
 <!--个人资料栏-->
 <div class="main-middle" id="main-middle-detail">
-    <div class="main-middle-person-left">
+    <div class="card-detail">
+        <div class="div-card">
+            <ul class="ul-card">
+                <li class="li-card" id="lc1"></li>
+                <li class="li-card" id="lc2"></li>
+                <li class="li-card" id="lc3"></li>
+                <li class="li-card" id="lc4"></li>
+                <li class="li-card" id="lc5"></li>
+                <li class="li-card" id="lc6"></li>
+                <li class="li-card" id="lc7"></li>
+                <li class="li-card" id="lc8"></li>
+                <li class="li-card" id="lc9"></li>
+                <li class="li-card" id="lc10"></li>
+                <li class="li-card" id="lc11"></li>
+                <li class="li-card" id="lc12"></li>
+                <li class="li-card" id="lc13"></li>
+                <li class="li-card" id="lc14"></li>
+                <li class="li-card" id="lc15"></li>
+                <li class="li-card" id="lc16"></li>
+        </ul></div>
+        <button class="btn-close-set" id="close-card"></button>
+    </div>
+    <div class="user-col">
+        <img class="user-head" src="../image/png/main/user-default.png">
+        <span class="span-user" id="su1">未命名</span>
+        <span class="span-user" id="su2">0</span>
+        <span class="span-user" id="su3">50</span>
+        <button class="btn-change"></button>
+        <button class="btn-detail"></button>
+    </div>
+    <div class="user-record">
+        <div class="div-record"></div>
+    </div>
+    <!--<div class="main-middle-person-left">
         <div class="main-head">
-            <!--<img class="img-head" src="../image/png/main/">-->
+            &lt;!&ndash;<img class="img-head" src="../image/png/main/">&ndash;&gt;
         </div>
     </div>
-    <div class="main-middle-person-right">
+    <div class="main-middle-person-right">-->
     </div>
 </div>
 <!--任务栏-->
 <div class="main-middle" id="main-middle-mark">
+    <div class="get-card"></div>
+    <img class="img-box" src="../image/png/main/box0.png">
+    <button class="btn-get-card"></button>
+    <div class="main-mark">
+        <button class="btn-mark" id="m0" onclick="msg(this.id)"></button>
+        <button class="btn-mark" id="m1" onclick="msg(this.id)"></button>
+        <button class="btn-mark" id="m2" onclick="msg(this.id)"></button>
+        <button class="btn-mark" id="m3" onclick="msg(this.id)"></button>
+        <button class="btn-mark" id="m4" onclick="msg(this.id)"></button>
+    </div>
+    <div class="single-mark">
+        <div class="mark-msg"></div>
+        <button class="btn-close-set" id="mark-close"></button>
+        <button class="btn-begin-mark"></button>
+    </div>
 </div>
 <!--游戏规则栏-->
 <div class="main-middle" id="main-middle-rule">
+    <div class="div-rule">
+        <span class="span-rule">&nbsp;&nbsp;&nbsp;&nbsp;本游戏为回合制游戏，玩家初始血量值为30，灵活的卡牌对战会对玩家的血量产生不同的效果，当某一方玩家的血量值先降为0，则失败，另一方获得胜利；多人游戏中只有一人可获胜，即活到最后一人为胜利方。</span><br>
+        <span class="span-rule">&nbsp;&nbsp;&nbsp;&nbsp;本游戏分为匹配模式和故事模式。</span><br>
+        <span class="span-rule">&nbsp;&nbsp;&nbsp;&nbsp;匹配模式：玩家可在线与一个或多个玩家（最多七人）进行同台竞技卡牌战斗，活到最后即为胜利。</span><br>
+        <span class="span-rule">&nbsp;&nbsp;&nbsp;&nbsp;故事模式：玩家可逐一选择一项历史事件关卡来进行卡牌战斗，战斗胜利即为闯关成功，失败则可以重来。每闯过一关可开启下一关卡，每关都有丰厚的战斗奖励等你来拿。</span><br>
+        <span class="span-rule">&nbsp;&nbsp;&nbsp;&nbsp;卡牌对战规则：卡牌可分为帝王牌，武将牌，军师牌，武器牌，城池牌，玉玺牌。帝王牌与武将牌代表不同的攻击力与攻击效果；军师牌代表不同的计谋与战斗效果；武器牌代表对玩家的攻击力加持效果；城池牌代表对玩家的防御力加持效果；玉玺牌代表对玩家的血量值回复效果。</span>
+    </div>
 </div>
 <!--关于我们栏-->
 <div id="main-middle-us">
     <button class="btn-us"></button>
+    <span class="span-us">&nbsp;&nbsp;&nbsp;&nbsp;恭喜你已成功加入三国群英榜，可尽情与其他英雄豪杰一决高下，争夺榜首之位。
+	&nbsp;&nbsp;&nbsp;&nbsp;不删档1.0版本上线，全部英雄卡牌免费使用。</span>
 </div>
 <img class="img-bottom-back" src="../image/png/main/main.png">
 <!--弹出框-->
 <div class="main-set-page">
+    <input class="open-set-music" type="checkbox">
+    <span class="set-music">开启音乐</span>
+    <input class="open-set-music" type="checkbox">
+    <span class="set-music">关闭音乐</span>
     <button class="btn-close-set"></button>
+    <button class="set-save">保存</button>
+</div>
+<div class="main-close-page">
+    <button class="btn-close-set"></button>
+    <span class="span-ques">是否注销当前用户？</span>
+    <button class="close-user" id="t1">是</button>
+    <button class="close-user" id="t2">否</button>
+</div>
+<div class="main-add-page">
+    <button class="btn-close-set"></button>
+    <input type="text" class="add-search"/>
+    <button class="btn-add-page" id="btn-search">查找</button>
+    <button class="btn-add-page" id="btn-add">添加</button>
 </div>
 </body>
 </html>
