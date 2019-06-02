@@ -26,6 +26,6 @@ public class SanguoNettyApplication implements CommandLineRunner {
 
     public void run(String... args) throws Exception {
         initService.init();
-        chatService.run(1111);
+        chatService.run();
     }
 }

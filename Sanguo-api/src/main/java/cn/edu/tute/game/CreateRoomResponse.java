@@ -1,10 +1,9 @@
-package cn.edu.tute.netty.jsonMsgPoJo;
+package cn.edu.tute.game;
 
 import java.io.Serializable;
 
-public class JoinMsg implements Serializable {
-    private String type="join";
-    private String isSuccess;
+public class CreateRoomResponse implements Serializable {
+    private String type="createRoom";
     private String errMsg;
 
     public String getType() {
@@ -13,14 +12,6 @@ public class JoinMsg implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getIsSuccess() {
-        return isSuccess;
-    }
-
-    public void setIsSuccess(String isSuccess) {
-        this.isSuccess = isSuccess;
     }
 
     public String getErrMsg() {

@@ -11,4 +11,6 @@ public interface GameLogicService {
     void joinRoom(JSONObject jsonMsg, ChannelHandlerContext ctx);
 
     void match(JSONObject jsonMsg, ChannelHandlerContext ctx);
+
+    void getRoom(JSONObject jsonMsg, ChannelHandlerContext ctx);
 }

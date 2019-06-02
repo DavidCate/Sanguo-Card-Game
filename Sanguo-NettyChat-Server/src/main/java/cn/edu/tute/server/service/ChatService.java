@@ -14,7 +14,7 @@ public class ChatService {
     @Autowired
     WebSocketServer webSocketServer;
 
-    public void run(int port) {
+    public void run() {
         Properties property=propertyUtil.getProperties("netty.properties");
         String webSocketPort=property.getProperty("webSocketPort");
         webSocketServer.run(Integer.valueOf(webSocketPort));

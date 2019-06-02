@@ -94,7 +94,14 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         }
         String msgType = (String) jsonMsg.get("type");
         if (msgType.equals("token") && msgType != null) {
-            msgHandService.handToken(jsonMsg, ctx);
+            String flag = (String) jsonMsg.get("flag");
+            if (flag.equals("1")) {
+                msgHandService.handToken1(jsonMsg, ctx);
+            }
+            if (flag.equals("2")) {
+                msgHandService.handToken2(jsonMsg, ctx);
+            }
+
         } else if (msgType.equals("private") && msgType != null) {
             msgHandService.handPrivate(jsonMsg, ctx);
         } else if (msgType.equals("world") && msgType != null) {
@@ -115,8 +122,10 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
             msgHandService.handCreateRoom(jsonMsg, ctx);
         } else if (msgType.equals("joinRoom") && msgType != null) {
             msgHandService.handJoinRoom(jsonMsg, ctx);
-        } else if (msgType.equals("match")&& msgType!=null){
-            msgHandService.handMatch(jsonMsg,ctx);
+        } else if (msgType.equals("match") && msgType != null) {
+            msgHandService.handMatch(jsonMsg, ctx);
+        } else if (msgType.equals("getRoom") && msgType != null) {
+            msgHandService.handGetRoom(jsonMsg, ctx);
         }
 
     }

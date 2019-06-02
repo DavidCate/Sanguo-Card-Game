@@ -1,6 +1,6 @@
 var lockReconnect = false;
 var ws;
-var myUrl = "ws://localhost:11111";
+var myUrl = "ws://192.168.43.189:11111";
 
 /**
  * 创建ws
@@ -39,7 +39,8 @@ function onOpen(){
     console.log("成功连接到" + myUrl);
     var ck = $.cookie('Sanguo_SessionInfo');
     var msg = ck.split("#")[1].split(":")[1];
-    var sendMsg0 = JSON.stringify(msg);
+    var obj = {"type":"token","value":msg,"flag":"2"};
+    var sendMsg0 = JSON.stringify(obj);
     ws.send(sendMsg0);
     //心跳检测重置
     heartCheck.reset().start();
@@ -305,6 +306,7 @@ function onMessage(evt){
     }*/
     var obj = JSON.parse(r_msg);
     /*var obj = {"type":"round","value":"true"};*/
+    console.log(obj);
     var parm = obj.type;
     switch (parm)
     {
@@ -360,7 +362,7 @@ function onClose(){
 }
 function onSend(msg){
     //发送数据；
-    /*ws.send(msg);*/
+    ws.send(msg);
 }
 
 /**
@@ -423,7 +425,9 @@ $(function(){
         if(word.length === 0){
             alert("聊天信息不能为空");
         }else{
-            var name = "user1";               //获取用户名
+            // var name = "user1";               //获取用户名
+            var ck = $.cookie('Sanguo_SessionInfo');
+            var name = ck.split("#")[1].split(":")[1];
             var sendMsg;
             if($('#talk-middle-person').css('display') === 'block'){
                 sendMsg = {"type":"private","name":name,"msg":word};
@@ -434,6 +438,7 @@ $(function(){
                 $('#talk-middle-world').prepend("<span class='my-msg'>"+ word + " : " + name +"</span></br>");
             }
             var sendMsg0 = JSON.stringify(sendMsg);
+            console.log(sendMsg0);
             onSend(sendMsg0);
             /*console.log(sendMsg0);*/
             $("input[name='talk-input']").val("");

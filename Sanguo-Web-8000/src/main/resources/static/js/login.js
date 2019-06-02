@@ -87,7 +87,7 @@ $(document).ready(function () {
                 var data0 = data.iS_SUCCESS;
                 var data1 = data.errorMsg;
                 if (data0=="true") {
-                    window.location.href = "http://localhost:8000/html/main.html?user="+user+"";
+                    window.location.href = "http://192.168.43.189:8000/html/main.html?user="+user+"";
                 } else {
                     alert(data1);
                 }

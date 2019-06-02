@@ -35,7 +35,7 @@ public class WebSocketServer{
                 .childHandler(webSocketInitializer);
         logger.info("开始监听");
         try {
-            ChannelFuture channelFuture=serverBootstrap.bind("127.0.0.1",port).sync();
+            ChannelFuture channelFuture=serverBootstrap.bind("192.168.43.189",port).sync();
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             logger.warn("服务异常，结束服务");

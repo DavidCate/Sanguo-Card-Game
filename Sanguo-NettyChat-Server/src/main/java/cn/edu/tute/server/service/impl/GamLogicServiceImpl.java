@@ -1,7 +1,9 @@
 package cn.edu.tute.server.service.impl;
 
+import cn.edu.tute.game.CreateRoomResponse;
 import cn.edu.tute.game.IdleRoom;
 import cn.edu.tute.game.Room;
+import cn.edu.tute.game.RoomList;
 import cn.edu.tute.netty.jsonMsgPoJo.CreateRoomMsg;
 import cn.edu.tute.netty.jsonMsgPoJo.JoinMsg;
 import cn.edu.tute.netty.jsonMsgPoJo.MatchMsg;
@@ -9,17 +11,16 @@ import cn.edu.tute.netty.jsonMsgPoJo.NoticeMsg;
 import cn.edu.tute.server.component.ConnectManager;
 import cn.edu.tute.server.redis.RedisService;
 import cn.edu.tute.server.service.GameLogicService;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -31,6 +32,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GamLogicServiceImpl implements GameLogicService {
     @Autowired
     RedisService redisService;
+
+    @Autowired
+    StringRedisTemplate redisTemplate;
 
     @Autowired
     ConnectManager connectManager;
@@ -70,6 +74,9 @@ public class GamLogicServiceImpl implements GameLogicService {
                 idleRoom1.setIdleRooms(idleRoomList);
                 redisService.set("idleRooms", idleRoom1);
             }
+            CreateRoomResponse createRoomResponse=new CreateRoomResponse();
+            createRoomResponse.setErrMsg("true");
+            ctx.channel().writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(createRoomResponse)));
         } else {
             //该用户已经存在一个房间
             CreateRoomMsg msg = new CreateRoomMsg();
@@ -82,9 +89,12 @@ public class GamLogicServiceImpl implements GameLogicService {
 
     public void joinRoom(JSONObject jsonMsg, ChannelHandlerContext ctx) {
         String joinRoomId = (String) jsonMsg.get("roomId");
-        IdleRoom idleRoom = redisService.get("idleRooms", IdleRoom.class);
+        String idleRoomsStr=redisTemplate.opsForValue().get("idleRooms");
+        IdleRoom idleRoom=JSONObject.parseObject(idleRoomsStr,IdleRoom.class);
         List<String> idleRooms = idleRoom.getIdleRooms();
-        if (idleRooms.contains(joinRoomId)) {
+        //
+        System.out.println("测试-------------------->"+"roomId:"+joinRoomId);
+        if (idleRooms.contains("roomId:"+joinRoomId)) {
             String roomInfo = redisService.get("roomId:" + joinRoomId);
             Room room = JSONObject.parseObject(roomInfo, Room.class);
             String userToken=redisService.get(ctx.channel().id().toString());
@@ -92,6 +102,9 @@ public class GamLogicServiceImpl implements GameLogicService {
             redisService.set("roomId:"+joinRoomId,room);
             redisService.set("roomIdForToken:"+room.getPlayer1(),"roomId"+room.getPlayer1());
             redisService.set("roomIdForToken:"+room.getPlayer2(),"roomId"+room.getPlayer1());
+            JoinMsg joinMsg=new JoinMsg();
+            joinMsg.setIsSuccess("true");
+            ctx.channel().writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(joinMsg)));
         } else {
             JoinMsg joinMsg=new JoinMsg();
             joinMsg.setIsSuccess("false");
@@ -125,5 +138,12 @@ public class GamLogicServiceImpl implements GameLogicService {
         matchMsg.setIsSuccess("true");
         matchMsg.setErrMsg(JSONObject.toJSONString(room));
         ctx.channel().write(new TextWebSocketFrame(JSONObject.toJSONString(matchMsg)));
+    }
+
+    public void getRoom(JSONObject jsonMsg, ChannelHandlerContext ctx) {
+        Set<String> rooms=redisTemplate.keys("roomId*");
+        RoomList roomList=new RoomList();
+        roomList.setRoomlist(rooms);
+        ctx.channel().writeAndFlush(new TextWebSocketFrame( JSONObject.toJSONString(roomList)));
     }
 }
