@@ -1,9 +1,6 @@
 package cn.edu.tute.server.service.impl;
 
-import cn.edu.tute.game.CreateRoomResponse;
-import cn.edu.tute.game.IdleRoom;
-import cn.edu.tute.game.Room;
-import cn.edu.tute.game.RoomList;
+import cn.edu.tute.game.*;
 import cn.edu.tute.netty.jsonMsgPoJo.CreateRoomMsg;
 import cn.edu.tute.netty.jsonMsgPoJo.JoinMsg;
 import cn.edu.tute.netty.jsonMsgPoJo.MatchMsg;
@@ -13,6 +10,7 @@ import cn.edu.tute.server.redis.RedisService;
 import cn.edu.tute.server.service.GameLogicService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -41,8 +39,19 @@ public class GamLogicServiceImpl implements GameLogicService {
 
     public void createRoom(JSONObject jsonMsg, ChannelHandlerContext ctx) {
         Room room = null;
-        String roomMaster = redisService.get(ctx.channel().id().toString());
-        String firstRoomInfo = redisService.get("roomId:" + roomMaster);
+        //通过ctx 获取token
+        String roomMaster = redisTemplate.opsForValue().get(ctx.channel().id().toString());
+        String gameplayerInfoStr=redisTemplate.opsForValue().get(roomMaster);
+        GamePlayerInfo gamePlayerInfo=null;
+        if (gameplayerInfoStr!=null&&gameplayerInfoStr.equals("")) {
+            gamePlayerInfo=JSON.parseObject(gameplayerInfoStr, GamePlayerInfo.class);
+        }
+        UUID roomId=UUID.randomUUID();
+        //通过token获取用户游戏进程中的信息
+        String firstRoomInfo =null;
+        if (gamePlayerInfo!=null){
+            firstRoomInfo = redisService.get("roomId:" + gamePlayerInfo.getRoomId());
+        }
         //判断用户是否存在
         if (roomMaster != null) {
             if (firstRoomInfo == null) {
@@ -55,22 +64,25 @@ public class GamLogicServiceImpl implements GameLogicService {
             }
         }
         if (room != null) {
-            //redis存储新创建的房间信息
-            redisService.set("roomId:" + roomMaster, room);
-            IdleRoom idleRoom = redisService.get("idleRooms", IdleRoom.class);
+            gamePlayerInfo=new GamePlayerInfo();
+            gamePlayerInfo.setRoomId(roomId.toString());
+            redisService.set("roomId:" + roomId, room);
+            redisTemplate.opsForValue().set(roomMaster,JSONObject.toJSONString(gamePlayerInfo));
+            String idleRoomsStr=redisTemplate.opsForValue().get("idleRooms");
+            IdleRoom idleRoom = JSON.parseObject(idleRoomsStr,IdleRoom.class);
             //idleRoom 不为空说明有待加入的房间，需要先判断要新创建的房间是否 已经存在于idle列表
             if (idleRoom != null) {
                 List<String> idleRooms = idleRoom.getIdleRooms();
-                if (!idleRooms.contains("roomId:" + roomMaster)) {
+                if (!idleRooms.contains("roomId:" + roomId)) {
                     //空闲列表没有这个房间id 就把这个房间id 加入空闲列表
-                    idleRoom.getIdleRooms().add("roomId:" + roomMaster);
+                    idleRoom.getIdleRooms().add("roomId:" + roomId);
                     redisService.set("idleRooms", idleRoom);
                 }
             } else {
                 //把新创建的房间放进idleRooms
                 IdleRoom idleRoom1 = new IdleRoom();
                 List<String> idleRoomList = new LinkedList<String>();
-                idleRoomList.add("roomId:" + roomMaster);
+                idleRoomList.add("roomId:" + roomId);
                 idleRoom1.setIdleRooms(idleRoomList);
                 redisService.set("idleRooms", idleRoom1);
             }
@@ -87,21 +99,30 @@ public class GamLogicServiceImpl implements GameLogicService {
         }
     }
 
+
+
     public void joinRoom(JSONObject jsonMsg, ChannelHandlerContext ctx) {
         String joinRoomId = (String) jsonMsg.get("roomId");
         String idleRoomsStr=redisTemplate.opsForValue().get("idleRooms");
-        IdleRoom idleRoom=JSONObject.parseObject(idleRoomsStr,IdleRoom.class);
+        IdleRoom idleRoom=JSON.parseObject(idleRoomsStr,IdleRoom.class);
         List<String> idleRooms = idleRoom.getIdleRooms();
-        //
+
+//        GamePlayerInfo gamePlayerInfo=JSON.parseObject(gamePlayerInfoStr,GamePlayerInfo.class);
         System.out.println("测试-------------------->"+"roomId:"+joinRoomId);
         if (idleRooms.contains("roomId:"+joinRoomId)) {
-            String roomInfo = redisService.get("roomId:" + joinRoomId);
-            Room room = JSONObject.parseObject(roomInfo, Room.class);
+            String roomInfo = redisTemplate.opsForValue().get("roomId:"+joinRoomId);
+            Room room = JSON.parseObject(roomInfo, Room.class);
             String userToken=redisService.get(ctx.channel().id().toString());
             room.setPlayer2(userToken);
+            //玩家2加入房间
             redisService.set("roomId:"+joinRoomId,room);
-            redisService.set("roomIdForToken:"+room.getPlayer1(),"roomId"+room.getPlayer1());
-            redisService.set("roomIdForToken:"+room.getPlayer2(),"roomId"+room.getPlayer1());
+            GamePlayerInfo gamePlayerInfo=new GamePlayerInfo();
+            gamePlayerInfo.setRoomId(joinRoomId);
+            redisTemplate.opsForValue().set(userToken,JSONObject.toJSONString(gamePlayerInfo));
+
+            idleRooms.remove("roomId:"+joinRoomId);
+            idleRoom.setIdleRooms(idleRooms);
+            redisTemplate.opsForValue().set("idleRooms",JSON.toJSONString(idleRoom));
             JoinMsg joinMsg=new JoinMsg();
             joinMsg.setIsSuccess("true");
             ctx.channel().writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(joinMsg)));

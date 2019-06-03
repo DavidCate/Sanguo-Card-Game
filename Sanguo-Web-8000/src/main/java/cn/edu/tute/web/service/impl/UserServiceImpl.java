@@ -37,8 +37,10 @@ public class UserServiceImpl implements UserService {
     public String login(String username, String password, HttpServletRequest request, HttpServletResponse httpServletResponse) {
         HttpSession session=request.getSession();
         String sessionId=session.getId();
+        session.setAttribute("username",username);
 //        logger.warn("sessionId=====>"+sessionId);
-        UserLoginInfo userLoginInfo=redisService.get(sessionId,UserLoginInfo.class);
+//        UserLoginInfo userLoginInfo=redisService.get(sessionId,UserLoginInfo.class);
+        UserLoginInfo userLoginInfo=null;
         if (userLoginInfo!=null){
 //            logger.warn(userInfo.toString());
             //判断userinfo是否存在,如果存在说明已经登录过,校验token
@@ -81,8 +83,8 @@ public class UserServiceImpl implements UserService {
                     httpServletResponse.addCookie(cookie);
                     userLoginInfo.setToken(tokenId.toString());
                     userLoginInfo.setSessionID(sessionId);
-                    redisService.set(session.toString(),JSON.toJSONString(userLoginInfo));
-                    redisService.set(tokenId.toString(), JSON.toJSONString(userLoginInfo));
+//                    redisService.set(session.toString(),JSON.toJSONString(userLoginInfo));
+//                    redisService.set(tokenId.toString(), JSON.toJSONString(userLoginInfo));
                     SuccessResponse response=new SuccessResponse();
                     response.setErrorMsg("登录成功");
                     return response.send();
@@ -136,4 +138,18 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    //新增修改昵称接口
+    public String updateName(){
+        return null;
+    }
+
+    //增加好友接口
+    public String addFriend(){
+        return null;
+    }
+
+    //搜索用户昵称是否存在
+    public String searchUser(){
+        return null;
+    }
 }

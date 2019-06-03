@@ -1,7 +1,10 @@
 package cn.edu.tute.server.handler;
 
+import cn.edu.tute.game.GamePlayerInfo;
+import cn.edu.tute.server.component.ConnectManager;
 import cn.edu.tute.server.service.MsgHandService;
 import cn.edu.tute.server.service.impl.MsgHandServiceImpl;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -15,7 +18,10 @@ import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 
 @Component
@@ -26,11 +32,17 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
     private WebSocketServerHandshaker handshaker;
 
     @Autowired
+    StringRedisTemplate redisTemplate;
+
+    @Autowired
+    ConnectManager connectManager;
+
+    @Autowired
     private MsgHandService msgHandService;
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-        logger.info(ctx.channel().id().toString());
+        logger.info("有新连接："+ctx.channel().id().toString());
     }
 
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -109,9 +121,9 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         } else if (msgType.equals("ready") && msgType != null) {
             msgHandService.handReady(jsonMsg, ctx);
         } else if (msgType.equals("round") && msgType != null) {
-//            msgHandService.handRound(jsonMsg, ctx);
+            msgHandService.handRound(jsonMsg, ctx);
         } else if (msgType.equals("play") && msgType != null) {
-            msgHandService.handPlay(jsonMsg, ctx);
+            msgHandService.handGet(jsonMsg, ctx);
         } else if (msgType.equals("end") && msgType != null) {
             msgHandService.handEnd(jsonMsg, ctx);
         } else if (msgType.equals("over") && msgType != null) {
@@ -126,8 +138,24 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
             msgHandService.handMatch(jsonMsg, ctx);
         } else if (msgType.equals("getRoom") && msgType != null) {
             msgHandService.handGetRoom(jsonMsg, ctx);
+        } else if (msgType.equals("round1") && msgType != null){
+            msgHandService.handRound1(jsonMsg,ctx);
+        } else if (msgType.equals("get") && msgType!=null){
+            msgHandService.handGet(jsonMsg,ctx);
         }
 
+    }
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+//        ConcurrentHashMap connections=connectManager.getConnections();
+//        String userToken=redisTemplate.opsForValue().get(ctx.channel().id().toString());
+//        String gamePlayerInfoStr=redisTemplate.opsForValue().get(userToken);
+//        GamePlayerInfo gamePlayerInfo=JSON.parseObject(gamePlayerInfoStr, GamePlayerInfo.class);
+//        redisTemplate.delete("roomId:"+gamePlayerInfo.getRoomId());
+//        redisTemplate.delete(userToken);
+//        redisTemplate.delete(ctx.channel().id().toString());
+//        connections.remove(userToken);
     }
 
     private static boolean isKeepAlive(FullHttpRequest request) {
