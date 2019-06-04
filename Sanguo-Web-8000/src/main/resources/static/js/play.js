@@ -56,6 +56,9 @@ function onOpen(){
     ws.send(sendMsg0);
     //心跳检测重置
     /*heartCheck.reset().start();*/
+    var obj = {"type":"card"};
+    var sendMsg0 = JSON.stringify(obj);
+    ws.send(sendMsg0);
 }
 /**
  * onOpen初始化用户数据
@@ -69,8 +72,7 @@ var player1 = $("#user-up-number").html();
 
 /**
  * 卡牌组
- * @type {{cards: *[]}}
- */
+ * @type {{cards: *[]}}*/
 var cards = {"cards":[
         {"name":"JW0001", "type":"JW","title":"人物背景：曹操，字孟德，东汉末年政治家，军事家，文学家。足智多谋，善于随机应变；攻击效果:对攻击角色造成三点伤害；锦囊:若攻击角色攻击装备区有牌，则移除。","url":"../image/card/caocao.png"},
         {"name":"JW0002", "type":"JW","title":"人物背景：刘备，字玄德，蜀汉昭烈皇帝，与关羽张飞桃园结义，三顾茅庐请出诸葛亮为军师；攻击效果：对攻击角色造成三点伤害；锦囊：若攻击角色防御装备区有牌，则移除。","url":"../image/card/liubei.png"},
@@ -125,6 +127,7 @@ var cards = {"cards":[
         {"name":"CC005", "type":"CC","title":"城池简介：下邳；防御加成：对对方角色卡牌攻击抵消两点伤害","url":"../image/card/xiapi.png"},
         {"name":"YX001", "type":"YX","title":"简介：玉玺，东汉末年，袁绍入宫杀宦官，玉玺失踪，孙坚率军攻入洛阳，得玉玺，后被曹操所得，挟天子以令诸侯；使用效果：对角色回复三点血量值","url":"../image/card/yuxi.png"},
     ]};
+// var cards={};
 /**
  * 整理手牌
  */
@@ -567,6 +570,9 @@ function onMessage(evt){
     var parm = obj.type;
     switch (parm)
     {
+        case "cards":
+            cards = obj.cards;
+            break;
         case "round":
             var val = obj.value;
             if(val === "true"){

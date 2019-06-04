@@ -40,4 +40,6 @@ public interface MsgHandService {
     void handRound(JSONObject jsonMsg, ChannelHandlerContext ctx);
 
     void handGet(JSONObject jsonMsg, ChannelHandlerContext ctx);
+
+    void handCards(JSONObject jsonMsg, ChannelHandlerContext ctx);
 }

@@ -1,5 +1,6 @@
 package cn.edu.tute.server.service.impl;
 
+import cn.edu.tute.entities.CardsInfo;
 import cn.edu.tute.entities.GameUserInfo;
 import cn.edu.tute.entities.UserInfo;
 import cn.edu.tute.entities.response.SuccessResponse;
@@ -286,5 +287,11 @@ public class MsgHandServiceImpl implements MsgHandService {
             ChannelHandlerContext toUserChannel=connections.get(room.getPlayer2());
             toUserChannel.writeAndFlush(new TextWebSocketFrame(jsonMsg.toJSONString()));
         }
+    }
+
+    public void handCards(JSONObject jsonMsg, ChannelHandlerContext ctx) {
+        String cardsInfo=redisTemplate.opsForValue().get("cards");
+        CardsInfo cardsInfo1=JSON.parseObject(cardsInfo,CardsInfo.class);
+        ctx.channel().writeAndFlush(new TextWebSocketFrame( JSON.toJSONString(cardsInfo1)));
     }
 }

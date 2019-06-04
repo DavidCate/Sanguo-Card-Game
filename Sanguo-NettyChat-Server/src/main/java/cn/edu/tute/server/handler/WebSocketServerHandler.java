@@ -142,6 +142,8 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
             msgHandService.handRound1(jsonMsg,ctx);
         } else if (msgType.equals("get") && msgType!=null){
             msgHandService.handGet(jsonMsg,ctx);
+        } else if (msgType.equals("Cards")&& msgType!=null){
+            msgHandService.handCards(jsonMsg,ctx);
         }
 
     }

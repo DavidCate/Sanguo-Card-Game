@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class CardsInfo implements Serializable {
+    private String type="card";
     private List<Card> cards;
 
     public List<Card> getCards() {
