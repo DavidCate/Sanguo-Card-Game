@@ -1219,3 +1219,50 @@ button:active{
     top: 15%;
     background: #634a12;
 }
+/*修改弹窗*/
+.main-change-page{
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    width: 35%;
+    height: 44.3%;
+    min-width: 478px;
+    min-height: 291px;
+    background: url("../image/png/main/mainSetPage.png") no-repeat;
+    background-size: 100% 100%;
+    display: none;
+    z-index: 5;
+    text-align:center;
+}
+.user-change{
+    font-size: 25px;
+    position:absolute;
+    font-weight: 600;
+    font-family: '楷体';
+    color: #DAA520;
+    top: 28%;
+    left: 10%;
+}
+.text-change{
+    background: url(../image/png/login/input.png);
+    width: 270px;
+    height: 38px;
+    font-size: 20px;
+    position:absolute;
+    top: 25%;
+    left: 25%;
+}
+
+.btn-change-save{
+    width: 80px;
+    height: 32px;
+    outline: none;
+    background: rgba(117, 46, 7, 0.82);
+    font-size: 25px;
+    font-weight: 600;
+    font-family: '楷体';
+    color: #DAA520;
+    position: absolute;
+    bottom: 20%;
+    left: 42%;
+}

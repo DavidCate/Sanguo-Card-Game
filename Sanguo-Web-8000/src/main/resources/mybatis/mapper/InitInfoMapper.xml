@@ -13,7 +13,7 @@
     -->
     <select id="selectInitInfo" resultMap="initInfo">
         SELECT
-            u.username,
+            u.name,
             u.head,
             f.friendImg,
             f.friendName,
@@ -38,7 +38,7 @@
 
     <resultMap id="initInfo" type="cn.edu.tute.entities.InitInfo">
         <result property="headImg" column="head"/>
-        <result property="userName" column="username"/>
+        <result property="userName" column="name"/>
         <!--<association property="userInfo" javaType="cn.edu.tute.entities.UserInfo">-->
         <!--<result column="u_name" property="userName"/>-->
         <!--</association>-->

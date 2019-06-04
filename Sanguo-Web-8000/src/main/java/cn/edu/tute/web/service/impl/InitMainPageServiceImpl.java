@@ -28,7 +28,7 @@ public class InitMainPageServiceImpl implements InitMainPageService {
 
     public String getInitInfo(String userId) {
         InitInfo initInfo=initInfoMapper.selectInitInfo(userId);
-        logger.info(JSON.toJSONString(initInfo));
+//        logger.info(JSON.toJSONString(initInfo));
         return JSON.toJSONString(initInfo);
     }
 

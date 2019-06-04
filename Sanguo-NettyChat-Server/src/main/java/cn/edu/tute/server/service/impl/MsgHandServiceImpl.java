@@ -1,11 +1,14 @@
 package cn.edu.tute.server.service.impl;
 
+import cn.edu.tute.entities.GameUserInfo;
+import cn.edu.tute.entities.UserInfo;
 import cn.edu.tute.entities.response.SuccessResponse;
 import cn.edu.tute.game.GamePlayerInfo;
 import cn.edu.tute.game.IdleRoom;
 import cn.edu.tute.game.Room;
 import cn.edu.tute.netty.jsonMsgPoJo.*;
 import cn.edu.tute.server.component.ConnectManager;
+import cn.edu.tute.server.mapper.GameMapper;
 import cn.edu.tute.server.redis.RedisService;
 import cn.edu.tute.server.service.GameLogicService;
 import cn.edu.tute.server.service.MsgHandService;
@@ -18,8 +21,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,6 +32,9 @@ public class MsgHandServiceImpl implements MsgHandService {
     public MsgHandServiceImpl() {
 
     }
+
+    @Autowired
+    GameMapper gameMapper;
 
     @Autowired
     ConnectManager connectManager;
@@ -41,7 +48,6 @@ public class MsgHandServiceImpl implements MsgHandService {
     @Autowired
     GameLogicService gameLogicService;
 
-    @Autowired
 
 
     public void handPrivate(JSONObject jsonMsg, ChannelHandlerContext ctx) {
@@ -179,11 +185,27 @@ public class MsgHandServiceImpl implements MsgHandService {
         ChannelHandlerContext player1 = connect.get(room.getPlayer1());
         ChannelHandlerContext player2 = connect.get(room.getPlayer2());
         ResultMsg resultMsg=new ResultMsg();
+//插入游戏记录
+        String user1name=redisTemplate.opsForValue().get("tokenId:"+room.getPlayer1());
+        String user2name=redisTemplate.opsForValue().get("tokenId:"+room.getPlayer2());
+        GameUserInfo gameUser1Info=gameMapper.selectUserInfo(user1name);
+        GameUserInfo gameUser2Info=gameMapper.selectUserInfo(user2name);
+        Date date=new Date();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time=simpleDateFormat.format(date);
         if (room.getPlayer1().equals(fromUserToken)){
             //输了
             resultMsg.setValue("true");
+            int in1=gameMapper.insertRecord(time,gameUser2Info.getName(),resultMsg.getValue(),gameUser1Info.getId());
+            if (in1!=0){
+                resultMsg.setInsert("true");
+            }
             player1.channel().writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(resultMsg)));
             resultMsg.setValue("false");
+            int in2=gameMapper.insertRecord(time,gameUser1Info.getName(),resultMsg.getValue(),gameUser2Info.getId());
+            if (in2!=0){
+                resultMsg.setInsert("true");
+            }
             player2.channel().writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(resultMsg)));
         }else {
             resultMsg.setValue("false");

@@ -207,10 +207,8 @@
 <img class="img-bottom-back" src="../image/png/main/main.png">
 <!--弹出框-->
 <div class="main-set-page">
-    <input class="open-set-music" type="checkbox">
-    <span class="set-music">开启音乐</span>
-    <input class="open-set-music" type="checkbox">
-    <span class="set-music">关闭音乐</span>
+    <input id="open" class="open-set-music" type="radio" checked="checked" name="music" value="open"/><span class="set-music">开启音乐</span>
+    <input id="close" class="open-set-music" type="radio" name="music" value="close"/><span class="set-music">关闭音乐</span><br>
     <button class="btn-close-set"></button>
     <button class="set-save">保存</button>
 </div>
@@ -225,6 +223,12 @@
     <input type="text" class="add-search"/>
     <button class="btn-add-page" id="btn-search">查找</button>
     <button class="btn-add-page" id="btn-add">添加</button>
+</div>
+<div class="main-change-page">
+    <span class="user-change">昵称:</span>
+    <input type="text" class="text-change" value=""/>
+    <button class="btn-close-set"></button>
+    <button class="btn-change-save">保存</button>
 </div>
 </body>
 </html>

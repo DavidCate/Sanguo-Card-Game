@@ -12,12 +12,5 @@ public interface UserService {
 
     String register(RegisterUserInfo registerUserInfo);
 
-    //更新用户姓名
-    String updateName();
 
-    //添加用户好友
-    String addFriend();
-
-    //查询用户昵称
-    String searchUser();
 }

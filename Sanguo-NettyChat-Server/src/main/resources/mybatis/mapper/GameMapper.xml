@@ -7,9 +7,12 @@
 
     <insert id="insertRecord" >
         insert into record (time,player,result,userid)
-        values (#{},#{},#{});
+        values (#{time},#{player},#{result},#{userid});
     </insert>
-    
+
+    <select id="selectUserInfo" parameterType="java.lang.String" resultType="cn.edu.tute.entities.GameUserInfo">
+        select id,name from user where user.username=#{username}
+    </select>
 
     <!--<resultMap id="cardsInfo" type="cn.edu.tute.entities.CardsInfo">-->
     <!--<collection property="cards" ofType="cn.edu.tute.entities.Card">-->

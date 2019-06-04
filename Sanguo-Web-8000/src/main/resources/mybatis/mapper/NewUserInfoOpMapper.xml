@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.tute.web.mapper.NewUserInfoOpMapper">
+    <!--<cache/>-->
+    <update id="updateName" parameterType="java.lang.String">
+        update user
+        set user.name=#{newName}
+        where user.username = #{username}
+    </update>
+
+    <insert id="addFriend" parameterType="java.lang.String">
+      insert into friend(friendImg,friendName,masterId) values (#{head},#{friendName},#{username});
+    </insert>
+
+    <select id="searchUser" parameterType="java.lang.String" resultType="cn.edu.tute.entities.SearchUserInfo">
+        select user.name,user.head
+        from user
+        where user.username = #{username}
+    </select>
+
+
+    <select id="selectUserInfo" resultType="cn.edu.tute.entities.GameUserInfo">
+        select id,name from user where user.username=#{username}
+    </select>
+
+    <select id="getRecord" resultMap="recordInfo">
+        select time,player,result from record where record.userid=#{id}
+    </select>
+
+    <resultMap id="recordInfo" type="cn.edu.tute.entities.Record">
+        <result column="time" property="time1"></result>
+        <result column="player" property="player1"></result>
+        <result column="result" property="result1"></result>
+    </resultMap>
+</mapper>

@@ -5,9 +5,11 @@ import cn.edu.tute.entities.RegisterUserInfo;
 import cn.edu.tute.game.Room;
 import cn.edu.tute.web.mapper.FriendInfoMapper;
 import cn.edu.tute.web.mapper.InitInfoMapper;
+import cn.edu.tute.web.mapper.NewUserInfoOpMapper;
 import cn.edu.tute.web.mapper.UserInfoMapper;
 import cn.edu.tute.web.redis.RedisService;
 import cn.edu.tute.web.service.InitMainPageService;
+import cn.edu.tute.web.service.NewUserInfoOpService;
 import cn.edu.tute.web.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.HashMap;
@@ -55,6 +58,9 @@ public class CenterController {
 
     @Autowired
     RedisService redisService;
+
+    @Autowired
+    NewUserInfoOpService newUserInfoOpService;
 
 
     @RequestMapping("/")
@@ -160,5 +166,25 @@ public class CenterController {
     @GetMapping("match")
     public String match(@RequestParam("token") String token, HttpServletRequest request, HttpServletResponse response) {
         return "";
+    }
+
+    @PostMapping("updateName")
+    public String updateName(@RequestParam("user") String newName,HttpServletRequest request,HttpServletResponse response){
+        return  newUserInfoOpService.updateName(newName,request,response);
+    }
+
+    @PostMapping("addFriend")
+    public String addFriend(@RequestParam("head")String head,@RequestParam("friendName") String friendName,HttpServletRequest request,HttpServletResponse response){
+        return newUserInfoOpService.addFriend(head,friendName,request,response);
+    }
+
+    @PostMapping("searchUser")
+    public String searchUser(@RequestParam("friend") String name,HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+        return newUserInfoOpService.searchUser(name,httpServletRequest,httpServletResponse);
+    }
+
+    @PostMapping("getRecord")
+    public String getRecord(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse){
+        return newUserInfoOpService.getRecord(httpServletRequest,httpServletResponse);
     }
 }

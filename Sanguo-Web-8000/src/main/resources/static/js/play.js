@@ -1,4 +1,16 @@
-﻿var lockReconnect = false;
+﻿/**
+ * 获取url参数
+ * @param name
+ * @returns {*}
+ */
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
+
+var lockReconnect = false;
 var ws;
 var myUrl = "ws://192.168.43.189:11111";
 
@@ -45,8 +57,20 @@ function onOpen(){
     //心跳检测重置
     /*heartCheck.reset().start();*/
 }
+/**
+ * onOpen初始化用户数据
+ */
+$(function(){
+    $(".game-down-user").prepend("<span class='user-number' id='user-down-number'>30</span>");
+    $(".game-up-user").prepend("<span class='user-number' id='user-up-number'>30</span>");
+});
+var player0 = $("#user-down-number").html();
+var player1 = $("#user-up-number").html();
 
-//卡牌组
+/**
+ * 卡牌组
+ * @type {{cards: *[]}}
+ */
 var cards = {"cards":[
         {"name":"JW0001", "type":"JW","title":"人物背景：曹操，字孟德，东汉末年政治家，军事家，文学家。足智多谋，善于随机应变；攻击效果:对攻击角色造成三点伤害；锦囊:若攻击角色攻击装备区有牌，则移除。","url":"../image/card/caocao.png"},
         {"name":"JW0002", "type":"JW","title":"人物背景：刘备，字玄德，蜀汉昭烈皇帝，与关羽张飞桃园结义，三顾茅庐请出诸葛亮为军师；攻击效果：对攻击角色造成三点伤害；锦囊：若攻击角色防御装备区有牌，则移除。","url":"../image/card/liubei.png"},
@@ -151,19 +175,6 @@ function guan(card) {
 /**
  * 触发/点击卡牌
  */
-// $(function(){
-//     $(".game-card").bind("click",function(){
-//         alert("aaa");
-//         if($(this).attr("boolean") === "false"){
-//             $(this).css("bottom","10%");
-//             $(this).attr("boolean","true");
-//         }else{
-//             $(this).attr("boolean","false");
-//             $(this).css("bottom","0");
-//         }
-//     })
-// });
-
 function dianji(card){
     if($("#"+card.id).attr("boolean") === "false"){
         $("#"+card.id).css("bottom","10%");
@@ -173,7 +184,6 @@ function dianji(card){
         $("#"+card.id).css("bottom","0");
     }
 }
-
 
 /**
  * 首次发牌
@@ -210,7 +220,7 @@ function nextcard() {
         var uuid = createRandomId();
         cardId.push(uuid);
         var cid = Math.floor(Math.random() * 52);
-        $(".down-card").prepend("<img class='game-card' onmouseover='detail(this)' onmouseout='close(this)' id='" + uuid + "' name='" + cards.cards[cid].name + "' type='" + cards.cards[cid].type + "' boolean='false' msg='" + cards.cards[cid].title + "' src='" + cards.cards[cid].url + "'/>");
+        $(".down-card").prepend("<img class='game-card' onclick='dianji(this)' onmouseover='detail(this)' onmouseout='guan(this)' id='" + uuid + "' name='" + cards.cards[cid].name + "' type='" + cards.cards[cid].type + "' boolean='false' msg='" + cards.cards[cid].title + "' src='" + cards.cards[cid].url + "'/>");
         /**
          * 发送摸牌信息
          * @type {{type: string, name: string, url: string}}
@@ -218,8 +228,27 @@ function nextcard() {
         var str = {"type":"get","id":""+ uuid +"","name":""+cards.cards[cid].name+"","url":""+cards.cards[cid].url+""};
         var sendMsg = JSON.stringify(str);
         onSend(sendMsg);
+        pailie();
     }
 }
+
+/**
+ * 开局动画
+ */
+function cartoon() {
+    var audio = $(".bj-voice");
+    var bj = audio[0];
+    $('.game-begin').fadeIn("slow");
+    setTimeout(function(){
+        bj.play();
+        $('.game-begin').css('background','url(../image/png/game/begin1.png) no-repeat');
+        $('.game-begin').css('background-size','100% 100%');
+    }, 800);
+    setTimeout(function(){
+        $('.game-begin').fadeOut("slow");
+    }, 1500);
+}
+
 /**
  * 对手出牌君王牌
  * @param cid
@@ -243,6 +272,21 @@ function moveOtherDiwang(cid,curl){
     setTimeout(function(){ $("#"+cid).remove();
         pailie0();
     }, 2000);
+
+   /* var num = $("#user-down-number").html();*/
+    if($('#game-up-first').children().length == 0){
+        if($('#game-down-second').children().length == 0){
+            $("#user-down-number").html(player0 - 3);
+        }else{
+            $("#user-down-number").html(player0 - 1);
+        }
+    }else{
+        if($('#game-down-second').children().length == 0){
+            $("#user-down-number").html(player0 - 4);
+        }else{
+            $("#user-down-number").html(player0 - 2);
+        }
+    }
 }
 /**
  * 对手出牌武将牌
@@ -469,6 +513,46 @@ function deleteOtherArmor() {
     }
 }
 
+/**
+ * 移除自己攻击牌
+ */
+function deleteAttack() {
+    if($("#game-down-first").children().length > 0){
+        var id = $("#game-down-first").children()[0].id;
+        $("#"+id).animate({
+            bottom:'250px',
+            left:'100px'
+        },"slow");
+        $("#"+id).animate({
+            bottom:'269.9px',
+            left:'-470.734px'
+        },"slow");
+        setTimeout(function(){
+            $("#"+id).remove();
+        }, 1500);
+    }
+}
+
+/**
+ * 移除自己防御牌
+ */
+function deleteArmor() {
+    if($("#game-down-second").children().length > 0){
+        var id = $("#game-down-second").children()[0].id;
+        $("#"+id).animate({
+            bottom:'250px',
+            left:'100px'
+        },"slow");
+        $("#"+id).animate({
+            bottom:'269.9px',
+            left:'-470.734px'
+        },"slow");
+        setTimeout(function(){
+            $("#"+id).remove();
+        }, 1500);
+    }
+}
+
 function onMessage(evt){
    /* heartCheck.reset().start();*/
     //接受数据，并判断渲染
@@ -478,35 +562,37 @@ function onMessage(evt){
     }else{
         //处理消息的业务逻辑
     }*/
+    console.log(r_msg);
     var obj = JSON.parse(r_msg);
-    /*var obj = {"type":"round","value":"true"};*/
-    console.log(obj);
     var parm = obj.type;
     switch (parm)
     {
         case "round":
-            //执行？
             var val = obj.value;
             if(val === "true"){
                 //我的回合
                 //1.渲染
+                cartoon();
                 $('#game-ready').css('display','none');
                 $('#game-play').css('display','block');
                 $('#game-cancel').css('display','block');
                 $('#game-end').css('display','block');
-                /*$('.down-status').css('background','url(../image/png/game/gameCancelBtn0.png) no-repeat');
-                $('.down-status').css('background-size','100% 100%');*/
+                $('.down-status').attr('src','../image/png/game/begined.png');
                 //2.发牌
                 firstcard();
+                setTimeout(function(){
+                    $('.down-status').attr('src','../image/png/game/played.png');
+                    nextcard();
+                }, 1000);
             }else if(val === "false"){
                 //对方回合
                 //1.渲染
+                cartoon();
                 $('#game-ready').css('display','none');
                 $('#game-play').css('display','none');
                 $('#game-cancel').css('display','none');
                 $('#game-end').css('display','none');
-                /*$('.up-status').css('background','url(../image/png/game/gameCancelBtn0.png) no-repeat');
-                $('.up-status').css('background-size','100% 100%');*/
+                $('.up-status').css('display','none');
                 //发牌
                 firstcard();
             }
@@ -515,8 +601,7 @@ function onMessage(evt){
             var cid = obj.id;
             var cname = obj.name;
             var curl = obj.url;
-            var uuid = createRandomId();
-            $(".up-card").prepend("<img class='game-card0 no-click' id='"+ uuid + "' name='"+cname+"' boolean='false' url='"+curl+"' src='../image/card/cardbg.png'/>");
+            $(".up-card").prepend("<img class='game-card0 no-click' id='"+ cid + "' name='"+cname+"' boolean='false' url='"+curl+"' src='../image/card/cardbg.png'/>");
             pailie0();
             break;
         case "private":
@@ -533,15 +618,433 @@ function onMessage(evt){
             break;
         case "play":
             //执行？
+            debugger;
             var aid = obj.id;
-            var aurl = obj.src;
-            var atype =obj.type;
-            moveOtherAttack(aid,aurl);
+            var aurl = obj.url;
+            var aname = obj.name;
+            switch (aname) {
+                case "JW0001":
+                    moveOtherDiwang(aid,aurl);
+                    lose0();
+                    setTimeout(function () {
+                        deleteAttack();
+                    }, 1500);
+                    break;
+                case "JW0002":
+                    moveOtherDiwang(aid,aurl);
+                    lose0();
+                    setTimeout(function () {
+                        deleteArmor();
+                    }, 1500);
+                    break;
+                case "JW0003":
+                    moveOtherDiwang(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        $("#user-down-number").html(player0 - 2);
+                    }else{
+                        $("#user-down-number").html(player0 - 0);
+                    }
+                    lose0();
+                    break;
+                case "JL001":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 5);
+                        }else{
+                            $("#user-down-number").html(player0 - 3);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL002":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL003":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL004":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 2);
+                            lose0();
+                        }else{
+                            $("#user-down-number").html(player0 - 0);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                            lose0();
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                            lose0();
+                        }
+                    }
+                    break;
+                case "JL005":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 5);
+                        }else{
+                            $("#user-down-number").html(player0 - 3);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL006":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 5);
+                        }else{
+                            $("#user-down-number").html(player0 - 3);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL007":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL008":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL009":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL010":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL011":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL012":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL013":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 4);
+                        }else{
+                            $("#user-down-number").html(player0 - 2);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JL014":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 2);
+                            lose0();
+                        }else{
+                            $("#user-down-number").html(player0 - 0);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                            lose0();
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                            lose0();
+                        }
+                    }
+                    break;
+                case "JL015":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 2);
+                            lose0();
+                        }else{
+                            $("#user-down-number").html(player0 - 0);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 3);
+                            lose0();
+                        }else{
+                            $("#user-down-number").html(player0 - 1);
+                            lose0();
+                        }
+                    }
+                    break;
+                case "JL016":
+                    moveOtherPerson(aid,aurl);
+                    if($('#game-up-first').children().length == 0){
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 5);
+                        }else{
+                            $("#user-down-number").html(player0 - 3);
+                        }
+                    }else{
+                        if($('#game-down-second').children().length == 0){
+                            $("#user-down-number").html(player0 - 6);
+                        }else{
+                            $("#user-down-number").html(player0 - 4);
+                        }
+                    }
+                    lose0();
+                    break;
+                case "JS001":
+                    moveOtherPerson0(aid,aurl);
+                    break;
+                case "JS002":
+                    moveOtherPerson0(aid,aurl);
+                    break;
+                case "JS003":
+                    moveOtherPerson0(aid,aurl);
+                    $("#user-up-number").html(player1 + 1);
+                    break;
+                case "JS004":
+                    moveOtherPerson0(aid,aurl);
+                    break;
+                case "JS005":
+                    moveOtherPerson0(aid,aurl);
+                    break;
+                case "JS006":
+                    moveOtherPerson0(aid,aurl);
+                    break;
+                case "JS007":
+                    moveOtherPerson0(aid,aurl);
+                    break;
+                case "JS008":
+                    moveOtherPerson0(aid,aurl);
+                    break;
+                case "JS009":
+                    moveOtherPerson0(aid,aurl);
+                    $("#user-down-number").html(player0 - 2);
+                    lose0();
+                    break;
+                case "JS010":
+                    moveOtherPerson0(aid,aurl);
+                    $("#user-down-number").html(player0 - 2);
+                    lose0();
+                    break;
+                case "WQ001":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ002":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ003":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ004":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ005":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ006":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ007":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ008":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ009":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ010":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ011":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ012":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ013":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ014":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ015":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ016":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "WQ017":
+                    moveOtherAttack(aid,aurl);
+                    break;
+                case "CC001":
+                    moveOtherArmor(aid,aurl);
+                    break;
+                case "CC002":
+                    moveOtherArmor(aid,aurl);
+                    break;
+                case "CC003":
+                    moveOtherArmor(aid,aurl);
+                    break;
+                case "CC004":
+                    moveOtherArmor(aid,aurl);
+                    break;
+                case "CC005":
+                    moveOtherArmor(aid,aurl);
+                    break;
+                case "YX001":
+                    moveOtherYx(aid,aurl);
+                    $("#user-up-number").html(player1 + 3);
+                    break;
+            }
             break;
         case "result":
             //执行？
             var val = obj.value;
-            alert(val);
+            if(val === "true"){
+                alert("你输了");
+                setTimeout(function(){
+                    window.location.href = "http://192.168.43.189:8000/html/main.html?user="+getUrlParam("user")+"";
+                }, 3000);
+            }else if(val === "false"){
+                alert("你赢了");
+                setTimeout(function(){
+                    window.location.href = "http://192.168.43.189:8000/html/main.html?user="+getUrlParam("user")+"";
+                }, 3000);
+            }
             break;
         case "round1":
             var val = obj.value;
@@ -550,6 +1053,7 @@ function onMessage(evt){
                 $('#game-cancel').css('display','block');
                 $('#game-end').css('display','block');
             }
+            nextcard();
             break;
     }
 
@@ -611,13 +1115,6 @@ var heartCheck = {
  */
 myWebSocket(myUrl);
 /**
- * onOpen初始化用户数据
- */
-$(function(){
-    $(".game-down-user").prepend("<span class='user-number' id='user-down-number'>30</span>");
-    $(".game-up-user").prepend("<span class='user-number' id='user-up-number'>30</span>");
-});
-/**
  * 点击发送
  */
 $(function(){
@@ -626,9 +1123,9 @@ $(function(){
         if(word.length === 0){
             alert("聊天信息不能为空");
         }else{
-            // var name = "user1";               //获取用户名
-            var ck = $.cookie('Sanguo_SessionInfo');
-            var name = ck.split("#")[1].split(":")[1];
+            var name = getUrlParam('name');             //获取用户名
+            /*var ck = $.cookie('Sanguo_SessionInfo');
+            var name = ck.split("#")[1].split(":")[1];*/
             var sendMsg;
             if($('#talk-middle-person').css('display') === 'block'){
                 sendMsg = {"type":"private","name":name,"msg":word};
@@ -639,9 +1136,7 @@ $(function(){
                 $('#talk-middle-world').prepend("<span class='my-msg'>"+ word + " : " + name +"</span></br>");
             }
             var sendMsg0 = JSON.stringify(sendMsg);
-            console.log(sendMsg0);
             onSend(sendMsg0);
-            /*console.log(sendMsg0);*/
             $("input[name='talk-input']").val("");
         }
 
@@ -659,11 +1154,6 @@ $(function(){
             $("#game-ready").css('background','url(../image/png/game/gameCancelBtn.png) no-repeat');
             $("#game-ready").css('background-size','100% 100%');
         }
-        /*测试*/
-        $('#game-play').css('display','block');
-        $('#game-cancel').css('display','block');
-        $('#game-end').css('display','block');
-        /**/
     });
     $("#game-ready").mouseup(function(){
         if($('#game-ready').attr("name") === "false"){
@@ -675,19 +1165,6 @@ $(function(){
             var str = {"type":"ready","value":"true"};
             var sendMsg = JSON.stringify(str);
             onSend(sendMsg);
-            /*开始动画*/
-            var audio = $(".bj-voice");
-            var bj = audio[0];
-            $('.game-begin').fadeIn("slow");
-            setTimeout(function(){
-                bj.play();
-                $('.game-begin').css('background','url(../image/png/game/begin1.png) no-repeat');
-                $('.game-begin').css('background-size','100% 100%');
-                }, 800);
-            setTimeout(function(){
-                $('.game-begin').fadeOut("slow");
-            }, 1500);
-
         }else{
             $("#game-ready").css('background','url(../image/png/game/gameReadyBtn0.png) no-repeat');
             $("#game-ready").css('background-size','100% 100%');
@@ -767,18 +1244,18 @@ function moveDiwang(cid){
         pailie();
     }, 1500);
 
-    var num = $("#user-up-number").html();
+    /*var num = $("#user-up-number").html();*/
     if($('#game-down-first').children().length == 0){
         if($('#game-up-second').children().length == 0){
-            $("#user-up-number").html(num - 3);
+            $("#user-up-number").html(player1 - 3);
         }else{
-            $("#user-up-number").html(num - 1);
+            $("#user-up-number").html(player1 - 1);
         }
     }else{
         if($('#game-up-second').children().length == 0){
-            $("#user-up-number").html(num - 4);
+            $("#user-up-number").html(player1 - 4);
         }else{
-            $("#user-up-number").html(num - 2);
+            $("#user-up-number").html(player1 - 2);
         }
     }
 }
@@ -974,14 +1451,13 @@ $(function(){
             if($("#"+cardId[j]).attr("boolean") === "true"){
                 var ctype = $("#"+cardId[j]).attr("type");
                 var cid = $("#"+cardId[j]).attr("id");
-                var csrc = $("#"+cardId[j]).attr("src");
+                var curl = $("#"+cardId[j]).attr("src");
                 var cname = $("#"+cardId[j]).attr("name");
-                console.log(cname);
                 /*测试发送*/
-                var str = {"type":"play","id": cid,"src":csrc,"type":ctype};
+                /*var str = {"type":"play","id": cid,"url":curl,"name":cname};
                 console.log(str);
                 var sendMsg = JSON.stringify(str);
-                onSend(sendMsg);
+                onSend(sendMsg);*/
 
                 switch (cname) {
                     case "JW0001":
@@ -991,7 +1467,7 @@ $(function(){
                             deleteOtherAttack();
                         }, 1500);
                         /**/
-                        var str = {"type":"play","value":num - 3};
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
                         var sendMsg = JSON.stringify(str);
                         onSend(sendMsg);
                         break;
@@ -1001,10 +1477,21 @@ $(function(){
                         setTimeout(function(){
                             deleteOtherArmor();
                         }, 1500);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JW0003":
                         moveDiwang(cardId[j]);
+                        if($('#game-down-first').children().length == 0){
+                            $("#user-up-number").html(player1 - 2);
+                        }else{
+                            $("#user-up-number").html(player1 - 0);
+                        }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL001":
                         movePerson(cardId[j]);
@@ -1023,6 +1510,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL002":
                         movePerson(cardId[j]);
@@ -1041,6 +1531,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL003":
                         movePerson(cardId[j]);
@@ -1059,6 +1552,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL004":
                         movePerson(cardId[j]);
@@ -1079,6 +1575,9 @@ $(function(){
                                 lose();
                             }
                         }
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL005":
                         movePerson(cardId[j]);
@@ -1097,6 +1596,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL006":
                         movePerson(cardId[j]);
@@ -1115,6 +1617,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL007":
                         movePerson(cardId[j]);
@@ -1134,6 +1639,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL008":
                         movePerson(cardId[j]);
@@ -1152,6 +1660,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL009":
                         movePerson(cardId[j]);
@@ -1170,6 +1681,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL010":
                         movePerson(cardId[j]);
@@ -1188,6 +1702,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL011":
                         movePerson(cardId[j]);
@@ -1206,6 +1723,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL012":
                         movePerson(cardId[j]);
@@ -1224,6 +1744,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL013":
                         movePerson(cardId[j]);
@@ -1242,6 +1765,9 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL014":
                         movePerson(cardId[j]);
@@ -1262,6 +1788,9 @@ $(function(){
                                 lose();
                             }
                         }
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL015":
                         movePerson(cardId[j]);
@@ -1282,6 +1811,9 @@ $(function(){
                                 lose();
                             }
                         }
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JL016":
                         movePerson(cardId[j]);
@@ -1300,21 +1832,27 @@ $(function(){
                             }
                         }
                         lose();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JS001":
                         movePerson0(cardId[j]);
+                        nextcard();
                         break;
                     case "JS002":
                         movePerson0(cardId[j]);
                         break;
                     case "JS003":
                         movePerson0(cardId[j]);
+                        $("#user-down-number").html(player0 + 1);
                         break;
                     case "JS004":
                         movePerson0(cardId[j]);
                         break;
                     case "JS005":
                         movePerson0(cardId[j]);
+                        nextcard();
                         break;
                     case "JS006":
                         movePerson0(cardId[j]);
@@ -1327,80 +1865,153 @@ $(function(){
                         break;
                     case "JS009":
                         movePerson0(cardId[j]);
+                        $("#user-up-number").html(player1 - 2);
+                        lose();
                         break;
                     case "JS010":
                         movePerson0(cardId[j]);
+                        $("#user-up-number").html(player1 - 2);
+                        lose();
                         break;
                     case "WQ001":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ002":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ003":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ004":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ005":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ006":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ007":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ008":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ009":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ010":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ011":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ012":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ013":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ014":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ015":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ016":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "WQ017":
                         moveAttack(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "CC001":
                         moveArmor(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "CC002":
                         moveArmor(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "CC003":
                         moveArmor(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "CC004":
                         moveArmor(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "CC005":
                         moveArmor(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "YX001":
                         moveYx(cardId[j]);
-                        var num = $("#user-up-number").html();
-                        $("#user-up-number").html(num + 3);
+                        /*var num = $("#user-up-number").html();*/
+                        $("#user-down-number").html(player0 + 3);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                 }
             }

@@ -1,3 +1,14 @@
+/**
+ * 获取url参数
+ * @param name
+ * @returns {*}
+ */
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
 var ws;
 var myUrl = "ws://192.168.43.189:11111";
 
@@ -34,7 +45,7 @@ function onOpen() {
     console.log("成功连接到" + myUrl);
     var ck = $.cookie('Sanguo_SessionInfo');
     var msg = ck.split("#")[1].split(":")[1];
-    var obj = {"type": "token", "value": msg,"flag":"1"};
+    var obj = {"type": "token", "value": msg, "flag": "1"};
     var sendMsg0 = JSON.stringify(obj);
     ws.send(sendMsg0);
 
@@ -42,38 +53,40 @@ function onOpen() {
 
 function onMessage(evt) {
     var r_msg = evt.data;
-    console.log(r_msg);
     var obj = JSON.parse(r_msg);
-    /*var obj = {"type":"round","value":"true"};*/
     var parm = obj.type;
+    var name = $(".user-name").html();
+    var user = getUrlParam("user");
     switch (parm) {
         case "createRoom":
             var val = obj.errMsg;
             if (val === "true") {
                 var ck0 = $.cookie('Sanguo_SessionInfo');
                 var ck = ck0.split("#")[1].split(":")[1];
-                window.location.href = "http://192.168.43.189:8000/html/game.html";
+                window.location.href = "http://192.168.43.189:8000/html/game.html?user="+ user +"&name="+ name +"";
+
             } else if (val === "false") {
                 alert("Create Failed");
             }
             break;
         case "roomlist":
             var val = obj.roomlist;
-            console.log(val);
+            var index = 1;
             for (var i = 0; i < val.length; i++) {
                 var room = val[i].substring(7, val[i].length);
-                console.log(room);
                 $('.room-li').append("<div style=\"position:relative;width:100%;height:10%;border-bottom:1px solid #000;float:left\">" +
-                    "<input id=\"open\" class=\"open-set-music\" type=\"radio\" checked=\"checked\" name=\"room\" value=\"" + room + "\"/>" +
-                    "<span style=\"position:absolute;left:15%;top:20%;width:35%;height:100%;font-family:'楷体';font-size:20px\">" + room + "</span>" +
+                    "<input id=\"open\" class=\"open-set-music\" type=\"radio\" name=\"room\" value=\"" + room + "\"/>" +
+                    "<span style=\"position:absolute;left:15%;top:20%;width:35%;height:100%;font-family:'楷体';font-size:20px\">房间00" + index + "</span>" +
                     "<span style=\"position:absolute;left:51%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">1/2</span>" +
                     "<span style=\"position:absolute;left:83%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">等待中</span></div>");
+                index++;
             }
             break;
         case "join":
             var val = obj.isSuccess;
             if (val === "true") {
-                window.location.href = "http://192.168.43.189:8000/html/game.html";
+                window.location.href = "http://192.168.43.189:8000/html/game.html?user="+ user +"&name="+ name +"";
+
             } else if (val === "false") {
                 alert("Join Failed");
             }
@@ -148,6 +161,7 @@ $(function () {
             $('.img-head').attr('src', img0);
             var name0 = data.userName;
             $('.user-name').html(name0);
+            $('#su1').html(name0);
             /**
              * 好友信息（头像，名称）
              */
@@ -223,16 +237,6 @@ $(function () {
     /**
      * 对局记录模拟
      */
-    /*$('.div-record').append("<div style=\"position:relative;width:100%;height:12.5%;border-bottom:1px solid #000;float:left\">" +
-        "<img style=\"position:absolute;left:3%;width:35px;height:100%\" src='../image/png/main/record_1.png'/>" +
-        "<span style=\"position:absolute;left:15%;top:20%;width:35%;height:100%;font-family:'楷体';font-size:20px\">2019年5月1日12:05</span>" +
-        "<span style=\"position:absolute;left:50%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">User1</span>" +
-        "<span style=\"position:absolute;left:70%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">胜利</span></div>");
-    $('.div-record').append("<div style=\"position:relative;width:100%;height:12.5%;border-bottom:1px solid #000;float:left\">" +
-        "<img style=\"position:absolute;left:3%;width:35px;height:100%\" src='../image/png/main/record_2.png'/>" +
-        "<span style=\"position:absolute;left:15%;top:20%;width:35%;height:100%;font-family:'楷体';font-size:20px\">2019年5月1日13:05</span>" +
-        "<span style=\"position:absolute;left:50%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">User2</span>" +
-        "<span style=\"position:absolute;left:70%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">失败</span></div>");*/
 });
 /**
  * 动态火
@@ -514,6 +518,37 @@ $(function () {
         $('.main-close-page').css('display', 'none');
     })
 });
+
+
+/**
+ * 查找好友
+ */
+$(function () {
+    $("#btn-search").bind("click", function () {
+        $(".span-f").remove();
+        $(".img-f").remove();
+        var friend = $(".add-search").val();
+        $.ajax({
+            type: "POST",
+            url: "/searchUser",
+            data: {"friend": friend},
+            dataType: "json",
+            success: function (data) {
+                if(data.isSuccess === "true"){
+                    $(".main-add-page").append("<img class='img-f' src='"+ data.head +"' style=\"position:absolute;height: 30px;width:30px;left:30%;top:45%;\">" +
+                        "<span class='span-f' style=\"position:absolute;left:45%;top:45%;font-size: 20px\">"+ data.name +"</span>");
+                }else{
+                    alert("Not Found!")
+                }
+            },
+            error: function () {
+                console.log(Failed);
+            }
+        });
+    })
+});
+
+
 /**
  * 添加与删除好友
  */
@@ -534,19 +569,39 @@ $(function () {
         $('.main-add-page').css('display', 'none');
     });
     /*数据模拟*/
-    var img = "../image/png/main/user-default.png";
+    /*var img = "../image/png/main/user-default.png";
     var userName = "关羽";
-
+*/
     $("#btn-add").bind("click", function () {
-        var l = $('.main-right-bottom').children().length;
-        $('.main-right-bottom').append("<div class='single-friend' id='" + l + "' style=\"position:relative;width:90%;height:30px;left:5%;float:left;border-bottom:1px solid #fff\"\"/>");
-        $('#' + l).append("<img style=\"position:absolute;width:30px;height:100%\" id='user" + l + "' src='" + img + "'/>");
-        $('#' + l).append("<span style=\"position:absolute;left: 25%;bottom: 25%;color:#DAA520\">" + userName + "</span>");
-        $('.main-add-page').css('display', 'none');
-        addDelete();
-    })
-});
+        var friendName = $(".span-f").html();
+        var head = $(".img-f").attr('src');
+        $.ajax({
+            type: "POST",
+            url: "/addFriend",
+            data: {
+                "friendName": friendName,
+                "head": head
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.toString() === "true") {
+                    var l = $('.main-right-bottom').children().length;
+                    $('.main-right-bottom').append("<div class='single-friend' id='" + l + "' style=\"position:relative;width:90%;height:30px;left:5%;float:left;border-bottom:1px solid #fff\"\"/>");
+                    $('#' + l).append("<img style=\"position:absolute;width:30px;height:100%\" id='user" + l + "' src='" + head + "'/>");
+                    $('#' + l).append("<span style=\"position:absolute;left: 25%;bottom: 25%;color:#DAA520\">" + friendName + "</span>");
+                    $('.main-add-page').css('display', 'none');
+                    addDelete();
+                } else {
+                    alert("Add Failed!")
+                }
+            },
+            error: function () {
+                console.log(Failed);
+            }
+        });
 
+    });
+});
 /**
  * 删除好友
  */
@@ -574,6 +629,43 @@ function shanchu(name) {
         }
     });
 }
+
+/**
+ * 修改个人资料
+ */
+$(function () {
+    $(".btn-change").bind("click", function () {
+        var user = $(".user-name").html();
+        $('.text-change').val(user);
+        $('.main-change-page').css('display', 'block');
+    });
+    $(".btn-close-set").bind("click", function () {
+        $('.main-change-page').css('display', 'none');
+    });
+    $(".btn-change-save").bind("click", function () {
+        $('.main-change-page').css('display', 'none');
+        var newuser = $('.text-change').val();
+        $.ajax({
+            type: "POST",
+            url: "/updateName",
+            data: {"user": newuser},
+            dataType: "json",
+            success: function (data) {
+                if (data.toString() === "true") {
+                    $(".user-name").html(newuser);
+                    $("#su1").html(newuser);
+                    alert("Change Success!");
+                } else {
+                    alert("change Failed!")
+                }
+            },
+            error: function () {
+                console.log(Failed);
+            }
+
+        });
+    });
+});
 
 /**
  * 查看卡牌
@@ -655,7 +747,8 @@ $(function () {
  */
 $(function () {
     $("#rb1").bind("click", function () {
-        var sendMsg = "aaaa";
+        $('.room-li').empty();
+        var sendMsg = {"type": "getRoom"};
         var sendMsg0 = JSON.stringify(sendMsg);
         onSend(sendMsg0);
     });
@@ -681,5 +774,39 @@ $(function () {
         var sendMsg = {"type": "joinRoom", "roomId": val};
         var sendMsg0 = JSON.stringify(sendMsg);
         onSend(sendMsg0);
+    });
+});
+
+/**
+ * 查看对局记录
+ */
+$(function () {
+    $("#main-record").bind("click", function () {
+        $.ajax({
+            type: "POST",
+            url: "",
+            data: {},
+            dataType: "json",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    if(data[i].result1 === "true"){
+                        $('.div-record').append("<div style=\"position:relative;width:100%;height:12.5%;border-bottom:1px solid #000;float:left\">" +
+                            "<img style=\"position:absolute;left:3%;width:35px;height:100%\" src='../image/png/main/record_1.png'/>" +
+                            "<span style=\"position:absolute;left:15%;top:20%;width:35%;height:100%;font-family:'楷体';font-size:20px\">" + data[i].time1 + "</span>" +
+                            "<span style=\"position:absolute;left:50%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">" + data[i].player1 + "</span>" +
+                            "<span style=\"position:absolute;left:70%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">胜</span></div>");
+                    }else if(data[i].result1 === "false"){
+                        $('.div-record').append("<div style=\"position:relative;width:100%;height:12.5%;border-bottom:1px solid #000;float:left\">" +
+                            "<img style=\"position:absolute;left:3%;width:35px;height:100%\" src='../image/png/main/record_1.png'/>" +
+                            "<span style=\"position:absolute;left:15%;top:20%;width:35%;height:100%;font-family:'楷体';font-size:20px\">" + data[i].time1 + "</span>" +
+                            "<span style=\"position:absolute;left:50%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">" + data[i].player1 + "</span>" +
+                            "<span style=\"position:absolute;left:70%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">败</span></div>");
+                    }
+                }
+            },
+            error: function () {
+                console.log(Failed);
+            }
+        });
     });
 });

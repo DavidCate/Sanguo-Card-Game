@@ -1,7 +1,6 @@
 package cn.edu.tute.web.mapper;
 
-import cn.edu.tute.entities.RegisterUserInfo;
-import cn.edu.tute.entities.UserLoginInfo;
+import cn.edu.tute.entities.*;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +18,6 @@ public interface UserInfoMapper {
 
     @Insert("insert into user(username,name,password,phone,sex) values(#{username},#{name},#{password},#{phone},#{sex})")
     void registUserInfo(RegisterUserInfo registerUserInfo);
+
+
 }
