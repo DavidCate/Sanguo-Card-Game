@@ -51,6 +51,10 @@ function onOpen() {
 
 }
 
+function danxuan() {
+    $(this).attr("chencked","checked");
+}
+
 function onMessage(evt) {
     var r_msg = evt.data;
     var obj = JSON.parse(r_msg);
@@ -75,7 +79,7 @@ function onMessage(evt) {
             for (var i = 0; i < val.length; i++) {
                 var room = val[i].substring(7, val[i].length);
                 $('.room-li').append("<div style=\"position:relative;width:100%;height:10%;border-bottom:1px solid #000;float:left\">" +
-                    "<input id=\"open\" class=\"open-set-music\" type=\"radio\" name=\"room\" value=\"" + room + "\"/>" +
+                    "<input id=\"open\" class=\"open-set-music\" onclick='danxuan(this)' type=\"radio\" name=\"room\" value=\"" + room + "\"/>" +
                     "<span style=\"position:absolute;left:15%;top:20%;width:35%;height:100%;font-family:'楷体';font-size:20px\">房间00" + index + "</span>" +
                     "<span style=\"position:absolute;left:51%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">1/2</span>" +
                     "<span style=\"position:absolute;left:83%;top:20%;width:20%;height:100%;font-family:'楷体';font-size:20px\">等待中</span></div>");
@@ -110,14 +114,6 @@ function onSend(msg) {
 }
 
 myWebSocket(myUrl);
-
-
-function getUrlParam(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]);
-    return null;
-}
 
 /**
  * 添加删除按钮
@@ -770,7 +766,9 @@ $(function () {
  */
 $(function () {
     $("#rb3").bind("click", function () {
+        debugger;
         var val = $('input:radio[name="room"]:checked').val();
+        console.log(val);
         var sendMsg = {"type": "joinRoom", "roomId": val};
         var sendMsg0 = JSON.stringify(sendMsg);
         onSend(sendMsg0);

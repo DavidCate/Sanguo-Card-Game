@@ -56,9 +56,13 @@ function onOpen(){
     ws.send(sendMsg0);
     //心跳检测重置
     /*heartCheck.reset().start();*/
-    var obj = {"type":"card"};
+    /**
+     * 请求卡牌资源
+     * @type {{type: string}}
+     */
+    /*var obj = {"type":"card"};
     var sendMsg0 = JSON.stringify(obj);
-    ws.send(sendMsg0);
+    ws.send(sendMsg0);*/
 }
 /**
  * onOpen初始化用户数据
@@ -72,7 +76,8 @@ var player1 = $("#user-up-number").html();
 
 /**
  * 卡牌组
- * @type {{cards: *[]}}*/
+ * @type {{cards: *[]}}
+ */
 var cards = {"cards":[
         {"name":"JW0001", "type":"JW","title":"人物背景：曹操，字孟德，东汉末年政治家，军事家，文学家。足智多谋，善于随机应变；攻击效果:对攻击角色造成三点伤害；锦囊:若攻击角色攻击装备区有牌，则移除。","url":"../image/card/caocao.png"},
         {"name":"JW0002", "type":"JW","title":"人物背景：刘备，字玄德，蜀汉昭烈皇帝，与关羽张飞桃园结义，三顾茅庐请出诸葛亮为军师；攻击效果：对攻击角色造成三点伤害；锦囊：若攻击角色防御装备区有牌，则移除。","url":"../image/card/liubei.png"},
@@ -93,7 +98,7 @@ var cards = {"cards":[
         {"name":"JL014", "type":"JL","title":"人物背景：凌统，字公绩，吴国重要将领；攻击效果：对攻击角色造成两点伤害","url":"../image/card/lingtong.png"},
         {"name":"JL015", "type":"JL","title":"人物背景：黄盖，字公覆，赤壁大战时，行苦肉计诈降曹操，率船火烧曹军，立下大功；攻击效果：对攻击角色造成两点伤害","url":"../image/card/huanggai.png"},
         {"name":"JL016", "type":"JL","title":"人物背景：吕布，字奉先，东汉末年董卓部将，一生有勇无谋，英雄气短，儿女情长；攻击效果：对攻击角色造成五点伤害","url":"../image/card/lvbu.png"},
-        {"name":"JL017", "type":"JL","title":"人物背景：姜维，字伯约，蜀汉名将，官至大将军；攻击效果：对攻击角色造成两点伤害","url":"../image/card/jiangwei.png"},
+        {"name":"JS010", "type":"JS","title":"人物背景：姜维，字伯约，蜀汉名将，官至大将军；攻击效果：对攻击角色造成两点伤害","url":"../image/card/jiangwei.png"},
         {"name":"JS001", "type":"JS","title":"人物背景：司马懿，字仲达，三国时期魏国政治家，军事家；锦囊：出牌回合角色摸两张牌","url":"../image/card/simayi.png"},
         {"name":"JS002", "type":"JS","title":"人物背景：程昱，字仲德，曹操部将，曾于徐州用计迫降关羽；锦囊：弃置对方角色一张牌","url":"../image/card/chengyu.png"},
         {"name":"JS003", "type":"JS","title":"人物背景：荀彧，字文若东汉末年曹操部下谋臣，杰出政治家军事家；锦囊：出牌回合使角色回复一点生命值","url":"../image/card/xunyu.png"},
@@ -127,7 +132,7 @@ var cards = {"cards":[
         {"name":"CC005", "type":"CC","title":"城池简介：下邳；防御加成：对对方角色卡牌攻击抵消两点伤害","url":"../image/card/xiapi.png"},
         {"name":"YX001", "type":"YX","title":"简介：玉玺，东汉末年，袁绍入宫杀宦官，玉玺失踪，孙坚率军攻入洛阳，得玉玺，后被曹操所得，挟天子以令诸侯；使用效果：对角色回复三点血量值","url":"../image/card/yuxi.png"},
     ]};
-// var cards={};
+/*var cards = {};*/
 /**
  * 整理手牌
  */
@@ -253,6 +258,17 @@ function cartoon() {
 }
 
 /**
+ * 判断血量值为0
+ */
+function isZero(){
+    var player0 = parseInt($("#user-down-number").html());
+    if(player0 <= 0){
+        var str = {"type":"over","value":"false"};
+        var sendMsg = JSON.stringify(str);
+        onSend(sendMsg);
+    }
+}
+/**
  * 对手出牌君王牌
  * @param cid
  * @param curl
@@ -276,18 +292,18 @@ function moveOtherDiwang(cid,curl){
         pailie0();
     }, 2000);
 
-   /* var num = $("#user-down-number").html();*/
+    var num = $("#user-down-number").html();
     if($('#game-up-first').children().length == 0){
         if($('#game-down-second').children().length == 0){
-            $("#user-down-number").html(player0 - 3);
+            $("#user-down-number").html(num - 3);
         }else{
-            $("#user-down-number").html(player0 - 1);
+            $("#user-down-number").html(num - 1);
         }
     }else{
         if($('#game-down-second').children().length == 0){
-            $("#user-down-number").html(player0 - 4);
+            $("#user-down-number").html(num - 4);
         }else{
-            $("#user-down-number").html(player0 - 2);
+            $("#user-down-number").html(num - 2);
         }
     }
 }
@@ -321,6 +337,7 @@ function moveOtherPerson(cid,curl){
  * @param curl
  */
 function moveOtherPerson0(cid,curl){
+    debugger;
     $("#"+cid).css({height:'161.4px',weight:'114.9px'});
     $("#"+cid).addClass("no-click");
     $("#"+cid).animate({
@@ -395,6 +412,7 @@ function moveOtherAttack(cid,curl){
         $("#"+cid).attr("boolean","false");
         setTimeout(function(){ $("#game-up-first").prepend($("#"+cid));
             $("#"+cid).css({left:'8px',top:'7px'});
+            pailie0();
         }, 2000);
     }else{
         $("#"+cid).css({height:'161.4px',weight:'114.9px'});
@@ -570,9 +588,9 @@ function onMessage(evt){
     var parm = obj.type;
     switch (parm)
     {
-        case "cards":
+        /*case "card":
             cards = obj.cards;
-            break;
+            break;*/
         case "round":
             var val = obj.value;
             if(val === "true"){
@@ -624,7 +642,8 @@ function onMessage(evt){
             break;
         case "play":
             //执行？
-            debugger;
+            var player0 = $("#user-down-number").html();
+            var player1 = $("#user-up-number").html();
             var aid = obj.id;
             var aurl = obj.url;
             var aname = obj.name;
@@ -938,7 +957,12 @@ function onMessage(evt){
                     break;
                 case "JS003":
                     moveOtherPerson0(aid,aurl);
-                    $("#user-up-number").html(player1 + 1);
+                    var num = parseInt($("#user-up-number").html());
+                    if(num > 29 ){
+                        $("#user-up-number").html(30);
+                    }else{
+                        $("#user-up-number").html(num + 1);
+                    }
                     break;
                 case "JS004":
                     moveOtherPerson0(aid,aurl);
@@ -1033,9 +1057,20 @@ function onMessage(evt){
                     break;
                 case "YX001":
                     moveOtherYx(aid,aurl);
-                    $("#user-up-number").html(player1 + 3);
+                    var num = parseInt($("#user-up-number").html());
+                    if(num > 29 || num > 28 || num > 27){
+                        $("#user-up-number").html(30);
+                    }else{
+                        $("#user-up-number").html(num + 3);
+                    }
                     break;
             }
+            if(parseInt(player0) < 0){
+                $("#user-down-number").html(0);
+            }
+            setTimeout(function(){
+                isZero();
+            }, 2000);
             break;
         case "result":
             //执行？
@@ -1129,7 +1164,8 @@ $(function(){
         if(word.length === 0){
             alert("聊天信息不能为空");
         }else{
-            var name = getUrlParam('name');             //获取用户名
+            var name = getUrlParam('name');
+            console.log(name);//获取用户名
             /*var ck = $.cookie('Sanguo_SessionInfo');
             var name = ck.split("#")[1].split(":")[1];*/
             var sendMsg;
@@ -1166,7 +1202,7 @@ $(function(){
             $("#game-ready").css('background','url(../image/png/game/gameCancelBtn0.png) no-repeat');
             $("#game-ready").css('background-size','100% 100%');
             $('#game-ready').attr("name","true");
-            $('.up-status').css('display','block');
+            /*$('.up-status').css('display','block');*/
             $('.down-status').css('display','block');
             var str = {"type":"ready","value":"true"};
             var sendMsg = JSON.stringify(str);
@@ -1250,18 +1286,18 @@ function moveDiwang(cid){
         pailie();
     }, 1500);
 
-    /*var num = $("#user-up-number").html();*/
+    var num = $("#user-up-number").html();
     if($('#game-down-first').children().length == 0){
         if($('#game-up-second').children().length == 0){
-            $("#user-up-number").html(player1 - 3);
+            $("#user-up-number").html(num - 3);
         }else{
-            $("#user-up-number").html(player1 - 1);
+            $("#user-up-number").html(num - 1);
         }
     }else{
         if($('#game-up-second').children().length == 0){
-            $("#user-up-number").html(player1 - 4);
+            $("#user-up-number").html(num - 4);
         }else{
-            $("#user-up-number").html(player1 - 2);
+            $("#user-up-number").html(num - 2);
         }
     }
 }
@@ -1464,7 +1500,8 @@ $(function(){
                 console.log(str);
                 var sendMsg = JSON.stringify(str);
                 onSend(sendMsg);*/
-
+                var player0 = $("#user-down-number").html();
+                var player1 = $("#user-up-number").html();
                 switch (cname) {
                     case "JW0001":
                         moveDiwang(cardId[j]);
@@ -1845,38 +1882,73 @@ $(function(){
                     case "JS001":
                         movePerson0(cardId[j]);
                         nextcard();
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JS002":
                         movePerson0(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JS003":
                         movePerson0(cardId[j]);
-                        $("#user-down-number").html(player0 + 1);
+                        var num = parseInt($("#user-down-number").html());
+                        if(num > 29 ){
+                            $("#user-down-number").html(30);
+                        }else{
+                            $("#user-down-number").html(num + 1);
+                        }
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JS004":
                         movePerson0(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JS005":
                         movePerson0(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         nextcard();
                         break;
                     case "JS006":
                         movePerson0(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JS007":
                         movePerson0(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JS008":
                         movePerson0(cardId[j]);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         break;
                     case "JS009":
                         movePerson0(cardId[j]);
                         $("#user-up-number").html(player1 - 2);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         lose();
                         break;
                     case "JS010":
                         movePerson0(cardId[j]);
                         $("#user-up-number").html(player1 - 2);
+                        var str = {"type":"play","id":cid,"name":cname,"url":curl};
+                        var sendMsg = JSON.stringify(str);
+                        onSend(sendMsg);
                         lose();
                         break;
                     case "WQ001":
@@ -2013,12 +2085,19 @@ $(function(){
                         break;
                     case "YX001":
                         moveYx(cardId[j]);
-                        /*var num = $("#user-up-number").html();*/
-                        $("#user-down-number").html(player0 + 3);
+                        var num = parseInt($("#user-down-number").html());
+                        if(num > 29 || num > 28 || num > 27){
+                            $("#user-down-number").html(30);
+                        }else{
+                            $("#user-down-number").html(num + 3);
+                        }
                         var str = {"type":"play","id":cid,"name":cname,"url":curl};
                         var sendMsg = JSON.stringify(str);
                         onSend(sendMsg);
                         break;
+                }
+                if(parseInt(player1)<0){
+                    $("#user-up-number").html(0);
                 }
             }
         }
@@ -2046,9 +2125,6 @@ $(function(){
         $('#game-cancel').css('display','none');
         $('#game-end').css('display','none');
     });
-    /*$("#game-end").bind("click",function(){
-
-    })*/
 });
 /**
  * 点击取消
@@ -2061,10 +2137,6 @@ $(function(){
     $("#game-cancel").mouseup(function(){
         $("#game-cancel").css('background','url(../image/png/game/gameNoBtn0.png) no-repeat');
         $("#game-cancel").css('background-size','100% 100%');
-
-        var str = {"type":"over","value":"false"};
-        var sendMsg = JSON.stringify(str);
-        onSend(sendMsg);
     });
 });
 

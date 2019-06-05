@@ -51,6 +51,7 @@ public class NewUserInfoOpServiceImpl implements NewUserInfoOpService {
             searchUserInfo.setIsSuccess("true");
             return JSON.toJSONString(searchUserInfo);
         }else {
+            searchUserInfo=new SearchUserInfo();
             searchUserInfo.setIsSuccess("false");
             return JSON.toJSONString(searchUserInfo);
         }
