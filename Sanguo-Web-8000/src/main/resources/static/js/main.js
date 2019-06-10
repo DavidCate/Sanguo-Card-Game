@@ -782,7 +782,7 @@ $(function () {
     $("#main-record").bind("click", function () {
         $.ajax({
             type: "POST",
-            url: "",
+            url: "/getRecord",
             data: {},
             dataType: "json",
             success: function (data) {
